@@ -1,0 +1,5 @@
+int main()
+{
+        Rfield testfield(3);
+        return 0;
+}

@@ -1,0 +1,88 @@
+// An N-dimensional field is
+// written u(x) = (u_1(x),u_2(x),...,u_N(x)),
+// where x = x_1,x_2,...,x_N. Here the case is N=3 and cartesian labels x,y,z.
+// Data is allocated contiguous as a long one-dimensional array. 
+// Thus we need to allocate Mx*My*Mz*3 of space for a function u(x) = (u_x(x),u_y(x),u_z(x)).
+
+#include <assert.h>
+#include <iostream>
+#include "common.h"
+
+inline size_t xyzstride(Int mx,Int my,Int mz){
+        return mx*my*mz;
+}
+
+template <class T>
+class Field
+{
+private:
+        //Loading sizes directly in here enables us to use .size()-method fast.
+        //Note that this is the "computer" size including ghost points, not the
+        //"mathematical" size.
+        Int mx_; //actual sizes of the dimensions (including ghostpoints)
+        Int my_;
+        Int mz_;
+        Int totsize_;
+        Int nvar_;
+
+        //Where space is allocated.
+        T *data_;
+        
+public:
+        Field(Int Mx, Int My, Int Mz, Int nvar); //Constructor
+        Field(T *inData, Int nvar);
+        ~Field(); //Destructor
+
+        //Utilities
+        inline Int totSize() const; //returns total arraysize Mx*My*Mz*nvar
+
+        //subfield
+        Field<T> subfield(Int vi, Int nvar)
+        {
+                return Field(data_+vi*xyzstride(mx_,my_,mz_),nvar);
+        }
+        
+}; //end class Field
+
+
+//------------ Constructors and destructor ------------
+
+//Constructor
+template <class T>
+Field<T>::Field(Int Mx, Int My, Int Mz, Int nvar) :
+        mx_(Mx),
+        my_(My),
+        mz_(Mz),
+        totsize_(Mx*My*Mz*nvar),
+        nvar_(nvar),
+        data_((Mx*My*Mz*nvar)>0 ? new T[Mx*My*Mz*nvar] : NULL)
+{
+        
+}
+
+template <class T>
+Field<T>::Field(T *inData, Int nvar) :
+        mx_(0),
+        my_(0),
+        mz_(0),
+        totsize_(0),
+        nvar_(nvar),
+        data_(inData)
+{
+        
+}
+
+//Destructor
+template <class T>
+Field<T>::~Field()
+{
+        delete[] data_;
+        data_=0;
+}
+
+//------------ Utilities ------------
+template<class T>
+inline Int Field<T>::totSize() const {
+        return totsize_;
+}
+

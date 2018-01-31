@@ -11,5 +11,8 @@
 #include "vartypedefs.h"
 #include "pmesh.h"
 
-typedef pMesh<Real,1,NGHOSTS> spencil;
-typedef pMesh<Real,3,NGHOSTS> vpencil;
+typedef pMesh<Real,1,0> sPencil;
+typedef pMesh<Real,3,0> vPencil;
+
+typedef pMesh<Real,1,NGHOSTS> sBundle;
+typedef pMesh<Real,3,NGHOSTS> vBundle;

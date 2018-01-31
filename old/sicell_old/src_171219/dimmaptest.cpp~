@@ -1,0 +1,18 @@
+#include <iostream>
+#include "field.h"
+#include "common.h"
+
+using namespace std;
+
+typedef Field<Real> RealF;
+
+Int main()
+{
+        Int Mx=Nx+NGHOST,My=Ny+NGHOST,Mz=Nz+NGHOST,nvar=3;
+        
+        RealF uTest(Mx,My,Mz,nvar);
+
+        cout << uTest.totSize() << endl;
+
+        return 0;
+}

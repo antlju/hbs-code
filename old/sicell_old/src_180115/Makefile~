@@ -1,0 +1,14 @@
+CC=g++
+CFLAGS=-Wall -std=c++11
+LDFLAGS=
+SOURCES=makefiletest.cpp derivatives.cpp #Dependencies .cpp
+OBJECTS=$(SOURCES:.cpp=.o) #Dependencies .o
+EXECUTABLE=mfiletest
+
+all: $(SOURCES) $(EXECUTABLE)
+
+$(EXECUTABLE): $(OBJECTS)
+	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+
+.cpp.o:
+	$(CC) $(CFLAGS) $< -o $@

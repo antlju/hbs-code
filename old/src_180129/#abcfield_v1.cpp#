@@ -52,8 +52,6 @@ void printfield(const Rfield &u,const Int useNg = 0) //Prints contents to comman
                 
 Real *linspace(Int size, Real start, Real end, Real dx)
 {
-
-        Real dx = (end-start)/size;
         Real *axis = new Real[size];
         for (Int i=0;i<size;i++)
         {

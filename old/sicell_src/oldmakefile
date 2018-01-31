@@ -1,0 +1,19 @@
+CC=g++
+CFLAGS=-c -Wall -std=c++14
+LFLAGS=-Wall -std=c++14
+TESTSRC=diffoptest_v1.cpp
+#THINGSRC=derivatives.cpp
+DIFFOPSRC=derivatives.cpp div.cpp lapl.cpp grad.cpp curl.cpp
+SOURCES=test_v1.o diffoptest_v1.cpp derivatives.cpp div.cpp lapl.cpp grad.cpp curl.cpp
+HDEPS=Makefile common.h field.h utils.h diffops.h
+OBJECTS=$(SOURCES:.cpp=.o) #Dependencies .o
+
+test_v1.o: $(TESTSRC) $(DIFFOPSRC) $(HDEPS)
+	$(CC) $(CFLAGS) $(TESTSRC) -o $@
+
+test: $(OBJECTS)
+	$(CC) $(LFLAGS) -o $@ $^
+
+clean:
+	rm *.o
+
