@@ -85,26 +85,30 @@ public:
         }
         */
         
-        size_t spindex(Int i, Int q, Int vi=0) const
+        size_t spindex(const Int i,const Int q,const Int h,const Int vi=0) const
         {
-                assert(q>=0 && q<4*H+1);
-                Int indx = q*nvars_*(nx_+2*H)+vi*(nx_+2*H)+(i+H);
-                return indx; 
+                assert(q>=0 && q<5);
+                if (H != 0)
+                        assert(h >=0 && h<H);
+                else
+                        assert(h == 0);
+                Int bindx = (q+h)*nvars_*(nx_+2*H)+vi*(nx_+2*H)+(i+H);
+                return bindx; 
         }
         /// ------ Overloads --------
         /// Element accessing (This will contain proper maps later!)
         
         ///           bundle element access:
-        T& operator()(Int i,Int q=0, Int vi=0)
+        T& operator()(const Int i, const Int q=0,const Int h=0, const Int vi=0)
         {
-                return mem_[spindex(i,q,vi)];
+                return mem_[spindex(i,q,h,vi)];
         }
-        const T& operator()(Int i, Int q=0, Int vi=0) const
+        const T& operator()(const Int i, const Int q=0, const Int h=0, const Int vi=0) const
         {
-                return mem_[spindex(i,q,vi)];
+                return mem_[spindex(i,q,h,vi)];
         }
 
-        void fillPencil(const T& val,Int q=0,Int vi=0)
+        void fillPencil(const T& val, const Int q=0, const Int h=0, const Int vi=0)
         {
                 if (H == 0)
                 {
@@ -114,7 +118,7 @@ public:
                 {
                         for (size_t i=0;i<nx_;i++)
                         {
-                                mem_[spindex(i,q,vi)] = val;
+                                mem_[spindex(i,q,h,vi)] = val;
                         }
                 }
         }
@@ -133,12 +137,12 @@ public:
         pMesh& operator/=(const T& rhs);
 
         /// Printing
-        void printpencil(const Int q=0, const Int vi=0, const std::string title="")
+        void printpencil(const Int q=0, const Int h=0, const Int vi=0, const std::string title="")
         {
                 std::cout << "------------ pencil print: " << title << std::endl;
-                std::cout << "------------ q: " << q << " vi: " << vi << std::endl;
+                std::cout << "------------ q: " << q <<" h: " << h << " vi: " << vi << std::endl;
                 for (size_t i=0;i<nx_;i++)
-                        std::cout << mem_[spindex(i,q,vi)] << std::endl;
+                        std::cout << mem_[spindex(i,q,h,vi)] << std::endl;
                 
         std::cout << std::endl;
         }

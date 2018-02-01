@@ -12,21 +12,21 @@ void linspace(sPencil &u, Real start, Real end, Real dx)
         //std::cout << std::endl;
 }
 
-void printspencil(sPencil &u,const std::string title="")
+void printvpencil(vPencil &u, const std::string title="")
 {
         std::cout << "------------ spencil print: " << title << std::endl;
         for (size_t i=0;i<u.nx_;i++)
-                std::cout << u(i) << std::endl;
+                std::cout << u(i,0,0) << " " << u(i,0,1) << " " << u(i,0,2) << std::endl;
         
         std::cout << std::endl;
         //std::cout << "----------------------------" << std::endl;
 }
 
-void printsbundle(sBundle &u, Int q, const std::string title="")
+void printvbundle(vBundle &u, Int q, const std::string title="")
 {
         std::cout << "------------ sbundle print: " << title << std::endl;
         for (size_t i=0;i<u.nx_;i++)
-                std::cout << u(i,q,0) << " " << u.nvars_ << std::endl;
+                std::cout << u(i,q,0) << " " << u(i,q,1) << " " << u(i,q,2) << " " << u.nvars_ << std::endl;
         
         std::cout << std::endl;
 }
@@ -41,7 +41,7 @@ Int main()
         Real dx = (L1-L0)/Nx;
         
         sPencil x(Nx);
-        sPencil a(Nx);
+        vPencil a(Nx);
         a.fillPencil(3.0);
         
         linspace(x,L0,L1,dx);
@@ -57,7 +57,7 @@ Int main()
         printspencil(a, "a-x");
         */
 
-        sBundle B(Nx);
+        vBundle B(Nx);
 
         //B.fillPencil(3.0, 0);
         //B.fillPencil(2.0, 1);
@@ -65,19 +65,20 @@ Int main()
 
         //printsbundle(B,0);
 
-        B.fillPencil(1.0, 0);
-        B.fillPencil(2.0, 1);
-        B.fillPencil(3.0, 2);
-        B.fillPencil(4.0, 3);
-        B.fillPencil(5.0, 4);
+        for (size_t qi=0;qi<5;qi++)
+        {
+                B.fillPencil(1.0+qi,qi,0);
+                B.fillPencil(1.0+qi,qi,1);
+                B.fillPencil(1.0+qi,qi,2);
+        }
         
         for (size_t j =0;j<5;j++)
-                printsbundle(B,j);
+                printvbundle(B,j);
 
         B = B-(B*2.0);
 
         for (size_t j =0;j<5;j++)
-                printsbundle(B,j);
+                printvbundle(B,j);
         
         return 0;
 }

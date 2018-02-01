@@ -88,8 +88,8 @@ public:
         size_t spindex(Int i, Int q, Int vi=0) const
         {
                 assert(q>=0 && q<4*H+1);
-                Int indx = q*nvars_*(nx_+2*H)+vi*(nx_+2*H)+(i+H);
-                return indx; 
+                Int bindx = q*nvars_*(nx_+2*H)+vi*(nx_+2*H)+(i+H);
+                return bindx; 
         }
         /// ------ Overloads --------
         /// Element accessing (This will contain proper maps later!)

@@ -1,8 +1,9 @@
 CC=g++
 CFLAGS=-c -Wall -std=c++14
 LDFLAGS=
-HEADERS=Makefile common.h vartypedefs.h pmesh.h
-SOURCES=penciltest_v2.cpp
+HEADERS=Makefile common.h vartypedefs.h pmesh.h diffops.h field.h
+DIFFOPS=grad.cpp derivatives.cpp
+SOURCES=diffoptest_v2.cpp $(DIFFOPS)
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=test
 
