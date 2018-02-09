@@ -141,7 +141,6 @@ public:
                         std::cout << mem_[spindex(i,q,vi)] << std::endl;
                 
         std::cout << std::endl;
-        std::cout << std::endl;
         }
 
 }; /// End class pMesh

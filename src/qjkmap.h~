@@ -1,0 +1,39 @@
+#pragma once
+
+#include "common.h"
+#include "vartypedefs.h"
+#include <vector>
+#include <iostream>
+#include <utility>
+
+typedef std::vector<Int> Intvec;
+
+namespace indexmap
+{
+        
+        Intpair jkpair;
+
+         j_arr;
+        Intvec j_arr;
+        Intvec k_arr;
+        size_t Nqtojk = 2*NGHOSTS+1;
+        j_arr.resize(Nqtojk);
+        k_arr.resize(Nqtojk);
+        
+        for (size_t jj=0;jj<Nqtojk;jj++)
+        {
+                j_arr[jj] = -NGHOSTS+jj;
+                k_arr[jj] = -NGHOSTS+jj;
+        }
+
+        
+        void qtojk(Intpair &jkpair, Int q, Intvec k_arr, Intvec j_arr)
+        {
+                assert(q>=0 && q<4*NGHOSTS+1);
+                
+                Int j,k;
+                
+                jkpair.make_pair(j,k);
+        }
+        
+}

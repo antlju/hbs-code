@@ -1,0 +1,9 @@
+#include qjkmap.h
+
+void main()
+{
+        for (Int q = 0;q<4*NGHOSTS+1;q++)
+        {
+                qtojk(q);
+        }
+}

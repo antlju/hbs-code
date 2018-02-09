@@ -70,6 +70,7 @@ Field<T,NG>& Field<T,NG>::operator*=(const T& rhs)
         }
         return *this;
 }
+
 /*
 template <class T, Int NG>
 inline Field<T,NG>& Field<T,NG>::operator*(Field<T,NG> lhs, const T& rhs)

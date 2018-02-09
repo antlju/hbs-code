@@ -12,18 +12,24 @@ void linspace(sPencil &u, Real start, Real end, Real dx)
         //std::cout << std::endl;
 }
 
-void fillsBundle(sBundle &u, sPencil &x, sPencil &y, sPencil &z)
+/*
+void createqtojkmap()
 {
-        Real k1=1.0;//,k2=2.0,k3=3.0;
-        
-        for (size_t q=0;q<u.stencilSize_;q++)
+        std::vector<Int> j_arr;
+        std::vector<Int> k_arr;
+        size_t Nqtojk = 2*NGHOSTS+1;
+        j_arr.resize(Nqtojk);
+        k_arr.resize(Nqtojk);
+
+        for (size_t jj=0;jj<Nqtojk;jj++)
         {
-                for (size_t i = 0;i<u.nx_;i++)
-                {
-                        u(i,q,0) = exp(k1*x(i));
-                }
+                j_arr[jj] = -NGHOSTS+jj;
+                k_arr[jj] = -NGHOSTS+jj;
         }
+
+        Int qtojkmap[][];
 }
+*/
 
 Int main()
 {
@@ -42,9 +48,10 @@ Int main()
 
         vPencil g(Nx);
         sBundle f(Nx);
-        fillsBundle(f,x,x,x);
-        f.printpencil(0,0);
+        //f.printpencil(0,0);
 
+        createqtojkmap();
+        
 
         return 0;
 }

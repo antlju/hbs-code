@@ -56,25 +56,4 @@ public:
                 std::fill(mem_.begin(),mem_.end(), T() ); //Fill with zeros of type T.
         }
 
-        /// Arithmetics.
-        Field& operator*=(const T& rhs);
-        
 }; //End class
-
-template <class T, Int NG>
-Field<T,NG>& Field<T,NG>::operator*=(const T& rhs)
-{
-        for (size_t i=0;i<this->mem_.size();i++)
-        {
-                this->mem_[i] *= rhs;
-        }
-        return *this;
-}
-/*
-template <class T, Int NG>
-inline Field<T,NG>& Field<T,NG>::operator*(Field<T,NG> lhs, const T& rhs)
-{
-        lhs *= rhs;
-        return lhs;
-}
-*/

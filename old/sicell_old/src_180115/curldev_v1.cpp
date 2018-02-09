@@ -246,7 +246,7 @@ int main()
                                         }
                                         else
                                         {
-                                                cout << "\t" << udotcu[vfidx(xi,yi,zi,0)]/udotu[vfidx(xi,yi,zi,0)];
+                                                cout << "\t" << udotu[vfidx(xi,yi,zi,0)];
                                                 
                                         }
                                         
