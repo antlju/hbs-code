@@ -4,9 +4,9 @@ LDFLAGS=
 
 HEADERS=Makefile headers/*.h
 
-DIFFOPS=partials/partials.cpp findiff/findiff.cpp curl/curl.cpp
+DIFFOPS=partials/partials.cpp findiff/findiff.cpp curl/curl.cpp div/div.cpp grad/grad.cpp lapl/lapl.cpp
 UTILS=utility/bundlememcpy.cpp utility/linspace.cpp utility/pbc.cpp utility/printfield.cpp
-MAINSRC=divTest_v1.cpp
+MAINSRC=laplTest_v1.cpp
 SOURCES=$(MAINSRC) $(DIFFOPS) $(UTILS)
 
 OBJECTS=$(SOURCES:.cpp=.o)
