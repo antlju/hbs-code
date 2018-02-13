@@ -1,2 +1,2 @@
 # hbs-code
-A sickled-RBCs-in-flow finite difference code.
+A multiphase flow finite difference code.
