@@ -1,5 +1,5 @@
 #pragma once
-#include "common.h"
+#include "includes.h"
 
 void printfield(const Field4 &u) //Prints contents to command line (excluding ghost points)
 {
@@ -19,6 +19,7 @@ void printfield(const Field4 &u) //Prints contents to command line (excluding gh
                                 std::cout << "\n";
                         }
                         std::cout << "---------------------------------------" << std::endl;
+                        std::cout << std::endl;
                 }
                         
         }
@@ -36,23 +37,27 @@ void linspace(sPencil &u, Real start, Real end, Real dx)
         //std::cout << std::endl;
 }
 
-void ABC_setup(Field4 &u, sPencil &x, sPencil &y, sPencil &z)
+Mesh pwiseffdiv(const Mesh &u1,const Mesh &u2)
 {
-        Real kk=1.0,A=1.0,B=1.0,C=1.0;
-        for (size_t i=0;i<u.nx_;i++)
+        Mesh div(u1.nx_,u1.ny_,u1.nz_,u1.nvar_);
+        for (size_t vii=0;vii<u1.nvar_;vii++)
         {
-                for (size_t j=0;j<u.ny_;j++)
+                for (size_t ii=0;ii<u1.nx_;ii++)
                 {
-                        for (size_t k=0;k<u.nz_;k++)
+                        for (size_t jj=0;jj<u1.ny_;jj++)
                         {
-                                u(i,j,k,0) = A*sin(kk*z(k,0,0))+C*cos(kk*y(j,0,0));
-                                u(i,j,k,1) = B*sin(kk*x(i,0,0))+A*cos(kk*z(k,0,0));
-                                u(i,j,k,2) = C*sin(kk*y(j,0,0))+B*cos(kk*x(i,0,0));
-                                //u(i,j,k,0) = x[i];
-                                //u(i,j,k,1) = y[i];
-                                //u(i,j,k,2) = z[i];
+                                for (size_t kk=0;kk<u1.nz_;kk++)
+                                {
+                                        div(ii,jj,kk,vii) = u1(ii,jj,kk,vii)/u2(ii,jj,kk,vii);   
+                                }
+              
                         }
+              
                 }
+                        
         }
 
+        return div;     
 }
+
+void apply_pbc(Mesh &u);

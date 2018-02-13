@@ -1,0 +1,140 @@
+/// Library 
+#include <iostream>
+#include <cmath>
+#include <cassert>
+
+/// Headers
+#include "inputparams.h"
+#include "vartypedef.h"
+#include "typedef.h"
+#include "fmesh.h"
+#include "pmesh.h"
+#include "utility.h"
+#include "diffops.h"
+
+
+/// Test program for computing the curl of the ABC-field.
+/// - version 1.
+
+/// Takes two vector fields and produces a scalar function.
+void dotprod(const Mesh &A, const Mesh &B, Mesh &C)
+{
+
+        for (size_t i=0;i<A.nx_;i++)
+        {
+                for (size_t j=0;j<A.ny_;j++)
+                {
+                        for (size_t k=0;k<A.nz_;k++)
+                        {
+                                
+                                C(i,j,k) = A(i,j,k,0)*B(i,j,k,0)
+                                        +A(i,j,k,1)*B(i,j,k,1)
+                                        +A(i,j,k,2)*B(i,j,k,2);
+                        }
+                }
+        }
+
+}
+
+void setup(Mesh &u, const Pencil &x, const Pencil &y, const Pencil &z)
+{
+        Real A=1.0,B=1.0,C=1.0;
+        Real L=1.0;
+        for (size_t i=0;i<u.nx_;i++)
+        {
+                for (size_t j=0;j<u.ny_;j++)
+                {
+                        for (size_t k=0;k<u.nz_;k++)
+                        {
+                                u(i,j,k,0) = A*sin(L*z(k,0))+C*cos(L*y(j,0));
+                                u(i,j,k,1) = B*sin(L*x(i,0))+A*cos(L*z(k,0));
+                                u(i,j,k,2) = C*sin(L*y(j,0))+B*cos(L*x(i,0));
+                                //u(i,j,k,0) = x[i];
+                                //u(i,j,k,1) = y[i];
+                                //u(i,j,k,2) = z[i];
+                        }
+                }
+        }
+
+}
+
+
+void apply_curl(const Mesh &u, Mesh &cu,const Real xfac, const Real yfac, const Real zfac)
+{
+/// Create vector bundle and pencil
+        Bundle Dbundle(u.nx_,3);
+        Pencil Dpencil(u.nx_,3);
+        //for (size_t vi=0;vi<Dbundle.nvars_;vi++)
+        //std::cout << delx(Dbundle,xfac,0,vi) << std::endl;
+        
+        for (size_t j=0;j<u.ny_;j++)
+        {
+                for (size_t k=0;k<u.nz_;k++)
+                {
+                        ff2bundle(u,Dbundle,j,k,0);
+                        curl(Dbundle,Dpencil,xfac,yfac,zfac);
+                        pencil2ff(Dpencil,cu,j,k,0);
+                        //std::cout << "applied curl at j: " << j << " k: " << k << std::endl;
+                }
+        }
+        
+}
+
+
+Int main()
+{
+        Int Nx = NX;
+        Int Ny = NY; 
+        Int Nz = NZ;
+        
+        Real L0 = 0.0;
+        Real L1 = 2*M_PI;
+        Real dx = (L1-L0)/(Nx);
+        
+        Pencil x(Nx);
+        x.printpencil();
+        linspace(x,L0,L1,dx);
+        x.printpencil();
+
+        Mesh u(Nx,Ny,Nz,3);
+        setup(u,x,x,x);
+        apply_pbc(u);
+
+        Mesh cu(Nx,Ny,Nz,3);
+        apply_curl(u,cu,1.0/dx,1.0/dx,1.0/dx);
+        
+        Mesh udotu(Nx,Ny,Nz,1);
+        Mesh udotcu(Nx,Ny,Nz,1);
+        dotprod(u,u,udotu); 
+        dotprod(u,cu,udotcu);
+        
+        /// PRINTING FOR DEBUGGING! Ideally we want to this to print udotcu/udotu = k everywhere.
+        for (size_t vii=0;vii<udotu.nvar_;vii++)
+        {
+                std::cout << "------- component: " << vii << " -------" << std::endl;
+                std::cout << "---------------------------------------" << std::endl;
+                for (size_t ii=0;ii<udotu.nx_;ii++)
+                {
+                        for (size_t jj=0;jj<udotu.ny_;jj++)
+                        {
+                                for (size_t kk=0;kk<udotu.nz_;kk++)
+                                {
+                                        if (udotu(ii,jj,kk) < 1e-15)
+                                        {
+                                                std::cout << "div by 0" << "\t";
+                                        }
+                                        else
+                                        {
+                                        std::cout << udotcu(ii,jj,kk)/udotu(ii,jj,kk) << "\t";
+                                        }
+                                }
+                                std::cout << "\n";
+                        }
+                        std::cout << "---------------------------------------" << std::endl;
+                        std::cout << std::endl;
+                }
+                        
+        }
+        
+        return 0;
+}

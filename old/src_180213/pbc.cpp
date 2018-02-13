@@ -1,8 +1,8 @@
 #include "common.h"
 
-void apply_pbc(Rfield &u)
+void apply_pbc(Field4 &u)
 {
-        size_t Ng = u.ng_,Nvars=u.nvar_;
+        size_t Ng=u.ng_,Nvars=u.nvar_;
         size_t Nx=u.nx_,Ny=u.ny_,Nz=u.nz_;
         
         for (size_t vi=0;vi<Nvars;vi++)

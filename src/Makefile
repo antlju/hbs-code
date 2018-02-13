@@ -1,11 +1,16 @@
 CC=g++
-CFLAGS=-c -Wall -std=c++14
+CFLAGS=-c -Wall -std=c++14 -Iheaders
 LDFLAGS=
-HEADERS=Makefile common.h vartypedefs.h pmesh.h diffops.h field.h qjkmap.h utils.h includes.h maps.h
-DIFFOPS=grad.cpp derivatives.cpp
-SOURCES=curltest_v2.cpp $(DIFFOPS) maps.cpp pbc.cpp curl.cpp
+
+HEADERS=Makefile headers/*.h
+
+DIFFOPS=partials/partials.cpp findiff/findiff.cpp curl/curl.cpp
+UTILS=utility/bundlememcpy.cpp utility/linspace.cpp utility/pbc.cpp utility/printfield.cpp
+MAINSRC=divTest_v1.cpp
+SOURCES=$(MAINSRC) $(DIFFOPS) $(UTILS)
+
 OBJECTS=$(SOURCES:.cpp=.o)
-EXECUTABLE=curltest.exe
+EXECUTABLE=test.exe
 
 all: $(SOURCES) $(EXECUTABLE)
 
