@@ -61,11 +61,36 @@ public:
                         isScalar_ = 1;
         }
 
+        /// Validate compatible sizes of lhs and rhs.
+        void validateDims(const fMesh &rhs)
+        {
+                if( (this->nx_ != rhs.nx_)
+                    || (this->ny_ != rhs.ny_)
+                    || (this->nz_ != rhs.nz_) )
+                        throw std::range_error ("lhs and rhs dimensions do no match!");
+        }
+        
         /// Arithmetics.
         fMesh& operator*=(const T& rhs);
+        fMesh& operator=(const fMesh& rhs);
+        fMesh& operator+=(const fMesh& rhs);
+        
                       
         
 }; //End class
+
+template <class T, Int NG>
+fMesh<T,NG>& fMesh<T,NG>::operator=(const fMesh<T,NG>& rhs)
+{
+        validateDims(rhs);
+
+        for (size_t i=0;i<this->mem_.size();i++)
+        {
+                this->mem_[i] = rhs.mem_[i];
+        }
+
+        return *this;
+}
 
 template <class T, Int NG>
 fMesh<T,NG>& fMesh<T,NG>::operator*=(const T& rhs)
@@ -76,11 +101,34 @@ fMesh<T,NG>& fMesh<T,NG>::operator*=(const T& rhs)
         }
         return *this;
 }
-/*
+
 template <class T, Int NG>
-inline Field<T,NG>& Field<T,NG>::operator*(Field<T,NG> lhs, const T& rhs)
+fMesh<T,NG>& fMesh<T,NG>::operator+=(const fMesh<T,NG>& rhs)
+{
+        validateDims(rhs);
+        for (size_t i=0;i<this->mem_.size();i++)
+        {
+                this->mem_[i] += rhs.mem_[i];
+        }
+
+        return *this;
+}
+
+///-------------------------------------------------- 
+///    Array arithmetics, ie meshA+meshB = meshC etc.
+///--------------------------------
+
+template <class T, Int NG>
+inline fMesh<T,NG>& operator*(fMesh<T,NG> lhs, const T& rhs)
 {
         lhs *= rhs;
         return lhs;
 }
-*/
+
+template <class T, Int H>
+inline fMesh<T, H> operator+(fMesh<T, H> lhs, const fMesh<T, H>& rhs)
+{
+        lhs += rhs;
+        return lhs;
+}
+

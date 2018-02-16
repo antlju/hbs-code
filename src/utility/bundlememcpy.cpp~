@@ -7,7 +7,7 @@ void pencil2ff(const Pencil &P, Mesh &ff, Int j, Int k,Int ffvi)
         {
                 for (size_t i=0;i<ff.nx_;i++)
                 {
-                        ff(i,j,k,ffvi) = P(i);
+                        ff(i,j,k,ffvi) = P(i,0,0);
                 }
         }
         else
@@ -16,7 +16,7 @@ void pencil2ff(const Pencil &P, Mesh &ff, Int j, Int k,Int ffvi)
                 {
                         for (size_t i=0;i<ff.nx_;i++)
                         {
-                                ff(i,j,k,vi) = P(i,vi);
+                                ff(i,j,k,vi) = P(i,0,vi);
                         }
                 }
         }

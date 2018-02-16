@@ -1,0 +1,37 @@
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
+from numpy import *
+from matplotlib import pyplot as plt
+import matplotlib.pylab as pl
+from matplotlib.colors import ListedColormap
+
+num = 1250
+fname = "/home/anton/dev/hbs/src/simdata/u_tNum_"+str(num)+".dat"
+
+X = loadtxt(fname, usecols=0)
+Y = loadtxt(fname, usecols=1)
+Z = loadtxt(fname, usecols=2)
+U = loadtxt(fname, usecols=3)
+
+normU = U/sum(U)
+
+cmap = pl.cm.plasma
+my_cmap = cmap(arange(cmap.N))
+
+my_cmap[:,-1] = linspace(0,1,cmap.N)
+
+my_cmap = ListedColormap(my_cmap)
+
+#dotcolors = [(U,100*a) for a in normU]
+
+#c = dotcolors
+c = U
+fig = plt.figure(1)
+ax = fig.gca(projection='3d')
+surf = ax.scatter(X,Y,Z,c=c, cmap=my_cmap, linewidth=0,depthshade=False)
+#surf = ax.voxels(X,Y,Z,facecolors=U)
+#surf = ax.plot_surface(X,Y,Z,c=U, cmap=cm.plasma, antialiased=False)
+
+plt.show()
+#savefname = "diffeq_"+str(num)+".jpg"
+#plt.savefig(savefname,dpi=100, bbox_inches='tight')

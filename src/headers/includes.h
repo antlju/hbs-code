@@ -4,6 +4,8 @@
 #include <iostream>
 #include <cmath>
 #include <cassert>
+#include <fstream>
+#include <string>
 
 /// Headers
 #include "inputparams.h"
