@@ -38,3 +38,9 @@
 # Plots
 *.jpg
 *.eps
+
+# Backups
+*.cpp~
+*.h~
+*.bak
+*#*

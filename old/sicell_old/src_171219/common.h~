@@ -1,4 +1,0 @@
-#define NGHOST 2 //Comes from the order of fin-diff scheme.
-
-typedef double Real;
-typedef int Int;
