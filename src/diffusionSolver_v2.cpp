@@ -53,14 +53,14 @@ std::string set_fname(std::string base, std::string end, Int step)
 
 Int writeToFile(std::string fname, const Mesh &u)
 {
-        std::ofstream openfile("simdata2/"+fname, std::ios::trunc);
+        std::ofstream openfile("/home/anton/dev/hbs/simdata/"+fname, std::ios::trunc);
         for (size_t i=0;i<u.nx_;i++)
         {
                 for (size_t j=0;j<u.ny_;j++)
                 {
                         for (size_t k=0;k<u.nz_;k++)
                         {
-                                openfile << i << ", " << j << ", " << k << ", " << u(i,j,k,0) << std::endl;
+                                openfile << i << "," << j << "," << k << "," << u(i,j,k,0) << std::endl;
                         }
                         
                 }

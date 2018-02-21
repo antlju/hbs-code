@@ -73,10 +73,36 @@ public:
         /// Arithmetics.
         fMesh& operator*=(const T& rhs);
         fMesh& operator=(const fMesh& rhs);
+        fMesh& operator=(const T& rhs);
         fMesh& operator+=(const fMesh& rhs);
         
-                      
-        
+        void fill(const T val)
+        {
+                std::fill(mem_.begin(),mem_.end(), val);
+        }
+
+        void print()
+        {
+                for (size_t vi=0;vi<nvar_;vi++)
+                {
+                        std::cout << "========================" << std::endl;
+                        std::cout << "Component: " << vi << std::endl;
+                        std::cout << "========================" << std::endl;
+                        for (size_t i=0;i<nx_;i++)
+                        {
+                                for (size_t j=0;j<ny_;j++)
+                                {
+                                        for (size_t k=0;k<nz_;k++)
+                                        {
+                                                std::cout << mem_[ indx(i,j,k,vi) ] << "\t";
+                                        }
+                                        std::cout << std::endl;
+                                }
+                                std::cout << "----------------------------" << std::endl;
+                        }
+                        std::cout << std::endl;
+                }
+        }
 }; //End class
 
 template <class T, Int NG>
@@ -87,6 +113,17 @@ fMesh<T,NG>& fMesh<T,NG>::operator=(const fMesh<T,NG>& rhs)
         for (size_t i=0;i<this->mem_.size();i++)
         {
                 this->mem_[i] = rhs.mem_[i];
+        }
+
+        return *this;
+}
+
+template <class T, Int NG>
+fMesh<T,NG>& fMesh<T,NG>::operator=(const T& rhs)
+{
+        for (size_t i=0;i<this->mem_.size();i++)
+        {
+                this->mem_[i] = rhs;
         }
 
         return *this;
@@ -119,16 +156,18 @@ fMesh<T,NG>& fMesh<T,NG>::operator+=(const fMesh<T,NG>& rhs)
 ///--------------------------------
 
 template <class T, Int NG>
-inline fMesh<T,NG>& operator*(fMesh<T,NG> lhs, const T& rhs)
-{
-        lhs *= rhs;
-        return lhs;
-}
-
-template <class T, Int H>
-inline fMesh<T, H> operator+(fMesh<T, H> lhs, const fMesh<T, H>& rhs)
+inline fMesh<T, NG> operator+(fMesh<T, NG> lhs, const fMesh<T, NG>& rhs)
 {
         lhs += rhs;
         return lhs;
 }
 
+///-------------------------------------------------- 
+///    Single value operators
+///--------------------------------------------------
+template <class T, Int NG>
+inline fMesh<T,NG> operator*(fMesh<T,NG> lhs, const T& rhs)
+{
+        lhs *= rhs;
+        return lhs;
+}
