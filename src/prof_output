@@ -1,0 +1,1374 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+  4.29      0.64     0.64                             std::less<int>::operator()(int const&, int const&) const
+  3.35      1.14     0.50                             std::_Rb_tree_node<std::pair<int const, int> >::_M_valptr() const
+  3.35      1.64     0.50                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_S_key(std::_Rb_tree_node<std::pair<int const, int> > const*)
+  3.05      2.10     0.46                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_lower_bound(std::_Rb_tree_node<std::pair<int const, int> >*, std::_Rb_tree_node<std::pair<int const, int> >*, int const&)
+  2.95      2.54     0.44                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_get_insert_hint_unique_pos(std::_Rb_tree_const_iterator<std::pair<int const, int> >, int const&)
+  2.88      2.97     0.43                             std::map<int, int, std::less<int>, std::allocator<std::pair<int const, int> > >::operator[](int&&)
+  2.78      3.38     0.42                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_insert_node(std::_Rb_tree_node_base*, std::_Rb_tree_node_base*, std::_Rb_tree_node<std::pair<int const, int> >*)
+  2.41      3.74     0.36                             __gnu_cxx::__aligned_membuf<std::pair<int const, int> >::_M_addr() const
+  2.31      4.09     0.35                             __gnu_cxx::__aligned_membuf<std::pair<int const, int> >::_M_ptr() const
+  2.11      4.40     0.32                             std::_Rb_tree_iterator<std::pair<int const, int> >::_Rb_tree_iterator(std::_Rb_tree_node_base*)
+  2.08      4.71     0.31                             _ZN9__gnu_cxx13new_allocatorISt13_Rb_tree_nodeISt4pairIKiiEEE9constructIS4_IRKSt21piecewise_construct_tSt5tupleIIOiEESB_IIEEEEEvPT_DpOT0_
+  2.08      5.02     0.31                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_erase(std::_Rb_tree_node<std::pair<int const, int> >*)
+  2.04      5.33     0.31                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_S_value(std::_Rb_tree_node<std::pair<int const, int> > const*)
+  2.04      5.63     0.31                             pMesh<double, 2>::spindex(int, int, int) const
+  1.98      5.93     0.30                             std::_Rb_tree_iterator<std::pair<int const, int> > std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_emplace_hint_unique<std::piecewise_construct_t const&, std::tuple<int&&>, std::tuple<> >(std::_Rb_tree_const_iterator<std::pair<int const, int> >, std::piecewise_construct_t const&, std::tuple<int&&>&&, std::tuple<>&&)
+  1.88      6.21     0.28                             std::_Head_base<0ul, int&&, false>::_M_head(std::_Head_base<0ul, int&&, false>&)
+  1.78      6.47     0.27                             std::piecewise_construct_t const& std::forward<std::piecewise_construct_t const&>(std::remove_reference<std::piecewise_construct_t const&>::type&)
+  1.74      6.73     0.26                             std::tuple<>&& std::forward<std::tuple<> >(std::remove_reference<std::tuple<> >::type&)
+  1.71      6.99     0.26                             std::pair<int const, int>::pair<int&&, 0ul>(std::tuple<int&&>&, std::tuple<>&, std::_Index_tuple<0ul>, std::_Index_tuple<>)
+  1.61      7.23     0.24                             std::_Select1st<std::pair<int const, int> >::operator()(std::pair<int const, int> const&) const
+  1.57      7.46     0.24                             std::tuple<int&&>&& std::forward<std::tuple<int&&> >(std::remove_reference<std::tuple<int&&> >::type&)
+  1.54      7.69     0.23                             int&& std::forward<int>(std::remove_reference<int>::type&)
+  1.54      7.92     0.23                             std::_Rb_tree_node<std::pair<int const, int> >* std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_create_node<std::piecewise_construct_t const&, std::tuple<int&&>, std::tuple<> >(std::piecewise_construct_t const&, std::tuple<int&&>&&, std::tuple<>&&)
+  1.54      8.15     0.23                             void std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_construct_node<std::piecewise_construct_t const&, std::tuple<int&&>, std::tuple<> >(std::_Rb_tree_node<std::pair<int const, int> >*, std::piecewise_construct_t const&, std::tuple<int&&>&&, std::tuple<>&&)
+  1.31      8.35     0.20                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_S_right(std::_Rb_tree_node_base*)
+  1.31      8.54     0.20                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_S_key(std::_Rb_tree_node_base const*)
+  1.27      8.73     0.19                             __gnu_cxx::__aligned_membuf<std::pair<int const, int> >::_M_ptr()
+  1.24      8.92     0.19                             std::pair<int const, int>::pair<int&&>(std::piecewise_construct_t, std::tuple<int&&>, std::tuple<>)
+  1.21      9.10     0.18                             std::_Tuple_impl<0ul, int&&>::_M_head(std::_Tuple_impl<0ul, int&&>&)
+  1.21      9.28     0.18                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_S_value(std::_Rb_tree_node_base const*)
+  1.14      9.45     0.17                             _ZNSt16allocator_traitsISaISt13_Rb_tree_nodeISt4pairIKiiEEEE9constructIS3_IRKSt21piecewise_construct_tSt5tupleIIOiEESB_IIEEEEEvRS5_PT_DpOT0_
+  1.11      9.61     0.17 48376577     0.00     0.00  fMesh<double, 2>::indx(int, int, int, int) const
+  1.07      9.77     0.16                             std::_Rb_tree_node<std::pair<int const, int> >::_M_valptr()
+  1.07      9.93     0.16                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_get_node()
+  1.00     10.08     0.15                             std::_Head_base<0ul, int&&, false>::_Head_base<int>(int&&)
+  0.94     10.22     0.14                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_put_node(std::_Rb_tree_node<std::pair<int const, int> >*)
+  0.94     10.36     0.14                             __gnu_cxx::__aligned_membuf<std::pair<int const, int> >::_M_addr()
+  0.94     10.50     0.14                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_drop_node(std::_Rb_tree_node<std::pair<int const, int> >*)
+  0.94     10.64     0.14                             qtojk(int)
+  0.87     10.77     0.13                             std::_Rb_tree_const_iterator<std::pair<int const, int> >::_M_const_cast() const
+  0.87     10.90     0.13                             std::_Rb_tree_iterator<std::pair<int const, int> >::operator==(std::_Rb_tree_iterator<std::pair<int const, int> > const&) const
+  0.87     11.03     0.13                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::end()
+  0.84     11.16     0.13 99221173     0.00     0.00  std::vector<double, std::allocator<double> >::operator[](unsigned long)
+  0.80     11.28     0.12                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::~_Rb_tree()
+  0.80     11.40     0.12                             std::_Rb_tree_node<std::pair<int const, int> >::_Rb_tree_node()
+  0.80     11.52     0.12                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_end()
+  0.77     11.63     0.12 137639508     0.00     0.00  std::vector<double, std::allocator<double> >::operator[](unsigned long) const
+  0.74     11.74     0.11                             pMesh<double, 2>::operator()(int, int, int) const
+  0.74     11.85     0.11                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_get_Node_allocator()
+  0.70     11.96     0.11 44460916     0.00     0.00  fMesh<double, 2>::operator()(int, int, int, int) const
+  0.70     12.06     0.11                             std::_Rb_tree_const_iterator<std::pair<int const, int> >::_Rb_tree_const_iterator(std::_Rb_tree_iterator<std::pair<int const, int> > const&)
+  0.67     12.16     0.10                             std::allocator_traits<std::allocator<std::_Rb_tree_node<std::pair<int const, int> > > >::allocate(std::allocator<std::_Rb_tree_node<std::pair<int const, int> > >&, unsigned long)
+  0.67     12.26     0.10                             std::tuple<int&&>::tuple<int, void>(int&&)
+  0.67     12.36     0.10                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::begin()
+  0.67     12.46     0.10                             std::tuple<int&&> std::forward_as_tuple<int>(int&&)
+  0.67     12.56     0.10                             __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<int const, int> > >::allocate(unsigned long, void const*)
+  0.60     12.65     0.09                             std::_Tuple_impl<0ul, int&&>::_Tuple_impl<int>(int&&)
+  0.60     12.74     0.09                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::lower_bound(int const&)
+  0.57     12.83     0.09                             std::map<int, int, std::less<int>, std::allocator<std::pair<int const, int> > >::lower_bound(int const&)
+  0.54     12.91     0.08                             void std::allocator_traits<std::allocator<std::_Rb_tree_node<std::pair<int const, int> > > >::destroy<std::pair<int const, int> >(std::allocator<std::_Rb_tree_node<std::pair<int const, int> > >&, std::pair<int const, int>*)
+  0.54     12.99     0.08                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::find(int const&)
+  0.50     13.06     0.08                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_destroy_node(std::_Rb_tree_node<std::pair<int const, int> >*)
+  0.47     13.13     0.07     2189     0.03     0.05  fMesh<double, 2>::operator*=(double const&)
+  0.47     13.20     0.07                             std::_Rb_tree_iterator<std::pair<int const, int> >::operator*() const
+  0.47     13.27     0.07 10784069     0.00     0.00  pMesh<double, 0>::spindex(int, int, int) const
+  0.47     13.34     0.07      200     0.35     0.54  writeToFile(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, fMesh<double, 2> const&, pMesh<double, 0> const&, pMesh<double, 0> const&, pMesh<double, 0> const&)
+  0.47     13.41     0.07                             ff2bundle(fMesh<double, 2> const&, pMesh<double, 2>&, int, int, int)
+  0.47     13.48     0.07                             std::allocator_traits<std::allocator<std::_Rb_tree_node<std::pair<int const, int> > > >::deallocate(std::allocator<std::_Rb_tree_node<std::pair<int const, int> > >&, std::_Rb_tree_node<std::pair<int const, int> >*, unsigned long)
+  0.44     13.55     0.07                             std::map<int, int, std::less<int>, std::allocator<std::pair<int const, int> > >::end()
+  0.40     13.61     0.06                             fd4d2(double, double, double, double, double)
+  0.40     13.67     0.06                             __gnu_cxx::__aligned_membuf<std::pair<int const, int> >::__aligned_membuf()
+  0.40     13.73     0.06                             std::pair<std::_Rb_tree_node_base*, std::_Rb_tree_node_base*>::pair<std::_Rb_tree_node_base*&, void>(std::_Rb_tree_node_base* const&, std::_Rb_tree_node_base*&)
+  0.40     13.79     0.06                             int& std::__get_helper<0ul, int&&>(std::_Tuple_impl<0ul, int&&>&)
+  0.37     13.84     0.06                             std::tuple_element<0ul, std::tuple<int&&> >::type& std::get<0ul, int&&>(std::tuple<int&&>&)
+  0.33     13.89     0.05                             pMesh<double, 2>::operator()(int, int, int)
+  0.33     13.94     0.05                             __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<int const, int> > >::new_allocator()
+  0.33     13.99     0.05                             std::_Tuple_impl<0ul, int&&>::_Tuple_impl(std::_Tuple_impl<0ul, int&&>&&)
+  0.33     14.04     0.05                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_begin()
+  0.33     14.09     0.05                             int&& std::forward<int&&>(std::remove_reference<int&&>::type&)
+  0.30     14.14     0.05                             operator new(unsigned long, void*)
+  0.27     14.18     0.04                             std::_Rb_tree_node_base::_Rb_tree_node_base()
+  0.23     14.21     0.04                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_S_left(std::_Rb_tree_node_base*)
+  0.20     14.24     0.03 47939355     0.00     0.00  std::vector<double, std::allocator<double> >::size() const
+  0.20     14.27     0.03     1592     0.02     0.04  fMesh<double, 2>::operator=(fMesh<double, 2> const&)
+  0.20     14.30     0.03                             del2y(pMesh<double, 2> const&, double, int, int)
+  0.20     14.33     0.03                             __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<int const, int> > >::~new_allocator()
+  0.20     14.36     0.03                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::size() const
+  0.20     14.39     0.03                             std::allocator<std::_Rb_tree_node<std::pair<int const, int> > >::~allocator()
+  0.20     14.42     0.03                             std::pair<std::_Rb_tree_node_base*, std::_Rb_tree_node_base*>::pair<std::_Rb_tree_node_base*&, void>(std::_Rb_tree_node_base*&, std::_Rb_tree_node_base* const&)
+  0.20     14.45     0.03                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_rightmost()
+  0.20     14.48     0.03                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_get_insert_unique_pos(int const&)
+  0.20     14.51     0.03                             std::remove_reference<int&>::type&& std::move<int&>(int&)
+  0.20     14.54     0.03                             std::_Rb_tree_node_base*& std::forward<std::_Rb_tree_node_base*&>(std::remove_reference<std::_Rb_tree_node_base*&>::type&)
+  0.17     14.57     0.03  6873287     0.00     0.00  pMesh<double, 0>::operator()(int, int, int) const
+  0.17     14.59     0.03     9767     0.00     0.00  void std::_Destroy<double*, double>(double*, double*, std::allocator<double>&)
+  0.17     14.62     0.03                             fd4d1(double, double, double, double)
+  0.13     14.64     0.02     1393     0.01     0.04  fMesh<double, 2>::operator+=(fMesh<double, 2> const&)
+  0.13     14.66     0.02                             _GLOBAL__sub_I__Z5qtojki
+  0.13     14.68     0.02                             pencil2ff(pMesh<double, 0> const&, fMesh<double, 2>&, int, int, int)
+  0.13     14.70     0.02                             __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<int const, int> > >::deallocate(std::_Rb_tree_node<std::pair<int const, int> >*, unsigned long)
+  0.13     14.72     0.02                             void __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<int const, int> > >::destroy<std::pair<int const, int> >(std::pair<int const, int>*)
+  0.13     14.74     0.02                             __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<int const, int> > >::max_size() const
+  0.13     14.76     0.02                             std::map<int, int, std::less<int>, std::allocator<std::pair<int const, int> > >::key_comp() const
+  0.13     14.78     0.02                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::key_comp() const
+  0.13     14.80     0.02                             std::map<int, int, std::less<int>, std::allocator<std::pair<int const, int> > >::map()
+  0.13     14.82     0.02                             std::tuple<int&&>::tuple(std::tuple<int&&>&&)
+  0.10     14.83     0.02                             operator delete(void*, void*)
+  0.07     14.84     0.01     6567     0.00     0.00  __gnu_cxx::__alloc_traits<std::allocator<double> >::_S_select_on_copy(std::allocator<double> const&)
+  0.07     14.85     0.01     1600     0.01     0.01  double* std::__uninitialized_default_n<double*, unsigned long>(double*, unsigned long)
+  0.07     14.86     0.01                             _GLOBAL__sub_I__Z4delxRK5pMeshIdLi2EEdii
+  0.07     14.87     0.01                             lapl(pMesh<double, 2> const&, pMesh<double, 0>&, double, double, double)
+  0.07     14.88     0.01                             del2x(pMesh<double, 2> const&, double, int, int)
+  0.07     14.89     0.01                             std::pair<int, int>::pair<int&, int&, void>(int&, int&)
+  0.07     14.90     0.01                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_Rb_tree_impl<std::less<int>, true>::_Rb_tree_impl()
+  0.07     14.91     0.01                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_Rb_tree()
+  0.03     14.92     0.01                             __static_initialization_and_destruction_0(int, int)
+  0.03     14.92     0.01                             del2z(pMesh<double, 2> const&, double, int, int)
+  0.03     14.93     0.01                             std::_Rb_tree_iterator<std::pair<int const, int> >::operator++()
+  0.03     14.93     0.01                             std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_Rb_tree_impl<std::less<int>, true>::_M_initialize()
+  0.00     14.93     0.00  3915661     0.00     0.00  fMesh<double, 2>::operator()(int, int, int, int)
+  0.00     14.93     0.00    19534     0.00     0.00  std::_Vector_base<double, std::allocator<double> >::_M_get_Tp_allocator()
+  0.00     14.93     0.00    14734     0.00     0.00  __gnu_cxx::new_allocator<double>::~new_allocator()
+  0.00     14.93     0.00    14734     0.00     0.00  std::allocator<double>::~allocator()
+  0.00     14.93     0.00    13134     0.00     0.00  __gnu_cxx::new_allocator<double>::new_allocator(__gnu_cxx::new_allocator<double> const&)
+  0.00     14.93     0.00    13134     0.00     0.00  __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >::__normal_iterator(double const* const&)
+  0.00     14.93     0.00    13134     0.00     0.00  __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >::base() const
+  0.00     14.93     0.00    13134     0.00     0.00  std::allocator<double>::allocator(std::allocator<double> const&)
+  0.00     14.93     0.00    13134     0.00     0.00  std::_Iter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, false>::_S_base(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >)
+  0.00     14.93     0.00    13134     0.00     0.00  std::_Iter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, true>::_S_base(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >)
+  0.00     14.93     0.00    13134     0.00     0.00  std::_Miter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > > >::iterator_type std::__miter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > > >(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >)
+  0.00     14.93     0.00    13134     0.00     0.00  std::_Niter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > > >::iterator_type std::__niter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > > >(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >)
+  0.00     14.93     0.00    12967     0.00     0.00  std::_Iter_base<double*, false>::_S_base(double*)
+  0.00     14.93     0.00    12967     0.00     0.00  std::_Niter_base<double*>::iterator_type std::__niter_base<double*>(double*)
+  0.00     14.93     0.00    11367     0.00     0.00  __gnu_cxx::new_allocator<double>::max_size() const
+  0.00     14.93     0.00     9767     0.00     0.00  std::_Vector_base<double, std::allocator<double> >::_M_get_Tp_allocator() const
+  0.00     14.93     0.00     9767     0.00     0.00  void std::_Destroy_aux<true>::__destroy<double*>(double*, double*)
+  0.00     14.93     0.00     9767     0.00     0.00  std::_Vector_base<double, std::allocator<double> >::_M_deallocate(double*, unsigned long)
+  0.00     14.93     0.00     9767     0.00     0.00  void std::_Destroy<double*>(double*, double*)
+  0.00     14.93     0.00     8167     0.00     0.00  __gnu_cxx::new_allocator<double>::deallocate(double*, unsigned long)
+  0.00     14.93     0.00     8167     0.00     0.00  __gnu_cxx::new_allocator<double>::allocate(unsigned long, void const*)
+  0.00     14.93     0.00     8167     0.00     0.00  std::_Vector_base<double, std::allocator<double> >::_M_allocate(unsigned long)
+  0.00     14.93     0.00     8167     0.00     0.00  std::_Vector_base<double, std::allocator<double> >::_Vector_impl::~_Vector_impl()
+  0.00     14.93     0.00     8167     0.00     0.00  std::_Vector_base<double, std::allocator<double> >::~_Vector_base()
+  0.00     14.93     0.00     8167     0.00     0.00  std::allocator_traits<std::allocator<double> >::deallocate(std::allocator<double>&, double*, unsigned long)
+  0.00     14.93     0.00     8167     0.00     0.00  std::allocator_traits<std::allocator<double> >::allocate(std::allocator<double>&, unsigned long)
+  0.00     14.93     0.00     8167     0.00     0.00  std::vector<double, std::allocator<double> >::~vector()
+  0.00     14.93     0.00     6574     0.00     0.00  fMesh<double, 2>::~fMesh()
+  0.00     14.93     0.00     6567     0.00     0.00  fMesh<double, 2>::fMesh(fMesh<double, 2> const&)
+  0.00     14.93     0.00     6567     0.00     0.00  std::vector<double, std::allocator<double> >::end() const
+  0.00     14.93     0.00     6567     0.00     0.00  std::vector<double, std::allocator<double> >::begin() const
+  0.00     14.93     0.00     6567     0.00     0.00  double* std::__copy_move<false, true, std::random_access_iterator_tag>::__copy_m<double>(double const*, double const*, double*)
+  0.00     14.93     0.00     6567     0.00     0.00  std::_Vector_base<double, std::allocator<double> >::_Vector_impl::_Vector_impl(std::allocator<double> const&)
+  0.00     14.93     0.00     6567     0.00     0.00  std::_Vector_base<double, std::allocator<double> >::_M_create_storage(unsigned long)
+  0.00     14.93     0.00     6567     0.00     0.00  std::_Vector_base<double, std::allocator<double> >::_Vector_base(unsigned long, std::allocator<double> const&)
+  0.00     14.93     0.00     6567     0.00     0.00  std::allocator_traits<std::allocator<double> >::select_on_container_copy_construction(std::allocator<double> const&)
+  0.00     14.93     0.00     6567     0.00     0.00  double* std::__uninitialized_copy<true>::__uninit_copy<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*)
+  0.00     14.93     0.00     6567     0.00     0.00  std::vector<double, std::allocator<double> >::vector(std::vector<double, std::allocator<double> > const&)
+  0.00     14.93     0.00     6567     0.00     0.00  double* std::__copy_move_a<false, double const*, double*>(double const*, double const*, double*)
+  0.00     14.93     0.00     6567     0.00     0.00  double* std::__copy_move_a2<false, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*)
+  0.00     14.93     0.00     6567     0.00     0.00  double* std::uninitialized_copy<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*)
+  0.00     14.93     0.00     6567     0.00     0.00  double* std::__uninitialized_copy_a<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*, double>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*, std::allocator<double>&)
+  0.00     14.93     0.00     6567     0.00     0.00  double* std::copy<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*)
+  0.00     14.93     0.00     3200     0.00     0.00  __gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >::__normal_iterator(double* const&)
+  0.00     14.93     0.00     3200     0.00     0.00  __gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >::base() const
+  0.00     14.93     0.00     3200     0.00     0.00  std::move_iterator<double*>::base() const
+  0.00     14.93     0.00     3200     0.00     0.00  std::vector<double, std::allocator<double> >::max_size() const
+  0.00     14.93     0.00     3200     0.00     0.00  std::_Iter_base<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, true>::_S_base(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >)
+  0.00     14.93     0.00     3200     0.00     0.00  std::_Iter_base<std::move_iterator<double*>, true>::_S_base(std::move_iterator<double*>)
+  0.00     14.93     0.00     3200     0.00     0.00  std::move_iterator<double*>::move_iterator(double*)
+  0.00     14.93     0.00     3200     0.00     0.00  std::allocator_traits<std::allocator<double> >::max_size(std::allocator<double> const&)
+  0.00     14.93     0.00     3200     0.00     0.00  std::_Miter_base<std::move_iterator<double*> >::iterator_type std::__miter_base<std::move_iterator<double*> >(std::move_iterator<double*>)
+  0.00     14.93     0.00     3200     0.00     0.00  std::_Niter_base<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > > >::iterator_type std::__niter_base<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > > >(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >)
+  0.00     14.93     0.00     3200     0.00     0.00  std::move_iterator<double*> std::__make_move_if_noexcept_iterator<double*, std::move_iterator<double*> >(double*)
+  0.00     14.93     0.00     2985     0.00     0.00  fMesh<double, 2>::validateDims(fMesh<double, 2> const&)
+  0.00     14.93     0.00     2189     0.00     0.05  fMesh<double, 2> operator*<double, 2>(fMesh<double, 2>, double const&)
+  0.00     14.93     0.00     1600     0.00     0.00  __gnu_cxx::new_allocator<double>::new_allocator()
+  0.00     14.93     0.00     1600     0.00     0.00  std::vector<double, std::allocator<double> >::_M_check_len(unsigned long, char const*) const
+  0.00     14.93     0.00     1600     0.00     0.00  std::allocator<double>::allocator()
+  0.00     14.93     0.00     1600     0.00     0.00  double* std::__copy_move<true, true, std::random_access_iterator_tag>::__copy_m<double>(double const*, double const*, double*)
+  0.00     14.93     0.00     1600     0.00     0.00  std::_Vector_base<double, std::allocator<double> >::_Vector_impl::_Vector_impl()
+  0.00     14.93     0.00     1600     0.00     0.00  std::_Vector_base<double, std::allocator<double> >::_Vector_base()
+  0.00     14.93     0.00     1600     0.00     0.00  double* std::__uninitialized_copy<true>::__uninit_copy<std::move_iterator<double*>, double*>(std::move_iterator<double*>, std::move_iterator<double*>, double*)
+  0.00     14.93     0.00     1600     0.00     0.00  double* std::__uninitialized_default_n_1<true>::__uninit_default_n<double*, unsigned long>(double*, unsigned long)
+  0.00     14.93     0.00     1600     0.00     0.01  std::vector<double, std::allocator<double> >::_M_default_append(unsigned long)
+  0.00     14.93     0.00     1600     0.00     0.00  std::vector<double, std::allocator<double> >::end()
+  0.00     14.93     0.00     1600     0.00     0.00  std::vector<double, std::allocator<double> >::begin()
+  0.00     14.93     0.00     1600     0.00     0.01  std::vector<double, std::allocator<double> >::resize(unsigned long)
+  0.00     14.93     0.00     1600     0.00     0.00  std::vector<double, std::allocator<double> >::vector()
+  0.00     14.93     0.00     1600     0.00     0.00  __gnu_cxx::__enable_if<std::__is_scalar<double>::__value, double*>::__type std::__fill_n_a<double*, unsigned long, double>(double*, unsigned long, double const&)
+  0.00     14.93     0.00     1600     0.00     0.00  double* std::__copy_move_a<true, double*, double*>(double*, double*, double*)
+  0.00     14.93     0.00     1600     0.00     0.00  double* std::__copy_move_a2<true, double*, double*>(double*, double*, double*)
+  0.00     14.93     0.00     1600     0.00     0.00  double* std::uninitialized_copy<std::move_iterator<double*>, double*>(std::move_iterator<double*>, std::move_iterator<double*>, double*)
+  0.00     14.93     0.00     1600     0.00     0.00  double* std::__uninitialized_copy_a<std::move_iterator<double*>, double*, double>(std::move_iterator<double*>, std::move_iterator<double*>, double*, std::allocator<double>&)
+  0.00     14.93     0.00     1600     0.00     0.01  double* std::__uninitialized_default_n_a<double*, unsigned long, double>(double*, unsigned long, std::allocator<double>&)
+  0.00     14.93     0.00     1600     0.00     0.00  double* std::__uninitialized_move_if_noexcept_a<double*, double*, std::allocator<double> >(double*, double*, double*, std::allocator<double>&)
+  0.00     14.93     0.00     1600     0.00     0.00  unsigned long const& std::max<unsigned long>(unsigned long const&, unsigned long const&)
+  0.00     14.93     0.00     1600     0.00     0.00  double* std::copy<std::move_iterator<double*>, double*>(std::move_iterator<double*>, std::move_iterator<double*>, double*)
+  0.00     14.93     0.00     1600     0.00     0.00  void std::fill<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, double>(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, double const&)
+  0.00     14.93     0.00     1600     0.00     0.00  double* std::fill_n<double*, unsigned long, double>(double*, unsigned long, double const&)
+  0.00     14.93     0.00     1600     0.00     0.00  __gnu_cxx::__enable_if<std::__is_scalar<double>::__value, void>::__type std::__fill_a<double*, double>(double*, double*, double const&)
+  0.00     14.93     0.00     1393     0.00     0.04  fMesh<double, 2> operator+<double, 2>(fMesh<double, 2>, fMesh<double, 2> const&)
+  0.00     14.93     0.00      797     0.00     0.01  pMesh<double, 0>::pMesh(unsigned long, unsigned long)
+  0.00     14.93     0.00      797     0.00     0.00  pMesh<double, 0>::~pMesh()
+  0.00     14.93     0.00      796     0.00     0.02  diffops(fMesh<double, 2>&, fMesh<double, 2>&, double, double, double)
+  0.00     14.93     0.00      796     0.00     0.01  pMesh<double, 2>::pMesh(unsigned long, unsigned long)
+  0.00     14.93     0.00      796     0.00     0.00  pMesh<double, 2>::~pMesh()
+  0.00     14.93     0.00      400     0.00     0.00  bool __gnu_cxx::__is_null_pointer<char>(char*)
+  0.00     14.93     0.00      400     0.00     0.00  std::iterator_traits<char*>::difference_type std::__distance<char*>(char*, char*, std::random_access_iterator_tag)
+  0.00     14.93     0.00      400     0.00     0.00  std::iterator_traits<char*>::iterator_category std::__iterator_category<char*>(char* const&)
+  0.00     14.93     0.00      400     0.00     0.00  std::remove_reference<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>::type&& std::move<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&)
+  0.00     14.93     0.00      400     0.00     0.00  std::iterator_traits<char*>::difference_type std::distance<char*>(char*, char*)
+  0.00     14.93     0.00      200     0.00     0.00  set_fname(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int)
+  0.00     14.93     0.00      200     0.00     0.00  std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > __gnu_cxx::__to_xstring<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, char>(int (*)(char*, unsigned long, char const*, __va_list_tag*), unsigned long, char const*, ...)
+  0.00     14.93     0.00      200     0.00     0.00  std::char_traits<char>::length(char const*)
+  0.00     14.93     0.00      200     0.00     0.00  void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char*>(char*, char*)
+  0.00     14.93     0.00      200     0.00     0.00  void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char*>(char*, char*, std::forward_iterator_tag)
+  0.00     14.93     0.00      200     0.00     0.00  void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct_aux<char*>(char*, char*, std::__false_type)
+  0.00     14.93     0.00      200     0.00     0.00  std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string<char*, void>(char*, char*, std::allocator<char> const&)
+  0.00     14.93     0.00      200     0.00     0.00  std::__cxx11::to_string(int)
+  0.00     14.93     0.00      200     0.00     0.00  std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  0.00     14.93     0.00      200     0.00     0.00  std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&)
+  0.00     14.93     0.00      200     0.00     0.00  std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  0.00     14.93     0.00      200     0.00     0.00  std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  0.00     14.93     0.00        7     0.00     0.01  fMesh<double, 2>::fMesh(unsigned long, unsigned long, unsigned long, unsigned long)
+  0.00     14.93     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z9set_fnameNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_i
+  0.00     14.93     0.00        1     0.00     0.18  gauss_init(fMesh<double, 2>&, pMesh<double, 0> const&, pMesh<double, 0> const&, pMesh<double, 0> const&)
+  0.00     14.93     0.00        1     0.00   386.79  RK4(fMesh<double, 2>&, fMesh<double, 2>&, double, int, double, double, double, pMesh<double, 0> const&)
+  0.00     14.93     0.00        1     0.00     0.00  __static_initialization_and_destruction_0(int, int)
+  0.00     14.93     0.00        1     0.00     0.00  pMesh<double, 0>::printpencil(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2015 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 0.07% of 14.93 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]      4.3    0.64    0.00                 std::less<int>::operator()(int const&, int const&) const [1]
+-----------------------------------------------
+                                                 <spontaneous>
+[2]      3.3    0.50    0.00                 std::_Rb_tree_node<std::pair<int const, int> >::_M_valptr() const [2]
+-----------------------------------------------
+                                                 <spontaneous>
+[3]      3.3    0.50    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_S_key(std::_Rb_tree_node<std::pair<int const, int> > const*) [3]
+-----------------------------------------------
+                                                 <spontaneous>
+[4]      3.0    0.46    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_lower_bound(std::_Rb_tree_node<std::pair<int const, int> >*, std::_Rb_tree_node<std::pair<int const, int> >*, int const&) [4]
+-----------------------------------------------
+                                                 <spontaneous>
+[5]      2.9    0.44    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_get_insert_hint_unique_pos(std::_Rb_tree_const_iterator<std::pair<int const, int> >, int const&) [5]
+-----------------------------------------------
+                                                 <spontaneous>
+[6]      2.9    0.43    0.00                 std::map<int, int, std::less<int>, std::allocator<std::pair<int const, int> > >::operator[](int&&) [6]
+-----------------------------------------------
+                                                 <spontaneous>
+[7]      2.8    0.42    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_insert_node(std::_Rb_tree_node_base*, std::_Rb_tree_node_base*, std::_Rb_tree_node<std::pair<int const, int> >*) [7]
+-----------------------------------------------
+                                                 <spontaneous>
+[8]      2.6    0.00    0.39                 main [8]
+                0.00    0.39       1/1           RK4(fMesh<double, 2>&, fMesh<double, 2>&, double, int, double, double, double, pMesh<double, 0> const&) [9]
+                0.00    0.00       1/200         writeToFile(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, fMesh<double, 2> const&, pMesh<double, 0> const&, pMesh<double, 0> const&, pMesh<double, 0> const&) [55]
+                0.00    0.00       1/1           gauss_init(fMesh<double, 2>&, pMesh<double, 0> const&, pMesh<double, 0> const&, pMesh<double, 0> const&) [138]
+                0.00    0.00       2/7           fMesh<double, 2>::fMesh(unsigned long, unsigned long, unsigned long, unsigned long) [139]
+                0.00    0.00       1/797         pMesh<double, 0>::pMesh(unsigned long, unsigned long) [130]
+                0.00    0.00       2/6574        fMesh<double, 2>::~fMesh() [115]
+                0.00    0.00       1/797         pMesh<double, 0>::~pMesh() [136]
+                0.00    0.00       1/1           pMesh<double, 0>::printpencil(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [141]
+                0.00    0.00       1/200         set_fname(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int) [224]
+-----------------------------------------------
+                0.00    0.39       1/1           main [8]
+[9]      2.6    0.00    0.39       1         RK4(fMesh<double, 2>&, fMesh<double, 2>&, double, int, double, double, double, pMesh<double, 0> const&) [9]
+                0.00    0.11    2189/2189        fMesh<double, 2> operator*<double, 2>(fMesh<double, 2>, double const&) [53]
+                0.07    0.04     199/200         writeToFile(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, fMesh<double, 2> const&, pMesh<double, 0> const&, pMesh<double, 0> const&, pMesh<double, 0> const&) [55]
+                0.03    0.04    1592/1592        fMesh<double, 2>::operator=(fMesh<double, 2> const&) [72]
+                0.00    0.06    1393/1393        fMesh<double, 2> operator+<double, 2>(fMesh<double, 2>, fMesh<double, 2> const&) [81]
+                0.00    0.02     796/796         diffops(fMesh<double, 2>&, fMesh<double, 2>&, double, double, double) [114]
+                0.00    0.02    6572/6574        fMesh<double, 2>::~fMesh() [115]
+                0.00    0.00    2985/6567        fMesh<double, 2>::fMesh(fMesh<double, 2> const&) [119]
+                0.00    0.00       5/7           fMesh<double, 2>::fMesh(unsigned long, unsigned long, unsigned long, unsigned long) [139]
+                0.00    0.00     199/200         set_fname(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int) [224]
+-----------------------------------------------
+                                                 <spontaneous>
+[10]     2.4    0.36    0.00                 __gnu_cxx::__aligned_membuf<std::pair<int const, int> >::_M_addr() const [10]
+-----------------------------------------------
+                                                 <spontaneous>
+[11]     2.4    0.07    0.29                 ff2bundle(fMesh<double, 2> const&, pMesh<double, 2>&, int, int, int) [11]
+                0.10    0.18 43478316/44460916     fMesh<double, 2>::operator()(int, int, int, int) const [19]
+-----------------------------------------------
+                                                 <spontaneous>
+[12]     2.3    0.35    0.00                 __gnu_cxx::__aligned_membuf<std::pair<int const, int> >::_M_ptr() const [12]
+-----------------------------------------------
+                                                 <spontaneous>
+[13]     2.1    0.32    0.00                 std::_Rb_tree_iterator<std::pair<int const, int> >::_Rb_tree_iterator(std::_Rb_tree_node_base*) [13]
+-----------------------------------------------
+                                                 <spontaneous>
+[14]     2.1    0.31    0.00                 _ZN9__gnu_cxx13new_allocatorISt13_Rb_tree_nodeISt4pairIKiiEEE9constructIS4_IRKSt21piecewise_construct_tSt5tupleIIOiEESB_IIEEEEEvPT_DpOT0_ [14]
+-----------------------------------------------
+                                                 <spontaneous>
+[15]     2.1    0.31    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_erase(std::_Rb_tree_node<std::pair<int const, int> >*) [15]
+-----------------------------------------------
+                                                 <spontaneous>
+[16]     2.0    0.31    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_S_value(std::_Rb_tree_node<std::pair<int const, int> > const*) [16]
+-----------------------------------------------
+                                                 <spontaneous>
+[17]     2.0    0.31    0.00                 pMesh<double, 2>::spindex(int, int, int) const [17]
+-----------------------------------------------
+                                                 <spontaneous>
+[18]     2.0    0.30    0.00                 std::_Rb_tree_iterator<std::pair<int const, int> > std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_emplace_hint_unique<std::piecewise_construct_t const&, std::tuple<int&&>, std::tuple<> >(std::_Rb_tree_const_iterator<std::pair<int const, int> >, std::piecewise_construct_t const&, std::tuple<int&&>&&, std::tuple<>&&) [18]
+-----------------------------------------------
+                0.00    0.00  982600/44460916     writeToFile(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, fMesh<double, 2> const&, pMesh<double, 0> const&, pMesh<double, 0> const&, pMesh<double, 0> const&) [55]
+                0.10    0.18 43478316/44460916     ff2bundle(fMesh<double, 2> const&, pMesh<double, 2>&, int, int, int) [11]
+[19]     2.0    0.11    0.19 44460916         fMesh<double, 2>::operator()(int, int, int, int) const [19]
+                0.15    0.00 44460916/48376577     fMesh<double, 2>::indx(int, int, int, int) const [36]
+                0.04    0.00 44460916/137639508     std::vector<double, std::allocator<double> >::operator[](unsigned long) const [52]
+-----------------------------------------------
+                                                 <spontaneous>
+[20]     1.9    0.28    0.00                 std::_Head_base<0ul, int&&, false>::_M_head(std::_Head_base<0ul, int&&, false>&) [20]
+-----------------------------------------------
+                                                 <spontaneous>
+[21]     1.8    0.27    0.00                 std::piecewise_construct_t const& std::forward<std::piecewise_construct_t const&>(std::remove_reference<std::piecewise_construct_t const&>::type&) [21]
+-----------------------------------------------
+                                                 <spontaneous>
+[22]     1.7    0.26    0.00                 std::tuple<>&& std::forward<std::tuple<> >(std::remove_reference<std::tuple<> >::type&) [22]
+-----------------------------------------------
+                                                 <spontaneous>
+[23]     1.7    0.26    0.00                 std::pair<int const, int>::pair<int&&, 0ul>(std::tuple<int&&>&, std::tuple<>&, std::_Index_tuple<0ul>, std::_Index_tuple<>) [23]
+-----------------------------------------------
+                                                 <spontaneous>
+[24]     1.6    0.24    0.00                 std::_Select1st<std::pair<int const, int> >::operator()(std::pair<int const, int> const&) const [24]
+-----------------------------------------------
+                                                 <spontaneous>
+[25]     1.6    0.24    0.00                 std::tuple<int&&>&& std::forward<std::tuple<int&&> >(std::remove_reference<std::tuple<int&&> >::type&) [25]
+-----------------------------------------------
+                                                 <spontaneous>
+[26]     1.5    0.23    0.00                 int&& std::forward<int>(std::remove_reference<int>::type&) [26]
+-----------------------------------------------
+                                                 <spontaneous>
+[27]     1.5    0.23    0.00                 std::_Rb_tree_node<std::pair<int const, int> >* std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_create_node<std::piecewise_construct_t const&, std::tuple<int&&>, std::tuple<> >(std::piecewise_construct_t const&, std::tuple<int&&>&&, std::tuple<>&&) [27]
+-----------------------------------------------
+                                                 <spontaneous>
+[28]     1.5    0.23    0.00                 void std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_construct_node<std::piecewise_construct_t const&, std::tuple<int&&>, std::tuple<> >(std::_Rb_tree_node<std::pair<int const, int> >*, std::piecewise_construct_t const&, std::tuple<int&&>&&, std::tuple<>&&) [28]
+-----------------------------------------------
+                                                 <spontaneous>
+[29]     1.3    0.20    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_S_right(std::_Rb_tree_node_base*) [29]
+-----------------------------------------------
+                                                 <spontaneous>
+[30]     1.3    0.20    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_S_key(std::_Rb_tree_node_base const*) [30]
+-----------------------------------------------
+                                                 <spontaneous>
+[31]     1.3    0.19    0.00                 __gnu_cxx::__aligned_membuf<std::pair<int const, int> >::_M_ptr() [31]
+-----------------------------------------------
+                                                 <spontaneous>
+[32]     1.2    0.19    0.00                 std::pair<int const, int>::pair<int&&>(std::piecewise_construct_t, std::tuple<int&&>, std::tuple<>) [32]
+-----------------------------------------------
+                                                 <spontaneous>
+[33]     1.2    0.18    0.00                 std::_Tuple_impl<0ul, int&&>::_M_head(std::_Tuple_impl<0ul, int&&>&) [33]
+-----------------------------------------------
+                                                 <spontaneous>
+[34]     1.2    0.18    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_S_value(std::_Rb_tree_node_base const*) [34]
+-----------------------------------------------
+                                                 <spontaneous>
+[35]     1.1    0.17    0.00                 _ZNSt16allocator_traitsISaISt13_Rb_tree_nodeISt4pairIKiiEEEE9constructIS3_IRKSt21piecewise_construct_tSt5tupleIIOiEESB_IIEEEEEvRS5_PT_DpOT0_ [35]
+-----------------------------------------------
+                0.01    0.00 3915661/48376577     fMesh<double, 2>::operator()(int, int, int, int) [113]
+                0.15    0.00 44460916/48376577     fMesh<double, 2>::operator()(int, int, int, int) const [19]
+[36]     1.1    0.17    0.00 48376577         fMesh<double, 2>::indx(int, int, int, int) const [36]
+-----------------------------------------------
+                                                 <spontaneous>
+[37]     1.1    0.16    0.00                 std::_Rb_tree_node<std::pair<int const, int> >::_M_valptr() [37]
+-----------------------------------------------
+                                                 <spontaneous>
+[38]     1.1    0.16    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_get_node() [38]
+-----------------------------------------------
+                                                 <spontaneous>
+[39]     1.1    0.11    0.05                 pMesh<double, 2>::operator()(int, int, int) const [39]
+                0.05    0.00 58661220/137639508     std::vector<double, std::allocator<double> >::operator[](unsigned long) const [52]
+-----------------------------------------------
+                                                 <spontaneous>
+[40]     1.0    0.15    0.00                 std::_Head_base<0ul, int&&, false>::_Head_base<int>(int&&) [40]
+-----------------------------------------------
+                                                 <spontaneous>
+[41]     0.9    0.14    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_put_node(std::_Rb_tree_node<std::pair<int const, int> >*) [41]
+-----------------------------------------------
+                                                 <spontaneous>
+[42]     0.9    0.14    0.00                 __gnu_cxx::__aligned_membuf<std::pair<int const, int> >::_M_addr() [42]
+-----------------------------------------------
+                                                 <spontaneous>
+[43]     0.9    0.14    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_drop_node(std::_Rb_tree_node<std::pair<int const, int> >*) [43]
+-----------------------------------------------
+                                                 <spontaneous>
+[44]     0.9    0.14    0.00                 qtojk(int) [44]
+-----------------------------------------------
+                                                 <spontaneous>
+[45]     0.9    0.13    0.00                 std::_Rb_tree_const_iterator<std::pair<int const, int> >::_M_const_cast() const [45]
+-----------------------------------------------
+                                                 <spontaneous>
+[46]     0.9    0.13    0.00                 std::_Rb_tree_iterator<std::pair<int const, int> >::operator==(std::_Rb_tree_iterator<std::pair<int const, int> > const&) const [46]
+-----------------------------------------------
+                                                 <spontaneous>
+[47]     0.9    0.13    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::end() [47]
+-----------------------------------------------
+                0.00    0.00      17/99221173     pMesh<double, 0>::printpencil(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [141]
+                0.00    0.00 3910765/99221173     pMesh<double, 0>::operator()(int, int, int) [91]
+                0.00    0.00 3915661/99221173     fMesh<double, 2>::operator()(int, int, int, int) [113]
+                0.02    0.00 12900573/99221173     fMesh<double, 2>::operator+=(fMesh<double, 2> const&) [82]
+                0.02    0.00 14743512/99221173     fMesh<double, 2>::operator=(fMesh<double, 2> const&) [72]
+                0.03    0.00 20272329/99221173     fMesh<double, 2>::operator*=(double const&) [56]
+                0.05    0.00 43478316/99221173     pMesh<double, 2>::operator()(int, int, int) [58]
+[48]     0.8    0.13    0.00 99221173         std::vector<double, std::allocator<double> >::operator[](unsigned long) [48]
+-----------------------------------------------
+                                                 <spontaneous>
+[49]     0.8    0.12    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::~_Rb_tree() [49]
+-----------------------------------------------
+                                                 <spontaneous>
+[50]     0.8    0.12    0.00                 std::_Rb_tree_node<std::pair<int const, int> >::_Rb_tree_node() [50]
+-----------------------------------------------
+                                                 <spontaneous>
+[51]     0.8    0.12    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_end() [51]
+-----------------------------------------------
+                0.01    0.00 6873287/137639508     pMesh<double, 0>::operator()(int, int, int) const [70]
+                0.01    0.00 12900573/137639508     fMesh<double, 2>::operator+=(fMesh<double, 2> const&) [82]
+                0.01    0.00 14743512/137639508     fMesh<double, 2>::operator=(fMesh<double, 2> const&) [72]
+                0.04    0.00 44460916/137639508     fMesh<double, 2>::operator()(int, int, int, int) const [19]
+                0.05    0.00 58661220/137639508     pMesh<double, 2>::operator()(int, int, int) const [39]
+[52]     0.8    0.12    0.00 137639508         std::vector<double, std::allocator<double> >::operator[](unsigned long) const [52]
+-----------------------------------------------
+                0.00    0.11    2189/2189        RK4(fMesh<double, 2>&, fMesh<double, 2>&, double, int, double, double, double, pMesh<double, 0> const&) [9]
+[53]     0.7    0.00    0.11    2189         fMesh<double, 2> operator*<double, 2>(fMesh<double, 2>, double const&) [53]
+                0.07    0.04    2189/2189        fMesh<double, 2>::operator*=(double const&) [56]
+                0.00    0.00    2189/6567        fMesh<double, 2>::fMesh(fMesh<double, 2> const&) [119]
+-----------------------------------------------
+                                                 <spontaneous>
+[54]     0.7    0.11    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_get_Node_allocator() [54]
+-----------------------------------------------
+                0.00    0.00       1/200         main [8]
+                0.07    0.04     199/200         RK4(fMesh<double, 2>&, fMesh<double, 2>&, double, int, double, double, double, pMesh<double, 0> const&) [9]
+[55]     0.7    0.07    0.04     200         writeToFile(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, fMesh<double, 2> const&, pMesh<double, 0> const&, pMesh<double, 0> const&, pMesh<double, 0> const&) [55]
+                0.01    0.02 2947800/6873287     pMesh<double, 0>::operator()(int, int, int) const [70]
+                0.00    0.00  982600/44460916     fMesh<double, 2>::operator()(int, int, int, int) const [19]
+                0.00    0.00     200/200         std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [234]
+-----------------------------------------------
+                0.07    0.04    2189/2189        fMesh<double, 2> operator*<double, 2>(fMesh<double, 2>, double const&) [53]
+[56]     0.7    0.07    0.04    2189         fMesh<double, 2>::operator*=(double const&) [56]
+                0.03    0.00 20272329/99221173     std::vector<double, std::allocator<double> >::operator[](unsigned long) [48]
+                0.01    0.00 20274518/47939355     std::vector<double, std::allocator<double> >::size() const [92]
+-----------------------------------------------
+                                                 <spontaneous>
+[57]     0.7    0.11    0.00                 std::_Rb_tree_const_iterator<std::pair<int const, int> >::_Rb_tree_const_iterator(std::_Rb_tree_iterator<std::pair<int const, int> > const&) [57]
+-----------------------------------------------
+                                                 <spontaneous>
+[58]     0.7    0.05    0.05                 pMesh<double, 2>::operator()(int, int, int) [58]
+                0.05    0.00 43478316/99221173     std::vector<double, std::allocator<double> >::operator[](unsigned long) [48]
+-----------------------------------------------
+                                                 <spontaneous>
+[59]     0.7    0.10    0.00                 std::allocator_traits<std::allocator<std::_Rb_tree_node<std::pair<int const, int> > > >::allocate(std::allocator<std::_Rb_tree_node<std::pair<int const, int> > >&, unsigned long) [59]
+-----------------------------------------------
+                                                 <spontaneous>
+[60]     0.7    0.10    0.00                 std::tuple<int&&>::tuple<int, void>(int&&) [60]
+-----------------------------------------------
+                                                 <spontaneous>
+[61]     0.7    0.10    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::begin() [61]
+-----------------------------------------------
+                                                 <spontaneous>
+[62]     0.7    0.10    0.00                 std::tuple<int&&> std::forward_as_tuple<int>(int&&) [62]
+-----------------------------------------------
+                                                 <spontaneous>
+[63]     0.7    0.10    0.00                 __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<int const, int> > >::allocate(unsigned long, void const*) [63]
+-----------------------------------------------
+                                                 <spontaneous>
+[64]     0.6    0.09    0.00                 std::_Tuple_impl<0ul, int&&>::_Tuple_impl<int>(int&&) [64]
+-----------------------------------------------
+                                                 <spontaneous>
+[65]     0.6    0.09    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::lower_bound(int const&) [65]
+-----------------------------------------------
+                                                 <spontaneous>
+[66]     0.6    0.09    0.00                 std::map<int, int, std::less<int>, std::allocator<std::pair<int const, int> > >::lower_bound(int const&) [66]
+-----------------------------------------------
+                                                 <spontaneous>
+[67]     0.5    0.02    0.06                 pencil2ff(pMesh<double, 0> const&, fMesh<double, 2>&, int, int, int) [67]
+                0.01    0.03 3910748/6873287     pMesh<double, 0>::operator()(int, int, int) const [70]
+                0.00    0.02 3910748/3915661     fMesh<double, 2>::operator()(int, int, int, int) [113]
+-----------------------------------------------
+                                                 <spontaneous>
+[68]     0.5    0.08    0.00                 void std::allocator_traits<std::allocator<std::_Rb_tree_node<std::pair<int const, int> > > >::destroy<std::pair<int const, int> >(std::allocator<std::_Rb_tree_node<std::pair<int const, int> > >&, std::pair<int const, int>*) [68]
+-----------------------------------------------
+                                                 <spontaneous>
+[69]     0.5    0.08    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::find(int const&) [69]
+-----------------------------------------------
+                0.00    0.00   14739/6873287     gauss_init(fMesh<double, 2>&, pMesh<double, 0> const&, pMesh<double, 0> const&, pMesh<double, 0> const&) [138]
+                0.01    0.02 2947800/6873287     writeToFile(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, fMesh<double, 2> const&, pMesh<double, 0> const&, pMesh<double, 0> const&, pMesh<double, 0> const&) [55]
+                0.01    0.03 3910748/6873287     pencil2ff(pMesh<double, 0> const&, fMesh<double, 2>&, int, int, int) [67]
+[70]     0.5    0.03    0.05 6873287         pMesh<double, 0>::operator()(int, int, int) const [70]
+                0.04    0.00 6873287/10784069     pMesh<double, 0>::spindex(int, int, int) const [74]
+                0.01    0.00 6873287/137639508     std::vector<double, std::allocator<double> >::operator[](unsigned long) const [52]
+-----------------------------------------------
+                                                 <spontaneous>
+[71]     0.5    0.08    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_destroy_node(std::_Rb_tree_node<std::pair<int const, int> >*) [71]
+-----------------------------------------------
+                0.03    0.04    1592/1592        RK4(fMesh<double, 2>&, fMesh<double, 2>&, double, int, double, double, double, pMesh<double, 0> const&) [9]
+[72]     0.5    0.03    0.04    1592         fMesh<double, 2>::operator=(fMesh<double, 2> const&) [72]
+                0.02    0.00 14743512/99221173     std::vector<double, std::allocator<double> >::operator[](unsigned long) [48]
+                0.01    0.00 14743512/137639508     std::vector<double, std::allocator<double> >::operator[](unsigned long) const [52]
+                0.01    0.00 14745104/47939355     std::vector<double, std::allocator<double> >::size() const [92]
+                0.00    0.00    1592/2985        fMesh<double, 2>::validateDims(fMesh<double, 2> const&) [197]
+-----------------------------------------------
+                                                 <spontaneous>
+[73]     0.5    0.07    0.00                 std::_Rb_tree_iterator<std::pair<int const, int> >::operator*() const [73]
+-----------------------------------------------
+                0.00    0.00      17/10784069     pMesh<double, 0>::printpencil(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [141]
+                0.03    0.00 3910765/10784069     pMesh<double, 0>::operator()(int, int, int) [91]
+                0.04    0.00 6873287/10784069     pMesh<double, 0>::operator()(int, int, int) const [70]
+[74]     0.5    0.07    0.00 10784069         pMesh<double, 0>::spindex(int, int, int) const [74]
+-----------------------------------------------
+                                                 <spontaneous>
+[75]     0.5    0.07    0.00                 std::allocator_traits<std::allocator<std::_Rb_tree_node<std::pair<int const, int> > > >::deallocate(std::allocator<std::_Rb_tree_node<std::pair<int const, int> > >&, std::_Rb_tree_node<std::pair<int const, int> >*, unsigned long) [75]
+-----------------------------------------------
+                                                 <spontaneous>
+[76]     0.4    0.07    0.00                 std::map<int, int, std::less<int>, std::allocator<std::pair<int const, int> > >::end() [76]
+-----------------------------------------------
+                                                 <spontaneous>
+[77]     0.4    0.06    0.00                 fd4d2(double, double, double, double, double) [77]
+-----------------------------------------------
+                                                 <spontaneous>
+[78]     0.4    0.06    0.00                 __gnu_cxx::__aligned_membuf<std::pair<int const, int> >::__aligned_membuf() [78]
+-----------------------------------------------
+                                                 <spontaneous>
+[79]     0.4    0.06    0.00                 std::pair<std::_Rb_tree_node_base*, std::_Rb_tree_node_base*>::pair<std::_Rb_tree_node_base*&, void>(std::_Rb_tree_node_base* const&, std::_Rb_tree_node_base*&) [79]
+-----------------------------------------------
+                                                 <spontaneous>
+[80]     0.4    0.06    0.00                 int& std::__get_helper<0ul, int&&>(std::_Tuple_impl<0ul, int&&>&) [80]
+-----------------------------------------------
+                0.00    0.06    1393/1393        RK4(fMesh<double, 2>&, fMesh<double, 2>&, double, int, double, double, double, pMesh<double, 0> const&) [9]
+[81]     0.4    0.00    0.06    1393         fMesh<double, 2> operator+<double, 2>(fMesh<double, 2>, fMesh<double, 2> const&) [81]
+                0.02    0.04    1393/1393        fMesh<double, 2>::operator+=(fMesh<double, 2> const&) [82]
+                0.00    0.00    1393/6567        fMesh<double, 2>::fMesh(fMesh<double, 2> const&) [119]
+-----------------------------------------------
+                0.02    0.04    1393/1393        fMesh<double, 2> operator+<double, 2>(fMesh<double, 2>, fMesh<double, 2> const&) [81]
+[82]     0.4    0.02    0.04    1393         fMesh<double, 2>::operator+=(fMesh<double, 2> const&) [82]
+                0.02    0.00 12900573/99221173     std::vector<double, std::allocator<double> >::operator[](unsigned long) [48]
+                0.01    0.00 12900573/137639508     std::vector<double, std::allocator<double> >::operator[](unsigned long) const [52]
+                0.01    0.00 12901966/47939355     std::vector<double, std::allocator<double> >::size() const [92]
+                0.00    0.00    1393/2985        fMesh<double, 2>::validateDims(fMesh<double, 2> const&) [197]
+-----------------------------------------------
+                                                 <spontaneous>
+[83]     0.4    0.06    0.00                 std::tuple_element<0ul, std::tuple<int&&> >::type& std::get<0ul, int&&>(std::tuple<int&&>&) [83]
+-----------------------------------------------
+                                                 <spontaneous>
+[84]     0.3    0.05    0.00                 __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<int const, int> > >::new_allocator() [84]
+-----------------------------------------------
+                                                 <spontaneous>
+[85]     0.3    0.05    0.00                 std::_Tuple_impl<0ul, int&&>::_Tuple_impl(std::_Tuple_impl<0ul, int&&>&&) [85]
+-----------------------------------------------
+                                                 <spontaneous>
+[86]     0.3    0.05    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_begin() [86]
+-----------------------------------------------
+                                                 <spontaneous>
+[87]     0.3    0.05    0.00                 int&& std::forward<int&&>(std::remove_reference<int&&>::type&) [87]
+-----------------------------------------------
+                                                 <spontaneous>
+[88]     0.3    0.05    0.00                 operator new(unsigned long, void*) [88]
+-----------------------------------------------
+                                                 <spontaneous>
+[89]     0.3    0.04    0.00                 std::_Rb_tree_node_base::_Rb_tree_node_base() [89]
+-----------------------------------------------
+                                                 <spontaneous>
+[90]     0.2    0.04    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_S_left(std::_Rb_tree_node_base*) [90]
+-----------------------------------------------
+                                                 <spontaneous>
+[91]     0.2    0.00    0.03                 pMesh<double, 0>::operator()(int, int, int) [91]
+                0.03    0.00 3910765/10784069     pMesh<double, 0>::spindex(int, int, int) const [74]
+                0.00    0.00 3910765/99221173     std::vector<double, std::allocator<double> >::operator[](unsigned long) [48]
+-----------------------------------------------
+                0.00    0.00    1600/47939355     std::vector<double, std::allocator<double> >::_M_default_append(unsigned long) [118]
+                0.00    0.00    3200/47939355     std::vector<double, std::allocator<double> >::resize(unsigned long) [117]
+                0.00    0.00    6400/47939355     std::vector<double, std::allocator<double> >::_M_check_len(unsigned long, char const*) const [140]
+                0.00    0.00    6567/47939355     std::vector<double, std::allocator<double> >::vector(std::vector<double, std::allocator<double> > const&) [120]
+                0.01    0.00 12901966/47939355     fMesh<double, 2>::operator+=(fMesh<double, 2> const&) [82]
+                0.01    0.00 14745104/47939355     fMesh<double, 2>::operator=(fMesh<double, 2> const&) [72]
+                0.01    0.00 20274518/47939355     fMesh<double, 2>::operator*=(double const&) [56]
+[92]     0.2    0.03    0.00 47939355         std::vector<double, std::allocator<double> >::size() const [92]
+-----------------------------------------------
+                                                 <spontaneous>
+[93]     0.2    0.03    0.00                 del2y(pMesh<double, 2> const&, double, int, int) [93]
+-----------------------------------------------
+                                                 <spontaneous>
+[94]     0.2    0.03    0.00                 __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<int const, int> > >::~new_allocator() [94]
+-----------------------------------------------
+                                                 <spontaneous>
+[95]     0.2    0.03    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::size() const [95]
+-----------------------------------------------
+                                                 <spontaneous>
+[96]     0.2    0.03    0.00                 std::allocator<std::_Rb_tree_node<std::pair<int const, int> > >::~allocator() [96]
+-----------------------------------------------
+                                                 <spontaneous>
+[97]     0.2    0.03    0.00                 std::pair<std::_Rb_tree_node_base*, std::_Rb_tree_node_base*>::pair<std::_Rb_tree_node_base*&, void>(std::_Rb_tree_node_base*&, std::_Rb_tree_node_base* const&) [97]
+-----------------------------------------------
+                                                 <spontaneous>
+[98]     0.2    0.03    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_rightmost() [98]
+-----------------------------------------------
+                                                 <spontaneous>
+[99]     0.2    0.03    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_get_insert_unique_pos(int const&) [99]
+-----------------------------------------------
+                                                 <spontaneous>
+[100]    0.2    0.03    0.00                 std::remove_reference<int&>::type&& std::move<int&>(int&) [100]
+-----------------------------------------------
+                                                 <spontaneous>
+[101]    0.2    0.03    0.00                 std::_Rb_tree_node_base*& std::forward<std::_Rb_tree_node_base*&>(std::remove_reference<std::_Rb_tree_node_base*&>::type&) [101]
+-----------------------------------------------
+                0.00    0.00    1600/9767        std::vector<double, std::allocator<double> >::_M_default_append(unsigned long) [118]
+                0.02    0.00    8167/9767        std::vector<double, std::allocator<double> >::~vector() [104]
+[102]    0.2    0.03    0.00    9767         void std::_Destroy<double*, double>(double*, double*, std::allocator<double>&) [102]
+                0.00    0.00    9767/9767        void std::_Destroy<double*>(double*, double*) [165]
+-----------------------------------------------
+                                                 <spontaneous>
+[103]    0.2    0.03    0.00                 fd4d1(double, double, double, double) [103]
+-----------------------------------------------
+                0.00    0.00     796/8167        pMesh<double, 2>::~pMesh() [137]
+                0.00    0.00     797/8167        pMesh<double, 0>::~pMesh() [136]
+                0.00    0.02    6574/8167        fMesh<double, 2>::~fMesh() [115]
+[104]    0.1    0.00    0.02    8167         std::vector<double, std::allocator<double> >::~vector() [104]
+                0.02    0.00    8167/9767        void std::_Destroy<double*, double>(double*, double*, std::allocator<double>&) [102]
+                0.00    0.00    8167/19534       std::_Vector_base<double, std::allocator<double> >::_M_get_Tp_allocator() [148]
+                0.00    0.00    8167/8167        std::_Vector_base<double, std::allocator<double> >::~_Vector_base() [170]
+-----------------------------------------------
+                                                 <spontaneous>
+[105]    0.1    0.02    0.00                 _GLOBAL__sub_I__Z5qtojki [105]
+-----------------------------------------------
+                                                 <spontaneous>
+[106]    0.1    0.02    0.00                 __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<int const, int> > >::deallocate(std::_Rb_tree_node<std::pair<int const, int> >*, unsigned long) [106]
+-----------------------------------------------
+                                                 <spontaneous>
+[107]    0.1    0.02    0.00                 void __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<int const, int> > >::destroy<std::pair<int const, int> >(std::pair<int const, int>*) [107]
+-----------------------------------------------
+                                                 <spontaneous>
+[108]    0.1    0.02    0.00                 __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<int const, int> > >::max_size() const [108]
+-----------------------------------------------
+                                                 <spontaneous>
+[109]    0.1    0.02    0.00                 std::map<int, int, std::less<int>, std::allocator<std::pair<int const, int> > >::key_comp() const [109]
+-----------------------------------------------
+                                                 <spontaneous>
+[110]    0.1    0.02    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::key_comp() const [110]
+-----------------------------------------------
+                                                 <spontaneous>
+[111]    0.1    0.02    0.00                 std::map<int, int, std::less<int>, std::allocator<std::pair<int const, int> > >::map() [111]
+-----------------------------------------------
+                                                 <spontaneous>
+[112]    0.1    0.02    0.00                 std::tuple<int&&>::tuple(std::tuple<int&&>&&) [112]
+-----------------------------------------------
+                0.00    0.00    4913/3915661     gauss_init(fMesh<double, 2>&, pMesh<double, 0> const&, pMesh<double, 0> const&, pMesh<double, 0> const&) [138]
+                0.00    0.02 3910748/3915661     pencil2ff(pMesh<double, 0> const&, fMesh<double, 2>&, int, int, int) [67]
+[113]    0.1    0.00    0.02 3915661         fMesh<double, 2>::operator()(int, int, int, int) [113]
+                0.01    0.00 3915661/48376577     fMesh<double, 2>::indx(int, int, int, int) const [36]
+                0.00    0.00 3915661/99221173     std::vector<double, std::allocator<double> >::operator[](unsigned long) [48]
+-----------------------------------------------
+                0.00    0.02     796/796         RK4(fMesh<double, 2>&, fMesh<double, 2>&, double, int, double, double, double, pMesh<double, 0> const&) [9]
+[114]    0.1    0.00    0.02     796         diffops(fMesh<double, 2>&, fMesh<double, 2>&, double, double, double) [114]
+                0.00    0.01     796/796         pMesh<double, 2>::pMesh(unsigned long, unsigned long) [131]
+                0.00    0.01     796/797         pMesh<double, 0>::pMesh(unsigned long, unsigned long) [130]
+                0.00    0.00     796/797         pMesh<double, 0>::~pMesh() [136]
+                0.00    0.00     796/796         pMesh<double, 2>::~pMesh() [137]
+-----------------------------------------------
+                0.00    0.00       2/6574        main [8]
+                0.00    0.02    6572/6574        RK4(fMesh<double, 2>&, fMesh<double, 2>&, double, int, double, double, double, pMesh<double, 0> const&) [9]
+[115]    0.1    0.00    0.02    6574         fMesh<double, 2>::~fMesh() [115]
+                0.00    0.02    6574/8167        std::vector<double, std::allocator<double> >::~vector() [104]
+-----------------------------------------------
+                                                 <spontaneous>
+[116]    0.1    0.02    0.00                 operator delete(void*, void*) [116]
+-----------------------------------------------
+                0.00    0.00       7/1600        fMesh<double, 2>::fMesh(unsigned long, unsigned long, unsigned long, unsigned long) [139]
+                0.00    0.01     796/1600        pMesh<double, 2>::pMesh(unsigned long, unsigned long) [131]
+                0.00    0.01     797/1600        pMesh<double, 0>::pMesh(unsigned long, unsigned long) [130]
+[117]    0.1    0.00    0.01    1600         std::vector<double, std::allocator<double> >::resize(unsigned long) [117]
+                0.00    0.01    1600/1600        std::vector<double, std::allocator<double> >::_M_default_append(unsigned long) [118]
+                0.00    0.00    3200/47939355     std::vector<double, std::allocator<double> >::size() const [92]
+-----------------------------------------------
+                0.00    0.01    1600/1600        std::vector<double, std::allocator<double> >::resize(unsigned long) [117]
+[118]    0.1    0.00    0.01    1600         std::vector<double, std::allocator<double> >::_M_default_append(unsigned long) [118]
+                0.00    0.01    1600/1600        double* std::__uninitialized_default_n_a<double*, unsigned long, double>(double*, unsigned long, std::allocator<double>&) [123]
+                0.00    0.00    1600/9767        void std::_Destroy<double*, double>(double*, double*, std::allocator<double>&) [102]
+                0.00    0.00    1600/1600        std::vector<double, std::allocator<double> >::_M_check_len(unsigned long, char const*) const [140]
+                0.00    0.00    1600/47939355     std::vector<double, std::allocator<double> >::size() const [92]
+                0.00    0.00    4800/19534       std::_Vector_base<double, std::allocator<double> >::_M_get_Tp_allocator() [148]
+                0.00    0.00    1600/8167        std::_Vector_base<double, std::allocator<double> >::_M_allocate(unsigned long) [168]
+                0.00    0.00    1600/1600        double* std::__uninitialized_move_if_noexcept_a<double*, double*, std::allocator<double> >(double*, double*, double*, std::allocator<double>&) [213]
+                0.00    0.00    1600/9767        std::_Vector_base<double, std::allocator<double> >::_M_deallocate(double*, unsigned long) [164]
+-----------------------------------------------
+                0.00    0.00    1393/6567        fMesh<double, 2> operator+<double, 2>(fMesh<double, 2>, fMesh<double, 2> const&) [81]
+                0.00    0.00    2189/6567        fMesh<double, 2> operator*<double, 2>(fMesh<double, 2>, double const&) [53]
+                0.00    0.00    2985/6567        RK4(fMesh<double, 2>&, fMesh<double, 2>&, double, int, double, double, double, pMesh<double, 0> const&) [9]
+[119]    0.1    0.00    0.01    6567         fMesh<double, 2>::fMesh(fMesh<double, 2> const&) [119]
+                0.00    0.01    6567/6567        std::vector<double, std::allocator<double> >::vector(std::vector<double, std::allocator<double> > const&) [120]
+-----------------------------------------------
+                0.00    0.01    6567/6567        fMesh<double, 2>::fMesh(fMesh<double, 2> const&) [119]
+[120]    0.1    0.00    0.01    6567         std::vector<double, std::allocator<double> >::vector(std::vector<double, std::allocator<double> > const&) [120]
+                0.01    0.00    6567/6567        __gnu_cxx::__alloc_traits<std::allocator<double> >::_S_select_on_copy(std::allocator<double> const&) [121]
+                0.00    0.00    6567/47939355     std::vector<double, std::allocator<double> >::size() const [92]
+                0.00    0.00    6567/9767        std::_Vector_base<double, std::allocator<double> >::_M_get_Tp_allocator() const [162]
+                0.00    0.00    6567/6567        std::_Vector_base<double, std::allocator<double> >::_Vector_base(unsigned long, std::allocator<double> const&) [178]
+                0.00    0.00    6567/14734       std::allocator<double>::~allocator() [150]
+                0.00    0.00    6567/19534       std::_Vector_base<double, std::allocator<double> >::_M_get_Tp_allocator() [148]
+                0.00    0.00    6567/6567        std::vector<double, std::allocator<double> >::end() const [173]
+                0.00    0.00    6567/6567        std::vector<double, std::allocator<double> >::begin() const [174]
+                0.00    0.00    6567/6567        double* std::__uninitialized_copy_a<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*, double>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*, std::allocator<double>&) [184]
+-----------------------------------------------
+                0.01    0.00    6567/6567        std::vector<double, std::allocator<double> >::vector(std::vector<double, std::allocator<double> > const&) [120]
+[121]    0.1    0.01    0.00    6567         __gnu_cxx::__alloc_traits<std::allocator<double> >::_S_select_on_copy(std::allocator<double> const&) [121]
+                0.00    0.00    6567/6567        std::allocator_traits<std::allocator<double> >::select_on_container_copy_construction(std::allocator<double> const&) [179]
+-----------------------------------------------
+                0.01    0.00    1600/1600        double* std::__uninitialized_default_n_a<double*, unsigned long, double>(double*, unsigned long, std::allocator<double>&) [123]
+[122]    0.1    0.01    0.00    1600         double* std::__uninitialized_default_n<double*, unsigned long>(double*, unsigned long) [122]
+                0.00    0.00    1600/1600        double* std::__uninitialized_default_n_1<true>::__uninit_default_n<double*, unsigned long>(double*, unsigned long) [204]
+-----------------------------------------------
+                0.00    0.01    1600/1600        std::vector<double, std::allocator<double> >::_M_default_append(unsigned long) [118]
+[123]    0.1    0.00    0.01    1600         double* std::__uninitialized_default_n_a<double*, unsigned long, double>(double*, unsigned long, std::allocator<double>&) [123]
+                0.01    0.00    1600/1600        double* std::__uninitialized_default_n<double*, unsigned long>(double*, unsigned long) [122]
+-----------------------------------------------
+                                                 <spontaneous>
+[124]    0.1    0.01    0.00                 _GLOBAL__sub_I__Z4delxRK5pMeshIdLi2EEdii [124]
+-----------------------------------------------
+                                                 <spontaneous>
+[125]    0.1    0.01    0.00                 lapl(pMesh<double, 2> const&, pMesh<double, 0>&, double, double, double) [125]
+-----------------------------------------------
+                                                 <spontaneous>
+[126]    0.1    0.01    0.00                 del2x(pMesh<double, 2> const&, double, int, int) [126]
+-----------------------------------------------
+                                                 <spontaneous>
+[127]    0.1    0.01    0.00                 std::pair<int, int>::pair<int&, int&, void>(int&, int&) [127]
+-----------------------------------------------
+                                                 <spontaneous>
+[128]    0.1    0.01    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_Rb_tree_impl<std::less<int>, true>::_Rb_tree_impl() [128]
+-----------------------------------------------
+                                                 <spontaneous>
+[129]    0.1    0.01    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_Rb_tree() [129]
+-----------------------------------------------
+                0.00    0.00       1/797         main [8]
+                0.00    0.01     796/797         diffops(fMesh<double, 2>&, fMesh<double, 2>&, double, double, double) [114]
+[130]    0.0    0.00    0.01     797         pMesh<double, 0>::pMesh(unsigned long, unsigned long) [130]
+                0.00    0.01     797/1600        std::vector<double, std::allocator<double> >::resize(unsigned long) [117]
+                0.00    0.00     797/1600        std::vector<double, std::allocator<double> >::vector() [207]
+                0.00    0.00     797/1600        std::vector<double, std::allocator<double> >::end() [205]
+                0.00    0.00     797/1600        std::vector<double, std::allocator<double> >::begin() [206]
+                0.00    0.00     797/1600        void std::fill<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, double>(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, double const&) [216]
+-----------------------------------------------
+                0.00    0.01     796/796         diffops(fMesh<double, 2>&, fMesh<double, 2>&, double, double, double) [114]
+[131]    0.0    0.00    0.01     796         pMesh<double, 2>::pMesh(unsigned long, unsigned long) [131]
+                0.00    0.01     796/1600        std::vector<double, std::allocator<double> >::resize(unsigned long) [117]
+                0.00    0.00     796/1600        std::vector<double, std::allocator<double> >::vector() [207]
+                0.00    0.00     796/1600        std::vector<double, std::allocator<double> >::end() [205]
+                0.00    0.00     796/1600        std::vector<double, std::allocator<double> >::begin() [206]
+                0.00    0.00     796/1600        void std::fill<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, double>(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, double const&) [216]
+-----------------------------------------------
+                                                 <spontaneous>
+[132]    0.0    0.01    0.00                 __static_initialization_and_destruction_0(int, int) [132]
+-----------------------------------------------
+                                                 <spontaneous>
+[133]    0.0    0.01    0.00                 del2z(pMesh<double, 2> const&, double, int, int) [133]
+-----------------------------------------------
+                                                 <spontaneous>
+[134]    0.0    0.01    0.00                 std::_Rb_tree_iterator<std::pair<int const, int> >::operator++() [134]
+-----------------------------------------------
+                                                 <spontaneous>
+[135]    0.0    0.01    0.00                 std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_Rb_tree_impl<std::less<int>, true>::_M_initialize() [135]
+-----------------------------------------------
+                0.00    0.00       1/797         main [8]
+                0.00    0.00     796/797         diffops(fMesh<double, 2>&, fMesh<double, 2>&, double, double, double) [114]
+[136]    0.0    0.00    0.00     797         pMesh<double, 0>::~pMesh() [136]
+                0.00    0.00     797/8167        std::vector<double, std::allocator<double> >::~vector() [104]
+-----------------------------------------------
+                0.00    0.00     796/796         diffops(fMesh<double, 2>&, fMesh<double, 2>&, double, double, double) [114]
+[137]    0.0    0.00    0.00     796         pMesh<double, 2>::~pMesh() [137]
+                0.00    0.00     796/8167        std::vector<double, std::allocator<double> >::~vector() [104]
+-----------------------------------------------
+                0.00    0.00       1/1           main [8]
+[138]    0.0    0.00    0.00       1         gauss_init(fMesh<double, 2>&, pMesh<double, 0> const&, pMesh<double, 0> const&, pMesh<double, 0> const&) [138]
+                0.00    0.00   14739/6873287     pMesh<double, 0>::operator()(int, int, int) const [70]
+                0.00    0.00    4913/3915661     fMesh<double, 2>::operator()(int, int, int, int) [113]
+-----------------------------------------------
+                0.00    0.00       2/7           main [8]
+                0.00    0.00       5/7           RK4(fMesh<double, 2>&, fMesh<double, 2>&, double, int, double, double, double, pMesh<double, 0> const&) [9]
+[139]    0.0    0.00    0.00       7         fMesh<double, 2>::fMesh(unsigned long, unsigned long, unsigned long, unsigned long) [139]
+                0.00    0.00       7/1600        std::vector<double, std::allocator<double> >::resize(unsigned long) [117]
+                0.00    0.00       7/1600        std::vector<double, std::allocator<double> >::vector() [207]
+                0.00    0.00       7/1600        std::vector<double, std::allocator<double> >::end() [205]
+                0.00    0.00       7/1600        std::vector<double, std::allocator<double> >::begin() [206]
+                0.00    0.00       7/1600        void std::fill<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, double>(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, double const&) [216]
+-----------------------------------------------
+                0.00    0.00    1600/1600        std::vector<double, std::allocator<double> >::_M_default_append(unsigned long) [118]
+[140]    0.0    0.00    0.00    1600         std::vector<double, std::allocator<double> >::_M_check_len(unsigned long, char const*) const [140]
+                0.00    0.00    6400/47939355     std::vector<double, std::allocator<double> >::size() const [92]
+                0.00    0.00    3200/3200        std::vector<double, std::allocator<double> >::max_size() const [189]
+                0.00    0.00    1600/1600        unsigned long const& std::max<unsigned long>(unsigned long const&, unsigned long const&) [214]
+-----------------------------------------------
+                0.00    0.00       1/1           main [8]
+[141]    0.0    0.00    0.00       1         pMesh<double, 0>::printpencil(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [141]
+                0.00    0.00      17/10784069     pMesh<double, 0>::spindex(int, int, int) const [74]
+                0.00    0.00      17/99221173     std::vector<double, std::allocator<double> >::operator[](unsigned long) [48]
+-----------------------------------------------
+                0.00    0.00    4800/19534       std::vector<double, std::allocator<double> >::_M_default_append(unsigned long) [118]
+                0.00    0.00    6567/19534       std::vector<double, std::allocator<double> >::vector(std::vector<double, std::allocator<double> > const&) [120]
+                0.00    0.00    8167/19534       std::vector<double, std::allocator<double> >::~vector() [104]
+[148]    0.0    0.00    0.00   19534         std::_Vector_base<double, std::allocator<double> >::_M_get_Tp_allocator() [148]
+-----------------------------------------------
+                0.00    0.00   14734/14734       std::allocator<double>::~allocator() [150]
+[149]    0.0    0.00    0.00   14734         __gnu_cxx::new_allocator<double>::~new_allocator() [149]
+-----------------------------------------------
+                0.00    0.00    6567/14734       std::vector<double, std::allocator<double> >::vector(std::vector<double, std::allocator<double> > const&) [120]
+                0.00    0.00    8167/14734       std::_Vector_base<double, std::allocator<double> >::_Vector_impl::~_Vector_impl() [169]
+[150]    0.0    0.00    0.00   14734         std::allocator<double>::~allocator() [150]
+                0.00    0.00   14734/14734       __gnu_cxx::new_allocator<double>::~new_allocator() [149]
+-----------------------------------------------
+                0.00    0.00   13134/13134       std::allocator<double>::allocator(std::allocator<double> const&) [154]
+[151]    0.0    0.00    0.00   13134         __gnu_cxx::new_allocator<double>::new_allocator(__gnu_cxx::new_allocator<double> const&) [151]
+-----------------------------------------------
+                0.00    0.00    6567/13134       std::vector<double, std::allocator<double> >::begin() const [174]
+                0.00    0.00    6567/13134       std::vector<double, std::allocator<double> >::end() const [173]
+[152]    0.0    0.00    0.00   13134         __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >::__normal_iterator(double const* const&) [152]
+-----------------------------------------------
+                0.00    0.00   13134/13134       std::_Iter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, true>::_S_base(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >) [156]
+[153]    0.0    0.00    0.00   13134         __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >::base() const [153]
+-----------------------------------------------
+                0.00    0.00    6567/13134       std::allocator_traits<std::allocator<double> >::select_on_container_copy_construction(std::allocator<double> const&) [179]
+                0.00    0.00    6567/13134       std::_Vector_base<double, std::allocator<double> >::_Vector_impl::_Vector_impl(std::allocator<double> const&) [176]
+[154]    0.0    0.00    0.00   13134         std::allocator<double>::allocator(std::allocator<double> const&) [154]
+                0.00    0.00   13134/13134       __gnu_cxx::new_allocator<double>::new_allocator(__gnu_cxx::new_allocator<double> const&) [151]
+-----------------------------------------------
+                0.00    0.00   13134/13134       std::_Miter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > > >::iterator_type std::__miter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > > >(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >) [157]
+[155]    0.0    0.00    0.00   13134         std::_Iter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, false>::_S_base(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >) [155]
+-----------------------------------------------
+                0.00    0.00   13134/13134       std::_Niter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > > >::iterator_type std::__niter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > > >(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >) [158]
+[156]    0.0    0.00    0.00   13134         std::_Iter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, true>::_S_base(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >) [156]
+                0.00    0.00   13134/13134       __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >::base() const [153]
+-----------------------------------------------
+                0.00    0.00   13134/13134       double* std::copy<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*) [185]
+[157]    0.0    0.00    0.00   13134         std::_Miter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > > >::iterator_type std::__miter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > > >(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >) [157]
+                0.00    0.00   13134/13134       std::_Iter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, false>::_S_base(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >) [155]
+-----------------------------------------------
+                0.00    0.00   13134/13134       double* std::__copy_move_a2<false, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*) [182]
+[158]    0.0    0.00    0.00   13134         std::_Niter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > > >::iterator_type std::__niter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > > >(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >) [158]
+                0.00    0.00   13134/13134       std::_Iter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, true>::_S_base(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >) [156]
+-----------------------------------------------
+                0.00    0.00   12967/12967       std::_Niter_base<double*>::iterator_type std::__niter_base<double*>(double*) [160]
+[159]    0.0    0.00    0.00   12967         std::_Iter_base<double*, false>::_S_base(double*) [159]
+-----------------------------------------------
+                0.00    0.00    1600/12967       double* std::fill_n<double*, unsigned long, double>(double*, unsigned long, double const&) [217]
+                0.00    0.00    4800/12967       double* std::__copy_move_a2<true, double*, double*>(double*, double*, double*) [210]
+                0.00    0.00    6567/12967       double* std::__copy_move_a2<false, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*) [182]
+[160]    0.0    0.00    0.00   12967         std::_Niter_base<double*>::iterator_type std::__niter_base<double*>(double*) [160]
+                0.00    0.00   12967/12967       std::_Iter_base<double*, false>::_S_base(double*) [159]
+-----------------------------------------------
+                0.00    0.00    3200/11367       std::allocator_traits<std::allocator<double> >::max_size(std::allocator<double> const&) [193]
+                0.00    0.00    8167/11367       __gnu_cxx::new_allocator<double>::allocate(unsigned long, void const*) [167]
+[161]    0.0    0.00    0.00   11367         __gnu_cxx::new_allocator<double>::max_size() const [161]
+-----------------------------------------------
+                0.00    0.00    3200/9767        std::vector<double, std::allocator<double> >::max_size() const [189]
+                0.00    0.00    6567/9767        std::vector<double, std::allocator<double> >::vector(std::vector<double, std::allocator<double> > const&) [120]
+[162]    0.0    0.00    0.00    9767         std::_Vector_base<double, std::allocator<double> >::_M_get_Tp_allocator() const [162]
+-----------------------------------------------
+                0.00    0.00    9767/9767        void std::_Destroy<double*>(double*, double*) [165]
+[163]    0.0    0.00    0.00    9767         void std::_Destroy_aux<true>::__destroy<double*>(double*, double*) [163]
+-----------------------------------------------
+                0.00    0.00    1600/9767        std::vector<double, std::allocator<double> >::_M_default_append(unsigned long) [118]
+                0.00    0.00    8167/9767        std::_Vector_base<double, std::allocator<double> >::~_Vector_base() [170]
+[164]    0.0    0.00    0.00    9767         std::_Vector_base<double, std::allocator<double> >::_M_deallocate(double*, unsigned long) [164]
+                0.00    0.00    8167/8167        std::allocator_traits<std::allocator<double> >::deallocate(std::allocator<double>&, double*, unsigned long) [171]
+-----------------------------------------------
+                0.00    0.00    9767/9767        void std::_Destroy<double*, double>(double*, double*, std::allocator<double>&) [102]
+[165]    0.0    0.00    0.00    9767         void std::_Destroy<double*>(double*, double*) [165]
+                0.00    0.00    9767/9767        void std::_Destroy_aux<true>::__destroy<double*>(double*, double*) [163]
+-----------------------------------------------
+                0.00    0.00    8167/8167        std::allocator_traits<std::allocator<double> >::deallocate(std::allocator<double>&, double*, unsigned long) [171]
+[166]    0.0    0.00    0.00    8167         __gnu_cxx::new_allocator<double>::deallocate(double*, unsigned long) [166]
+-----------------------------------------------
+                0.00    0.00    8167/8167        std::allocator_traits<std::allocator<double> >::allocate(std::allocator<double>&, unsigned long) [172]
+[167]    0.0    0.00    0.00    8167         __gnu_cxx::new_allocator<double>::allocate(unsigned long, void const*) [167]
+                0.00    0.00    8167/11367       __gnu_cxx::new_allocator<double>::max_size() const [161]
+-----------------------------------------------
+                0.00    0.00    1600/8167        std::vector<double, std::allocator<double> >::_M_default_append(unsigned long) [118]
+                0.00    0.00    6567/8167        std::_Vector_base<double, std::allocator<double> >::_M_create_storage(unsigned long) [177]
+[168]    0.0    0.00    0.00    8167         std::_Vector_base<double, std::allocator<double> >::_M_allocate(unsigned long) [168]
+                0.00    0.00    8167/8167        std::allocator_traits<std::allocator<double> >::allocate(std::allocator<double>&, unsigned long) [172]
+-----------------------------------------------
+                0.00    0.00    8167/8167        std::_Vector_base<double, std::allocator<double> >::~_Vector_base() [170]
+[169]    0.0    0.00    0.00    8167         std::_Vector_base<double, std::allocator<double> >::_Vector_impl::~_Vector_impl() [169]
+                0.00    0.00    8167/14734       std::allocator<double>::~allocator() [150]
+-----------------------------------------------
+                0.00    0.00    8167/8167        std::vector<double, std::allocator<double> >::~vector() [104]
+[170]    0.0    0.00    0.00    8167         std::_Vector_base<double, std::allocator<double> >::~_Vector_base() [170]
+                0.00    0.00    8167/8167        std::_Vector_base<double, std::allocator<double> >::_Vector_impl::~_Vector_impl() [169]
+                0.00    0.00    8167/9767        std::_Vector_base<double, std::allocator<double> >::_M_deallocate(double*, unsigned long) [164]
+-----------------------------------------------
+                0.00    0.00    8167/8167        std::_Vector_base<double, std::allocator<double> >::_M_deallocate(double*, unsigned long) [164]
+[171]    0.0    0.00    0.00    8167         std::allocator_traits<std::allocator<double> >::deallocate(std::allocator<double>&, double*, unsigned long) [171]
+                0.00    0.00    8167/8167        __gnu_cxx::new_allocator<double>::deallocate(double*, unsigned long) [166]
+-----------------------------------------------
+                0.00    0.00    8167/8167        std::_Vector_base<double, std::allocator<double> >::_M_allocate(unsigned long) [168]
+[172]    0.0    0.00    0.00    8167         std::allocator_traits<std::allocator<double> >::allocate(std::allocator<double>&, unsigned long) [172]
+                0.00    0.00    8167/8167        __gnu_cxx::new_allocator<double>::allocate(unsigned long, void const*) [167]
+-----------------------------------------------
+                0.00    0.00    6567/6567        std::vector<double, std::allocator<double> >::vector(std::vector<double, std::allocator<double> > const&) [120]
+[173]    0.0    0.00    0.00    6567         std::vector<double, std::allocator<double> >::end() const [173]
+                0.00    0.00    6567/13134       __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >::__normal_iterator(double const* const&) [152]
+-----------------------------------------------
+                0.00    0.00    6567/6567        std::vector<double, std::allocator<double> >::vector(std::vector<double, std::allocator<double> > const&) [120]
+[174]    0.0    0.00    0.00    6567         std::vector<double, std::allocator<double> >::begin() const [174]
+                0.00    0.00    6567/13134       __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >::__normal_iterator(double const* const&) [152]
+-----------------------------------------------
+                0.00    0.00    6567/6567        double* std::__copy_move_a<false, double const*, double*>(double const*, double const*, double*) [181]
+[175]    0.0    0.00    0.00    6567         double* std::__copy_move<false, true, std::random_access_iterator_tag>::__copy_m<double>(double const*, double const*, double*) [175]
+-----------------------------------------------
+                0.00    0.00    6567/6567        std::_Vector_base<double, std::allocator<double> >::_Vector_base(unsigned long, std::allocator<double> const&) [178]
+[176]    0.0    0.00    0.00    6567         std::_Vector_base<double, std::allocator<double> >::_Vector_impl::_Vector_impl(std::allocator<double> const&) [176]
+                0.00    0.00    6567/13134       std::allocator<double>::allocator(std::allocator<double> const&) [154]
+-----------------------------------------------
+                0.00    0.00    6567/6567        std::_Vector_base<double, std::allocator<double> >::_Vector_base(unsigned long, std::allocator<double> const&) [178]
+[177]    0.0    0.00    0.00    6567         std::_Vector_base<double, std::allocator<double> >::_M_create_storage(unsigned long) [177]
+                0.00    0.00    6567/8167        std::_Vector_base<double, std::allocator<double> >::_M_allocate(unsigned long) [168]
+-----------------------------------------------
+                0.00    0.00    6567/6567        std::vector<double, std::allocator<double> >::vector(std::vector<double, std::allocator<double> > const&) [120]
+[178]    0.0    0.00    0.00    6567         std::_Vector_base<double, std::allocator<double> >::_Vector_base(unsigned long, std::allocator<double> const&) [178]
+                0.00    0.00    6567/6567        std::_Vector_base<double, std::allocator<double> >::_Vector_impl::_Vector_impl(std::allocator<double> const&) [176]
+                0.00    0.00    6567/6567        std::_Vector_base<double, std::allocator<double> >::_M_create_storage(unsigned long) [177]
+-----------------------------------------------
+                0.00    0.00    6567/6567        __gnu_cxx::__alloc_traits<std::allocator<double> >::_S_select_on_copy(std::allocator<double> const&) [121]
+[179]    0.0    0.00    0.00    6567         std::allocator_traits<std::allocator<double> >::select_on_container_copy_construction(std::allocator<double> const&) [179]
+                0.00    0.00    6567/13134       std::allocator<double>::allocator(std::allocator<double> const&) [154]
+-----------------------------------------------
+                0.00    0.00    6567/6567        double* std::uninitialized_copy<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*) [183]
+[180]    0.0    0.00    0.00    6567         double* std::__uninitialized_copy<true>::__uninit_copy<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*) [180]
+                0.00    0.00    6567/6567        double* std::copy<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*) [185]
+-----------------------------------------------
+                0.00    0.00    6567/6567        double* std::__copy_move_a2<false, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*) [182]
+[181]    0.0    0.00    0.00    6567         double* std::__copy_move_a<false, double const*, double*>(double const*, double const*, double*) [181]
+                0.00    0.00    6567/6567        double* std::__copy_move<false, true, std::random_access_iterator_tag>::__copy_m<double>(double const*, double const*, double*) [175]
+-----------------------------------------------
+                0.00    0.00    6567/6567        double* std::copy<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*) [185]
+[182]    0.0    0.00    0.00    6567         double* std::__copy_move_a2<false, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*) [182]
+                0.00    0.00   13134/13134       std::_Niter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > > >::iterator_type std::__niter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > > >(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >) [158]
+                0.00    0.00    6567/12967       std::_Niter_base<double*>::iterator_type std::__niter_base<double*>(double*) [160]
+                0.00    0.00    6567/6567        double* std::__copy_move_a<false, double const*, double*>(double const*, double const*, double*) [181]
+-----------------------------------------------
+                0.00    0.00    6567/6567        double* std::__uninitialized_copy_a<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*, double>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*, std::allocator<double>&) [184]
+[183]    0.0    0.00    0.00    6567         double* std::uninitialized_copy<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*) [183]
+                0.00    0.00    6567/6567        double* std::__uninitialized_copy<true>::__uninit_copy<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*) [180]
+-----------------------------------------------
+                0.00    0.00    6567/6567        std::vector<double, std::allocator<double> >::vector(std::vector<double, std::allocator<double> > const&) [120]
+[184]    0.0    0.00    0.00    6567         double* std::__uninitialized_copy_a<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*, double>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*, std::allocator<double>&) [184]
+                0.00    0.00    6567/6567        double* std::uninitialized_copy<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*) [183]
+-----------------------------------------------
+                0.00    0.00    6567/6567        double* std::__uninitialized_copy<true>::__uninit_copy<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*) [180]
+[185]    0.0    0.00    0.00    6567         double* std::copy<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*) [185]
+                0.00    0.00   13134/13134       std::_Miter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > > >::iterator_type std::__miter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > > >(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >) [157]
+                0.00    0.00    6567/6567        double* std::__copy_move_a2<false, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*) [182]
+-----------------------------------------------
+                0.00    0.00    1600/3200        std::vector<double, std::allocator<double> >::begin() [206]
+                0.00    0.00    1600/3200        std::vector<double, std::allocator<double> >::end() [205]
+[186]    0.0    0.00    0.00    3200         __gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >::__normal_iterator(double* const&) [186]
+-----------------------------------------------
+                0.00    0.00    3200/3200        std::_Iter_base<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, true>::_S_base(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >) [190]
+[187]    0.0    0.00    0.00    3200         __gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >::base() const [187]
+-----------------------------------------------
+                0.00    0.00    3200/3200        std::_Iter_base<std::move_iterator<double*>, true>::_S_base(std::move_iterator<double*>) [191]
+[188]    0.0    0.00    0.00    3200         std::move_iterator<double*>::base() const [188]
+-----------------------------------------------
+                0.00    0.00    3200/3200        std::vector<double, std::allocator<double> >::_M_check_len(unsigned long, char const*) const [140]
+[189]    0.0    0.00    0.00    3200         std::vector<double, std::allocator<double> >::max_size() const [189]
+                0.00    0.00    3200/3200        std::allocator_traits<std::allocator<double> >::max_size(std::allocator<double> const&) [193]
+                0.00    0.00    3200/9767        std::_Vector_base<double, std::allocator<double> >::_M_get_Tp_allocator() const [162]
+-----------------------------------------------
+                0.00    0.00    3200/3200        std::_Niter_base<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > > >::iterator_type std::__niter_base<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > > >(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >) [195]
+[190]    0.0    0.00    0.00    3200         std::_Iter_base<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, true>::_S_base(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >) [190]
+                0.00    0.00    3200/3200        __gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >::base() const [187]
+-----------------------------------------------
+                0.00    0.00    3200/3200        std::_Miter_base<std::move_iterator<double*> >::iterator_type std::__miter_base<std::move_iterator<double*> >(std::move_iterator<double*>) [194]
+[191]    0.0    0.00    0.00    3200         std::_Iter_base<std::move_iterator<double*>, true>::_S_base(std::move_iterator<double*>) [191]
+                0.00    0.00    3200/3200        std::move_iterator<double*>::base() const [188]
+-----------------------------------------------
+                0.00    0.00    3200/3200        std::move_iterator<double*> std::__make_move_if_noexcept_iterator<double*, std::move_iterator<double*> >(double*) [196]
+[192]    0.0    0.00    0.00    3200         std::move_iterator<double*>::move_iterator(double*) [192]
+-----------------------------------------------
+                0.00    0.00    3200/3200        std::vector<double, std::allocator<double> >::max_size() const [189]
+[193]    0.0    0.00    0.00    3200         std::allocator_traits<std::allocator<double> >::max_size(std::allocator<double> const&) [193]
+                0.00    0.00    3200/11367       __gnu_cxx::new_allocator<double>::max_size() const [161]
+-----------------------------------------------
+                0.00    0.00    3200/3200        double* std::copy<std::move_iterator<double*>, double*>(std::move_iterator<double*>, std::move_iterator<double*>, double*) [215]
+[194]    0.0    0.00    0.00    3200         std::_Miter_base<std::move_iterator<double*> >::iterator_type std::__miter_base<std::move_iterator<double*> >(std::move_iterator<double*>) [194]
+                0.00    0.00    3200/3200        std::_Iter_base<std::move_iterator<double*>, true>::_S_base(std::move_iterator<double*>) [191]
+-----------------------------------------------
+                0.00    0.00    3200/3200        void std::fill<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, double>(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, double const&) [216]
+[195]    0.0    0.00    0.00    3200         std::_Niter_base<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > > >::iterator_type std::__niter_base<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > > >(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >) [195]
+                0.00    0.00    3200/3200        std::_Iter_base<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, true>::_S_base(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >) [190]
+-----------------------------------------------
+                0.00    0.00    3200/3200        double* std::__uninitialized_move_if_noexcept_a<double*, double*, std::allocator<double> >(double*, double*, double*, std::allocator<double>&) [213]
+[196]    0.0    0.00    0.00    3200         std::move_iterator<double*> std::__make_move_if_noexcept_iterator<double*, std::move_iterator<double*> >(double*) [196]
+                0.00    0.00    3200/3200        std::move_iterator<double*>::move_iterator(double*) [192]
+-----------------------------------------------
+                0.00    0.00    1393/2985        fMesh<double, 2>::operator+=(fMesh<double, 2> const&) [82]
+                0.00    0.00    1592/2985        fMesh<double, 2>::operator=(fMesh<double, 2> const&) [72]
+[197]    0.0    0.00    0.00    2985         fMesh<double, 2>::validateDims(fMesh<double, 2> const&) [197]
+-----------------------------------------------
+                0.00    0.00    1600/1600        std::allocator<double>::allocator() [199]
+[198]    0.0    0.00    0.00    1600         __gnu_cxx::new_allocator<double>::new_allocator() [198]
+-----------------------------------------------
+                0.00    0.00    1600/1600        std::_Vector_base<double, std::allocator<double> >::_Vector_impl::_Vector_impl() [201]
+[199]    0.0    0.00    0.00    1600         std::allocator<double>::allocator() [199]
+                0.00    0.00    1600/1600        __gnu_cxx::new_allocator<double>::new_allocator() [198]
+-----------------------------------------------
+                0.00    0.00    1600/1600        double* std::__copy_move_a<true, double*, double*>(double*, double*, double*) [209]
+[200]    0.0    0.00    0.00    1600         double* std::__copy_move<true, true, std::random_access_iterator_tag>::__copy_m<double>(double const*, double const*, double*) [200]
+-----------------------------------------------
+                0.00    0.00    1600/1600        std::_Vector_base<double, std::allocator<double> >::_Vector_base() [202]
+[201]    0.0    0.00    0.00    1600         std::_Vector_base<double, std::allocator<double> >::_Vector_impl::_Vector_impl() [201]
+                0.00    0.00    1600/1600        std::allocator<double>::allocator() [199]
+-----------------------------------------------
+                0.00    0.00    1600/1600        std::vector<double, std::allocator<double> >::vector() [207]
+[202]    0.0    0.00    0.00    1600         std::_Vector_base<double, std::allocator<double> >::_Vector_base() [202]
+                0.00    0.00    1600/1600        std::_Vector_base<double, std::allocator<double> >::_Vector_impl::_Vector_impl() [201]
+-----------------------------------------------
+                0.00    0.00    1600/1600        double* std::uninitialized_copy<std::move_iterator<double*>, double*>(std::move_iterator<double*>, std::move_iterator<double*>, double*) [211]
+[203]    0.0    0.00    0.00    1600         double* std::__uninitialized_copy<true>::__uninit_copy<std::move_iterator<double*>, double*>(std::move_iterator<double*>, std::move_iterator<double*>, double*) [203]
+                0.00    0.00    1600/1600        double* std::copy<std::move_iterator<double*>, double*>(std::move_iterator<double*>, std::move_iterator<double*>, double*) [215]
+-----------------------------------------------
+                0.00    0.00    1600/1600        double* std::__uninitialized_default_n<double*, unsigned long>(double*, unsigned long) [122]
+[204]    0.0    0.00    0.00    1600         double* std::__uninitialized_default_n_1<true>::__uninit_default_n<double*, unsigned long>(double*, unsigned long) [204]
+                0.00    0.00    1600/1600        double* std::fill_n<double*, unsigned long, double>(double*, unsigned long, double const&) [217]
+-----------------------------------------------
+                0.00    0.00       7/1600        fMesh<double, 2>::fMesh(unsigned long, unsigned long, unsigned long, unsigned long) [139]
+                0.00    0.00     796/1600        pMesh<double, 2>::pMesh(unsigned long, unsigned long) [131]
+                0.00    0.00     797/1600        pMesh<double, 0>::pMesh(unsigned long, unsigned long) [130]
+[205]    0.0    0.00    0.00    1600         std::vector<double, std::allocator<double> >::end() [205]
+                0.00    0.00    1600/3200        __gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >::__normal_iterator(double* const&) [186]
+-----------------------------------------------
+                0.00    0.00       7/1600        fMesh<double, 2>::fMesh(unsigned long, unsigned long, unsigned long, unsigned long) [139]
+                0.00    0.00     796/1600        pMesh<double, 2>::pMesh(unsigned long, unsigned long) [131]
+                0.00    0.00     797/1600        pMesh<double, 0>::pMesh(unsigned long, unsigned long) [130]
+[206]    0.0    0.00    0.00    1600         std::vector<double, std::allocator<double> >::begin() [206]
+                0.00    0.00    1600/3200        __gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >::__normal_iterator(double* const&) [186]
+-----------------------------------------------
+                0.00    0.00       7/1600        fMesh<double, 2>::fMesh(unsigned long, unsigned long, unsigned long, unsigned long) [139]
+                0.00    0.00     796/1600        pMesh<double, 2>::pMesh(unsigned long, unsigned long) [131]
+                0.00    0.00     797/1600        pMesh<double, 0>::pMesh(unsigned long, unsigned long) [130]
+[207]    0.0    0.00    0.00    1600         std::vector<double, std::allocator<double> >::vector() [207]
+                0.00    0.00    1600/1600        std::_Vector_base<double, std::allocator<double> >::_Vector_base() [202]
+-----------------------------------------------
+                0.00    0.00    1600/1600        double* std::fill_n<double*, unsigned long, double>(double*, unsigned long, double const&) [217]
+[208]    0.0    0.00    0.00    1600         __gnu_cxx::__enable_if<std::__is_scalar<double>::__value, double*>::__type std::__fill_n_a<double*, unsigned long, double>(double*, unsigned long, double const&) [208]
+-----------------------------------------------
+                0.00    0.00    1600/1600        double* std::__copy_move_a2<true, double*, double*>(double*, double*, double*) [210]
+[209]    0.0    0.00    0.00    1600         double* std::__copy_move_a<true, double*, double*>(double*, double*, double*) [209]
+                0.00    0.00    1600/1600        double* std::__copy_move<true, true, std::random_access_iterator_tag>::__copy_m<double>(double const*, double const*, double*) [200]
+-----------------------------------------------
+                0.00    0.00    1600/1600        double* std::copy<std::move_iterator<double*>, double*>(std::move_iterator<double*>, std::move_iterator<double*>, double*) [215]
+[210]    0.0    0.00    0.00    1600         double* std::__copy_move_a2<true, double*, double*>(double*, double*, double*) [210]
+                0.00    0.00    4800/12967       std::_Niter_base<double*>::iterator_type std::__niter_base<double*>(double*) [160]
+                0.00    0.00    1600/1600        double* std::__copy_move_a<true, double*, double*>(double*, double*, double*) [209]
+-----------------------------------------------
+                0.00    0.00    1600/1600        double* std::__uninitialized_copy_a<std::move_iterator<double*>, double*, double>(std::move_iterator<double*>, std::move_iterator<double*>, double*, std::allocator<double>&) [212]
+[211]    0.0    0.00    0.00    1600         double* std::uninitialized_copy<std::move_iterator<double*>, double*>(std::move_iterator<double*>, std::move_iterator<double*>, double*) [211]
+                0.00    0.00    1600/1600        double* std::__uninitialized_copy<true>::__uninit_copy<std::move_iterator<double*>, double*>(std::move_iterator<double*>, std::move_iterator<double*>, double*) [203]
+-----------------------------------------------
+                0.00    0.00    1600/1600        double* std::__uninitialized_move_if_noexcept_a<double*, double*, std::allocator<double> >(double*, double*, double*, std::allocator<double>&) [213]
+[212]    0.0    0.00    0.00    1600         double* std::__uninitialized_copy_a<std::move_iterator<double*>, double*, double>(std::move_iterator<double*>, std::move_iterator<double*>, double*, std::allocator<double>&) [212]
+                0.00    0.00    1600/1600        double* std::uninitialized_copy<std::move_iterator<double*>, double*>(std::move_iterator<double*>, std::move_iterator<double*>, double*) [211]
+-----------------------------------------------
+                0.00    0.00    1600/1600        std::vector<double, std::allocator<double> >::_M_default_append(unsigned long) [118]
+[213]    0.0    0.00    0.00    1600         double* std::__uninitialized_move_if_noexcept_a<double*, double*, std::allocator<double> >(double*, double*, double*, std::allocator<double>&) [213]
+                0.00    0.00    3200/3200        std::move_iterator<double*> std::__make_move_if_noexcept_iterator<double*, std::move_iterator<double*> >(double*) [196]
+                0.00    0.00    1600/1600        double* std::__uninitialized_copy_a<std::move_iterator<double*>, double*, double>(std::move_iterator<double*>, std::move_iterator<double*>, double*, std::allocator<double>&) [212]
+-----------------------------------------------
+                0.00    0.00    1600/1600        std::vector<double, std::allocator<double> >::_M_check_len(unsigned long, char const*) const [140]
+[214]    0.0    0.00    0.00    1600         unsigned long const& std::max<unsigned long>(unsigned long const&, unsigned long const&) [214]
+-----------------------------------------------
+                0.00    0.00    1600/1600        double* std::__uninitialized_copy<true>::__uninit_copy<std::move_iterator<double*>, double*>(std::move_iterator<double*>, std::move_iterator<double*>, double*) [203]
+[215]    0.0    0.00    0.00    1600         double* std::copy<std::move_iterator<double*>, double*>(std::move_iterator<double*>, std::move_iterator<double*>, double*) [215]
+                0.00    0.00    3200/3200        std::_Miter_base<std::move_iterator<double*> >::iterator_type std::__miter_base<std::move_iterator<double*> >(std::move_iterator<double*>) [194]
+                0.00    0.00    1600/1600        double* std::__copy_move_a2<true, double*, double*>(double*, double*, double*) [210]
+-----------------------------------------------
+                0.00    0.00       7/1600        fMesh<double, 2>::fMesh(unsigned long, unsigned long, unsigned long, unsigned long) [139]
+                0.00    0.00     796/1600        pMesh<double, 2>::pMesh(unsigned long, unsigned long) [131]
+                0.00    0.00     797/1600        pMesh<double, 0>::pMesh(unsigned long, unsigned long) [130]
+[216]    0.0    0.00    0.00    1600         void std::fill<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, double>(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, double const&) [216]
+                0.00    0.00    3200/3200        std::_Niter_base<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > > >::iterator_type std::__niter_base<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > > >(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >) [195]
+                0.00    0.00    1600/1600        __gnu_cxx::__enable_if<std::__is_scalar<double>::__value, void>::__type std::__fill_a<double*, double>(double*, double*, double const&) [218]
+-----------------------------------------------
+                0.00    0.00    1600/1600        double* std::__uninitialized_default_n_1<true>::__uninit_default_n<double*, unsigned long>(double*, unsigned long) [204]
+[217]    0.0    0.00    0.00    1600         double* std::fill_n<double*, unsigned long, double>(double*, unsigned long, double const&) [217]
+                0.00    0.00    1600/12967       std::_Niter_base<double*>::iterator_type std::__niter_base<double*>(double*) [160]
+                0.00    0.00    1600/1600        __gnu_cxx::__enable_if<std::__is_scalar<double>::__value, double*>::__type std::__fill_n_a<double*, unsigned long, double>(double*, unsigned long, double const&) [208]
+-----------------------------------------------
+                0.00    0.00    1600/1600        void std::fill<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, double>(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, double const&) [216]
+[218]    0.0    0.00    0.00    1600         __gnu_cxx::__enable_if<std::__is_scalar<double>::__value, void>::__type std::__fill_a<double*, double>(double*, double*, double const&) [218]
+-----------------------------------------------
+                0.00    0.00     400/400         void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char*>(char*, char*, std::forward_iterator_tag) [228]
+[219]    0.0    0.00    0.00     400         bool __gnu_cxx::__is_null_pointer<char>(char*) [219]
+-----------------------------------------------
+                0.00    0.00     400/400         std::iterator_traits<char*>::difference_type std::distance<char*>(char*, char*) [223]
+[220]    0.0    0.00    0.00     400         std::iterator_traits<char*>::difference_type std::__distance<char*>(char*, char*, std::random_access_iterator_tag) [220]
+-----------------------------------------------
+                0.00    0.00     400/400         std::iterator_traits<char*>::difference_type std::distance<char*>(char*, char*) [223]
+[221]    0.0    0.00    0.00     400         std::iterator_traits<char*>::iterator_category std::__iterator_category<char*>(char* const&) [221]
+-----------------------------------------------
+                0.00    0.00     200/400         std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) [233]
+                0.00    0.00     200/400         std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [232]
+[222]    0.0    0.00    0.00     400         std::remove_reference<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>::type&& std::move<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [222]
+-----------------------------------------------
+                0.00    0.00     400/400         void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char*>(char*, char*, std::forward_iterator_tag) [228]
+[223]    0.0    0.00    0.00     400         std::iterator_traits<char*>::difference_type std::distance<char*>(char*, char*) [223]
+                0.00    0.00     400/400         std::iterator_traits<char*>::iterator_category std::__iterator_category<char*>(char* const&) [221]
+                0.00    0.00     400/400         std::iterator_traits<char*>::difference_type std::__distance<char*>(char*, char*, std::random_access_iterator_tag) [220]
+-----------------------------------------------
+                0.00    0.00       1/200         main [8]
+                0.00    0.00     199/200         RK4(fMesh<double, 2>&, fMesh<double, 2>&, double, int, double, double, double, pMesh<double, 0> const&) [9]
+[224]    0.0    0.00    0.00     200         set_fname(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int) [224]
+                0.00    0.00     200/200         std::__cxx11::to_string(int) [231]
+                0.00    0.00     200/200         std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [235]
+                0.00    0.00     200/200         std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) [233]
+                0.00    0.00     200/200         std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [232]
+-----------------------------------------------
+                0.00    0.00     200/200         std::__cxx11::to_string(int) [231]
+[225]    0.0    0.00    0.00     200         std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > __gnu_cxx::__to_xstring<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, char>(int (*)(char*, unsigned long, char const*, __va_list_tag*), unsigned long, char const*, ...) [225]
+                0.00    0.00     200/200         std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string<char*, void>(char*, char*, std::allocator<char> const&) [230]
+-----------------------------------------------
+                0.00    0.00     200/200         std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [234]
+[226]    0.0    0.00    0.00     200         std::char_traits<char>::length(char const*) [226]
+-----------------------------------------------
+                0.00    0.00     200/200         std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string<char*, void>(char*, char*, std::allocator<char> const&) [230]
+[227]    0.0    0.00    0.00     200         void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char*>(char*, char*) [227]
+                0.00    0.00     200/200         void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct_aux<char*>(char*, char*, std::__false_type) [229]
+-----------------------------------------------
+                0.00    0.00     200/200         void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct_aux<char*>(char*, char*, std::__false_type) [229]
+[228]    0.0    0.00    0.00     200         void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char*>(char*, char*, std::forward_iterator_tag) [228]
+                0.00    0.00     400/400         bool __gnu_cxx::__is_null_pointer<char>(char*) [219]
+                0.00    0.00     400/400         std::iterator_traits<char*>::difference_type std::distance<char*>(char*, char*) [223]
+-----------------------------------------------
+                0.00    0.00     200/200         void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char*>(char*, char*) [227]
+[229]    0.0    0.00    0.00     200         void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct_aux<char*>(char*, char*, std::__false_type) [229]
+                0.00    0.00     200/200         void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char*>(char*, char*, std::forward_iterator_tag) [228]
+-----------------------------------------------
+                0.00    0.00     200/200         std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > __gnu_cxx::__to_xstring<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, char>(int (*)(char*, unsigned long, char const*, __va_list_tag*), unsigned long, char const*, ...) [225]
+[230]    0.0    0.00    0.00     200         std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string<char*, void>(char*, char*, std::allocator<char> const&) [230]
+                0.00    0.00     200/200         void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char*>(char*, char*) [227]
+-----------------------------------------------
+                0.00    0.00     200/200         set_fname(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int) [224]
+[231]    0.0    0.00    0.00     200         std::__cxx11::to_string(int) [231]
+                0.00    0.00     200/200         std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > __gnu_cxx::__to_xstring<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, char>(int (*)(char*, unsigned long, char const*, __va_list_tag*), unsigned long, char const*, ...) [225]
+-----------------------------------------------
+                0.00    0.00     200/200         set_fname(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int) [224]
+[232]    0.0    0.00    0.00     200         std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [232]
+                0.00    0.00     200/400         std::remove_reference<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>::type&& std::move<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [222]
+-----------------------------------------------
+                0.00    0.00     200/200         set_fname(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int) [224]
+[233]    0.0    0.00    0.00     200         std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) [233]
+                0.00    0.00     200/400         std::remove_reference<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>::type&& std::move<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [222]
+-----------------------------------------------
+                0.00    0.00     200/200         writeToFile(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, fMesh<double, 2> const&, pMesh<double, 0> const&, pMesh<double, 0> const&, pMesh<double, 0> const&) [55]
+[234]    0.0    0.00    0.00     200         std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [234]
+                0.00    0.00     200/200         std::char_traits<char>::length(char const*) [226]
+-----------------------------------------------
+                0.00    0.00     200/200         set_fname(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int) [224]
+[235]    0.0    0.00    0.00     200         std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [235]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [284]
+[236]    0.0    0.00    0.00       1         _GLOBAL__sub_I__Z9set_fnameNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_i [236]
+                0.00    0.00       1/1           __static_initialization_and_destruction_0(int, int) [237]
+-----------------------------------------------
+                0.00    0.00       1/1           _GLOBAL__sub_I__Z9set_fnameNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_i [236]
+[237]    0.0    0.00    0.00       1         __static_initialization_and_destruction_0(int, int) [237]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2015 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+ [124] _GLOBAL__sub_I__Z4delxRK5pMeshIdLi2EEdii [189] std::vector<double, std::allocator<double> >::max_size() const [43] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_drop_node(std::_Rb_tree_node<std::pair<int const, int> >*)
+ [105] _GLOBAL__sub_I__Z5qtojki [52] std::vector<double, std::allocator<double> >::operator[](unsigned long) const [98] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_rightmost()
+ [236] _GLOBAL__sub_I__Z9set_fnameNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_i [95] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::size() const [135] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_Rb_tree_impl<std::less<int>, true>::_M_initialize()
+ [138] gauss_init(fMesh<double, 2>&, pMesh<double, 0> const&, pMesh<double, 0> const&, pMesh<double, 0> const&) [110] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::key_comp() const [128] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_Rb_tree_impl<std::less<int>, true>::_Rb_tree_impl()
+  [55] writeToFile(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, fMesh<double, 2> const&, pMesh<double, 0> const&, pMesh<double, 0> const&, pMesh<double, 0> const&) [96] std::allocator<std::_Rb_tree_node<std::pair<int const, int> > >::~allocator() [27] std::_Rb_tree_node<std::pair<int const, int> >* std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_create_node<std::piecewise_construct_t const&, std::tuple<int&&>, std::tuple<> >(std::piecewise_construct_t const&, std::tuple<int&&>&&, std::tuple<>&&)
+   [9] RK4(fMesh<double, 2>&, fMesh<double, 2>&, double, int, double, double, double, pMesh<double, 0> const&) [154] std::allocator<double>::allocator(std::allocator<double> const&) [7] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_insert_node(std::_Rb_tree_node_base*, std::_Rb_tree_node_base*, std::_Rb_tree_node<std::pair<int const, int> >*)
+ [237] __static_initialization_and_destruction_0(int, int) [199] std::allocator<double>::allocator() [4] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_lower_bound(std::_Rb_tree_node<std::pair<int const, int> >*, std::_Rb_tree_node<std::pair<int const, int> >*, int const&)
+ [132] __static_initialization_and_destruction_0(int, int) [150] std::allocator<double>::~allocator() [71] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_destroy_node(std::_Rb_tree_node<std::pair<int const, int> >*)
+ [125] lapl(pMesh<double, 2> const&, pMesh<double, 0>&, double, double, double) [20] std::_Head_base<0ul, int&&, false>::_M_head(std::_Head_base<0ul, int&&, false>&) [28] void std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_construct_node<std::piecewise_construct_t const&, std::tuple<int&&>, std::tuple<> >(std::_Rb_tree_node<std::pair<int const, int> >*, std::piecewise_construct_t const&, std::tuple<int&&>&&, std::tuple<>&&)
+ [126] del2x(pMesh<double, 2> const&, double, int, int) [40] std::_Head_base<0ul, int&&, false>::_Head_base<int>(int&&) [54] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_get_Node_allocator()
+  [93] del2y(pMesh<double, 2> const&, double, int, int) [155] std::_Iter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, false>::_S_base(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >) [18] std::_Rb_tree_iterator<std::pair<int const, int> > std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_emplace_hint_unique<std::piecewise_construct_t const&, std::tuple<int&&>, std::tuple<> >(std::_Rb_tree_const_iterator<std::pair<int const, int> >, std::piecewise_construct_t const&, std::tuple<int&&>&&, std::tuple<>&&)
+ [133] del2z(pMesh<double, 2> const&, double, int, int) [156] std::_Iter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, true>::_S_base(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >) [99] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_get_insert_unique_pos(int const&)
+ [103] fd4d1(double, double, double, double) [190] std::_Iter_base<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, true>::_S_base(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >) [5] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_get_insert_hint_unique_pos(std::_Rb_tree_const_iterator<std::pair<int const, int> >, int const&)
+  [77] fd4d2(double, double, double, double, double) [159] std::_Iter_base<double*, false>::_S_base(double*) [47] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::end()
+  [44] qtojk(int)            [191] std::_Iter_base<std::move_iterator<double*>, true>::_S_base(std::move_iterator<double*>) [69] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::find(int const&)
+ [114] diffops(fMesh<double, 2>&, fMesh<double, 2>&, double, double, double) [85] std::_Tuple_impl<0ul, int&&>::_Tuple_impl(std::_Tuple_impl<0ul, int&&>&&) [61] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::begin()
+  [11] ff2bundle(fMesh<double, 2> const&, pMesh<double, 2>&, int, int, int) [33] std::_Tuple_impl<0ul, int&&>::_M_head(std::_Tuple_impl<0ul, int&&>&) [51] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_end()
+  [67] pencil2ff(pMesh<double, 0> const&, fMesh<double, 2>&, int, int, int) [64] std::_Tuple_impl<0ul, int&&>::_Tuple_impl<int>(int&&) [3] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_S_key(std::_Rb_tree_node<std::pair<int const, int> > const*)
+ [224] set_fname(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int) [175] double* std::__copy_move<false, true, std::random_access_iterator_tag>::__copy_m<double>(double const*, double const*, double*) [30] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_S_key(std::_Rb_tree_node_base const*)
+ [197] fMesh<double, 2>::validateDims(fMesh<double, 2> const&) [200] double* std::__copy_move<true, true, std::random_access_iterator_tag>::__copy_m<double>(double const*, double const*, double*) [90] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_S_left(std::_Rb_tree_node_base*)
+ [119] fMesh<double, 2>::fMesh(fMesh<double, 2> const&) [226] std::char_traits<char>::length(char const*) [86] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_begin()
+ [139] fMesh<double, 2>::fMesh(unsigned long, unsigned long, unsigned long, unsigned long) [163] void std::_Destroy_aux<true>::__destroy<double*>(double*, double*) [15] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_erase(std::_Rb_tree_node<std::pair<int const, int> >*)
+ [115] fMesh<double, 2>::~fMesh() [168] std::_Vector_base<double, std::allocator<double> >::_M_allocate(unsigned long) [29] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_S_right(std::_Rb_tree_node_base*)
+  [72] fMesh<double, 2>::operator=(fMesh<double, 2> const&) [176] std::_Vector_base<double, std::allocator<double> >::_Vector_impl::_Vector_impl(std::allocator<double> const&) [16] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_S_value(std::_Rb_tree_node<std::pair<int const, int> > const*)
+ [113] fMesh<double, 2>::operator()(int, int, int, int) [201] std::_Vector_base<double, std::allocator<double> >::_Vector_impl::_Vector_impl() [34] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_S_value(std::_Rb_tree_node_base const*)
+  [56] fMesh<double, 2>::operator*=(double const&) [169] std::_Vector_base<double, std::allocator<double> >::_Vector_impl::~_Vector_impl() [129] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_Rb_tree()
+  [82] fMesh<double, 2>::operator+=(fMesh<double, 2> const&) [164] std::_Vector_base<double, std::allocator<double> >::_M_deallocate(double*, unsigned long) [49] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::~_Rb_tree()
+ [141] pMesh<double, 0>::printpencil(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [177] std::_Vector_base<double, std::allocator<double> >::_M_create_storage(unsigned long) [220] std::iterator_traits<char*>::difference_type std::__distance<char*>(char*, char*, std::random_access_iterator_tag)
+ [130] pMesh<double, 0>::pMesh(unsigned long, unsigned long) [148] std::_Vector_base<double, std::allocator<double> >::_M_get_Tp_allocator() [208] __gnu_cxx::__enable_if<std::__is_scalar<double>::__value, double*>::__type std::__fill_n_a<double*, unsigned long, double>(double*, unsigned long, double const&)
+ [136] pMesh<double, 0>::~pMesh() [202] std::_Vector_base<double, std::allocator<double> >::_Vector_base() [80] int& std::__get_helper<0ul, int&&>(std::_Tuple_impl<0ul, int&&>&)
+ [131] pMesh<double, 2>::pMesh(unsigned long, unsigned long) [178] std::_Vector_base<double, std::allocator<double> >::_Vector_base(unsigned long, std::allocator<double> const&) [157] std::_Miter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > > >::iterator_type std::__miter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > > >(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >)
+ [137] pMesh<double, 2>::~pMesh() [170] std::_Vector_base<double, std::allocator<double> >::~_Vector_base() [194] std::_Miter_base<std::move_iterator<double*> >::iterator_type std::__miter_base<std::move_iterator<double*> >(std::move_iterator<double*>)
+  [58] pMesh<double, 2>::operator()(int, int, int) [37] std::_Rb_tree_node<std::pair<int const, int> >::_M_valptr() [158] std::_Niter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > > >::iterator_type std::__niter_base<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > > >(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >)
+ [225] std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > __gnu_cxx::__to_xstring<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, char>(int (*)(char*, unsigned long, char const*, __va_list_tag*), unsigned long, char const*, ...) [50] std::_Rb_tree_node<std::pair<int const, int> >::_Rb_tree_node() [195] std::_Niter_base<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > > >::iterator_type std::__niter_base<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > > >(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >)
+ [106] __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<int const, int> > >::deallocate(std::_Rb_tree_node<std::pair<int const, int> >*, unsigned long) [192] std::move_iterator<double*>::move_iterator(double*) [160] std::_Niter_base<double*>::iterator_type std::__niter_base<double*>(double*)
+ [107] void __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<int const, int> > >::destroy<std::pair<int const, int> >(std::pair<int const, int>*) [75] std::allocator_traits<std::allocator<std::_Rb_tree_node<std::pair<int const, int> > > >::deallocate(std::allocator<std::_Rb_tree_node<std::pair<int const, int> > >&, std::_Rb_tree_node<std::pair<int const, int> >*, unsigned long) [181] double* std::__copy_move_a<false, double const*, double*>(double const*, double const*, double*)
+  [63] __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<int const, int> > >::allocate(unsigned long, void const*) [68] void std::allocator_traits<std::allocator<std::_Rb_tree_node<std::pair<int const, int> > > >::destroy<std::pair<int const, int> >(std::allocator<std::_Rb_tree_node<std::pair<int const, int> > >&, std::pair<int const, int>*) [209] double* std::__copy_move_a<true, double*, double*>(double*, double*, double*)
+  [14] _ZN9__gnu_cxx13new_allocatorISt13_Rb_tree_nodeISt4pairIKiiEEE9constructIS4_IRKSt21piecewise_construct_tSt5tupleIIOiEESB_IIEEEEEvPT_DpOT0_ [59] std::allocator_traits<std::allocator<std::_Rb_tree_node<std::pair<int const, int> > > >::allocate(std::allocator<std::_Rb_tree_node<std::pair<int const, int> > >&, unsigned long) [182] double* std::__copy_move_a2<false, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*)
+  [84] __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<int const, int> > >::new_allocator() [35] _ZNSt16allocator_traitsISaISt13_Rb_tree_nodeISt4pairIKiiEEEE9constructIS3_IRKSt21piecewise_construct_tSt5tupleIIOiEESB_IIEEEEEvRS5_PT_DpOT0_ [210] double* std::__copy_move_a2<true, double*, double*>(double*, double*, double*)
+  [94] __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<int const, int> > >::~new_allocator() [171] std::allocator_traits<std::allocator<double> >::deallocate(std::allocator<double>&, double*, unsigned long) [62] std::tuple<int&&> std::forward_as_tuple<int>(int&&)
+ [166] __gnu_cxx::new_allocator<double>::deallocate(double*, unsigned long) [179] std::allocator_traits<std::allocator<double> >::select_on_container_copy_construction(std::allocator<double> const&) [183] double* std::uninitialized_copy<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*)
+ [167] __gnu_cxx::new_allocator<double>::allocate(unsigned long, void const*) [172] std::allocator_traits<std::allocator<double> >::allocate(std::allocator<double>&, unsigned long) [211] double* std::uninitialized_copy<std::move_iterator<double*>, double*>(std::move_iterator<double*>, std::move_iterator<double*>, double*)
+ [151] __gnu_cxx::new_allocator<double>::new_allocator(__gnu_cxx::new_allocator<double> const&) [193] std::allocator_traits<std::allocator<double> >::max_size(std::allocator<double> const&) [221] std::iterator_traits<char*>::iterator_category std::__iterator_category<char*>(char* const&)
+ [198] __gnu_cxx::new_allocator<double>::new_allocator() [13] std::_Rb_tree_iterator<std::pair<int const, int> >::_Rb_tree_iterator(std::_Rb_tree_node_base*) [184] double* std::__uninitialized_copy_a<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*, double>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*, std::allocator<double>&)
+ [149] __gnu_cxx::new_allocator<double>::~new_allocator() [134] std::_Rb_tree_iterator<std::pair<int const, int> >::operator++() [212] double* std::__uninitialized_copy_a<std::move_iterator<double*>, double*, double>(std::move_iterator<double*>, std::move_iterator<double*>, double*, std::allocator<double>&)
+ [121] __gnu_cxx::__alloc_traits<std::allocator<double> >::_S_select_on_copy(std::allocator<double> const&) [89] std::_Rb_tree_node_base::_Rb_tree_node_base() [122] double* std::__uninitialized_default_n<double*, unsigned long>(double*, unsigned long)
+  [31] __gnu_cxx::__aligned_membuf<std::pair<int const, int> >::_M_ptr() [180] double* std::__uninitialized_copy<true>::__uninit_copy<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*) [123] double* std::__uninitialized_default_n_a<double*, unsigned long, double>(double*, unsigned long, std::allocator<double>&)
+  [42] __gnu_cxx::__aligned_membuf<std::pair<int const, int> >::_M_addr() [203] double* std::__uninitialized_copy<true>::__uninit_copy<std::move_iterator<double*>, double*>(std::move_iterator<double*>, std::move_iterator<double*>, double*) [196] std::move_iterator<double*> std::__make_move_if_noexcept_iterator<double*, std::move_iterator<double*> >(double*)
+  [78] __gnu_cxx::__aligned_membuf<std::pair<int const, int> >::__aligned_membuf() [57] std::_Rb_tree_const_iterator<std::pair<int const, int> >::_Rb_tree_const_iterator(std::_Rb_tree_iterator<std::pair<int const, int> > const&) [213] double* std::__uninitialized_move_if_noexcept_a<double*, double*, std::allocator<double> >(double*, double*, double*, std::allocator<double>&)
+ [219] bool __gnu_cxx::__is_null_pointer<char>(char*) [204] double* std::__uninitialized_default_n_1<true>::__uninit_default_n<double*, unsigned long>(double*, unsigned long) [83] std::tuple_element<0ul, std::tuple<int&&> >::type& std::get<0ul, int&&>(std::tuple<int&&>&)
+ [152] __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >::__normal_iterator(double const* const&) [66] std::map<int, int, std::less<int>, std::allocator<std::pair<int const, int> > >::lower_bound(int const&) [214] unsigned long const& std::max<unsigned long>(unsigned long const&, unsigned long const&)
+ [186] __gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >::__normal_iterator(double* const&) [76] std::map<int, int, std::less<int>, std::allocator<std::pair<int const, int> > >::end() [185] double* std::copy<__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*>(__gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >, double*)
+  [36] fMesh<double, 2>::indx(int, int, int, int) const [111] std::map<int, int, std::less<int>, std::allocator<std::pair<int const, int> > >::map() [215] double* std::copy<std::move_iterator<double*>, double*>(std::move_iterator<double*>, std::move_iterator<double*>, double*)
+  [19] fMesh<double, 2>::operator()(int, int, int, int) const [6] std::map<int, int, std::less<int>, std::allocator<std::pair<int const, int> > >::operator[](int&&) [216] void std::fill<__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, double>(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, __gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, double const&)
+  [74] pMesh<double, 0>::spindex(int, int, int) const [32] std::pair<int const, int>::pair<int&&>(std::piecewise_construct_t, std::tuple<int&&>, std::tuple<>) [222] std::remove_reference<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>::type&& std::move<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&)
+  [70] pMesh<double, 0>::operator()(int, int, int) const [23] std::pair<int const, int>::pair<int&&, 0ul>(std::tuple<int&&>&, std::tuple<>&, std::_Index_tuple<0ul>, std::_Index_tuple<>) [100] std::remove_reference<int&>::type&& std::move<int&>(int&)
+  [17] pMesh<double, 2>::spindex(int, int, int) const [97] std::pair<std::_Rb_tree_node_base*, std::_Rb_tree_node_base*>::pair<std::_Rb_tree_node_base*&, void>(std::_Rb_tree_node_base*&, std::_Rb_tree_node_base* const&) [217] double* std::fill_n<double*, unsigned long, double>(double*, unsigned long, double const&)
+  [39] pMesh<double, 2>::operator()(int, int, int) const [79] std::pair<std::_Rb_tree_node_base*, std::_Rb_tree_node_base*>::pair<std::_Rb_tree_node_base*&, void>(std::_Rb_tree_node_base* const&, std::_Rb_tree_node_base*&) [87] int&& std::forward<int&&>(std::remove_reference<int&&>::type&)
+ [108] __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<int const, int> > >::max_size() const [127] std::pair<int, int>::pair<int&, int&, void>(int&, int&) [21] std::piecewise_construct_t const& std::forward<std::piecewise_construct_t const&>(std::remove_reference<std::piecewise_construct_t const&>::type&)
+ [161] __gnu_cxx::new_allocator<double>::max_size() const [60] std::tuple<int&&>::tuple<int, void>(int&&) [101] std::_Rb_tree_node_base*& std::forward<std::_Rb_tree_node_base*&>(std::remove_reference<std::_Rb_tree_node_base*&>::type&)
+  [12] __gnu_cxx::__aligned_membuf<std::pair<int const, int> >::_M_ptr() const [112] std::tuple<int&&>::tuple(std::tuple<int&&>&&) [25] std::tuple<int&&>&& std::forward<std::tuple<int&&> >(std::remove_reference<std::tuple<int&&> >::type&)
+  [10] __gnu_cxx::__aligned_membuf<std::pair<int const, int> >::_M_addr() const [118] std::vector<double, std::allocator<double> >::_M_default_append(unsigned long) [22] std::tuple<>&& std::forward<std::tuple<> >(std::remove_reference<std::tuple<> >::type&)
+ [153] __gnu_cxx::__normal_iterator<double const*, std::vector<double, std::allocator<double> > >::base() const [205] std::vector<double, std::allocator<double> >::end() [26] int&& std::forward<int>(std::remove_reference<int>::type&)
+ [187] __gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >::base() const [206] std::vector<double, std::allocator<double> >::begin() [165] void std::_Destroy<double*>(double*, double*)
+  [24] std::_Select1st<std::pair<int const, int> >::operator()(std::pair<int const, int> const&) const [117] std::vector<double, std::allocator<double> >::resize(unsigned long) [102] void std::_Destroy<double*, double>(double*, double*, std::allocator<double>&)
+ [162] std::_Vector_base<double, std::allocator<double> >::_M_get_Tp_allocator() const [120] std::vector<double, std::allocator<double> >::vector(std::vector<double, std::allocator<double> > const&) [218] __gnu_cxx::__enable_if<std::__is_scalar<double>::__value, void>::__type std::__fill_a<double*, double>(double*, double*, double const&)
+   [2] std::_Rb_tree_node<std::pair<int const, int> >::_M_valptr() const [207] std::vector<double, std::allocator<double> >::vector() [223] std::iterator_traits<char*>::difference_type std::distance<char*>(char*, char*)
+ [188] std::move_iterator<double*>::base() const [104] std::vector<double, std::allocator<double> >::~vector() [232] std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  [73] std::_Rb_tree_iterator<std::pair<int const, int> >::operator*() const [48] std::vector<double, std::allocator<double> >::operator[](unsigned long) [233] std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&)
+  [46] std::_Rb_tree_iterator<std::pair<int const, int> >::operator==(std::_Rb_tree_iterator<std::pair<int const, int> > const&) const [227] void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char*>(char*, char*) [234] std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  [45] std::_Rb_tree_const_iterator<std::pair<int const, int> >::_M_const_cast() const [228] void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char*>(char*, char*, std::forward_iterator_tag) [235] std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+ [109] std::map<int, int, std::less<int>, std::allocator<std::pair<int const, int> > >::key_comp() const [229] void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct_aux<char*>(char*, char*, std::__false_type) [116] operator delete(void*, void*)
+   [1] std::less<int>::operator()(int const&, int const&) const [230] std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string<char*, void>(char*, char*, std::allocator<char> const&) [53] fMesh<double, 2> operator*<double, 2>(fMesh<double, 2>, double const&)
+ [140] std::vector<double, std::allocator<double> >::_M_check_len(unsigned long, char const*) const [231] std::__cxx11::to_string(int) [88] operator new(unsigned long, void*)
+ [173] std::vector<double, std::allocator<double> >::end() const [38] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_get_node() [81] fMesh<double, 2> operator+<double, 2>(fMesh<double, 2>, fMesh<double, 2> const&)
+  [92] std::vector<double, std::allocator<double> >::size() const [41] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::_M_put_node(std::_Rb_tree_node<std::pair<int const, int> >*)
+ [174] std::vector<double, std::allocator<double> >::begin() const [65] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::lower_bound(int const&)

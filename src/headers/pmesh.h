@@ -145,7 +145,7 @@ public:
                 std::cout << "------------ pencil print: " << title << std::endl;
                 std::cout << "------------ q: " << q << " vi: " << vi << std::endl;
                 for (size_t i=0;i<nx_;i++)
-                        std::cout << mem_[spindex(i,q,vi)] << std::endl;
+                        std::cout << i << ": " << mem_[spindex(i,q,vi)] << std::endl;
                 
         std::cout << std::endl;
         std::cout << std::endl;

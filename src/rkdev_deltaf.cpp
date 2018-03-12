@@ -35,16 +35,16 @@ Int writeToFile(std::string fname, const Mesh &u, const Pencil &x, const Pencil 
 
 void diffops(Mesh &ff, Mesh &dff, const Real xfac, const Real yfac, const Real zfac)
 {
-        Bundle B(ff.nx_,1); /// scalar bundle
-        Pencil LaplB(ff.nx_,1); /// scalar pencil
+        Bundle LaplB(ff.nx_,1); /// scalar bundle
+        Pencil LaplP(ff.nx_,1); /// scalar pencil
         
         for (size_t j=0;j<ff.ny_;j++)
         {
                 for (size_t k=0;k<ff.nz_;k++)
                 {
-                        ff2bundle(ff,B,j,k);
-                        lapl(B,LaplB,xfac,yfac,zfac);
-                        pencil2ff(LaplB,dff,j,k);
+                        ff2bundle(ff,LaplB,j,k);
+                        lapl(LaplB,LaplP,xfac,yfac,zfac);
+                        pencil2ff(LaplP,dff,j,k);
                 }
         }
 }
@@ -59,7 +59,7 @@ void gauss_init(Mesh &u,const Pencil &x, const Pencil &y, const Pencil &z)
 {
         //Real prefac = 1/sqrt(pow(2*M_PI,3));
         
-        Real stddev = 1.0;
+        Real stddev = (2.0*M_PI)/4;
         Real prefac = 1.0;
         Real stddev2 = pow(stddev,2);
         
@@ -70,7 +70,7 @@ void gauss_init(Mesh &u,const Pencil &x, const Pencil &y, const Pencil &z)
                         for (size_t k=0;k<u.nz_;k++)
                         {
                                 Real r2 = pow(x(i),2)+pow(y(j),2)+pow(z(k),2);
-                                u(i,j,k,0) = prefac*exp(-1.0*r2/(1.0*stddev2));
+                                u(i,j,k,0) = prefac*exp(-1.0*r2/(2.0*stddev2));
                                 
                         }
                 }
@@ -138,9 +138,12 @@ void RK4(Mesh &ff, Mesh &dff, const Real dt, const Int maxtsteps, const Real dx,
                 k4 = dff*dt;
 
                 ff = ff + k1*c1 + k2*c2 + k3*c2 + k4*c1;
-                writeToFile(set_fname("rk4test_gaussInit_2",".csv",tstep),ff,x,x,x);
+                writeToFile(set_fname("rk4test_deltaInit_2",".csv",tstep),ff,x,x,x);
         }
         //std::cout << "completed timestep #" << tstep << std::endl;
+        
+     
+        
 }
 
 
@@ -160,16 +163,16 @@ Int main()
         
         Real diffC = DD;
         Real dt = 0.01*pow(dx,2)/diffC;
-
+        std::cout << dt << std::endl;
         Mesh ff(Nx,Ny,Nz,1);
         Mesh dff(Nx,Ny,Nz,1);
-        //deltainit(ff,x,x,x,dx);
-        gauss_init(ff,x,x,x);
+        deltainit(ff,x,x,x,dx);
+        //gauss_init(ff,x,x,x);
 
         //writeToFile(set_fname("rk2test_gaussInit_2",".csv",0),ff,x,x,x);
         //RK2(ff,dff,dt,maxtstep,invdx2,invdx2,invdx2,x);
 
-        writeToFile(set_fname("rk4test_gaussInit_2",".csv",0),ff,x,x,x);
+        writeToFile(set_fname("rk4test_deltaInit_2",".csv",0),ff,x,x,x);
         RK4(ff,dff,dt,maxtstep,invdx2,invdx2,invdx2,x);
         return 0;
 }
