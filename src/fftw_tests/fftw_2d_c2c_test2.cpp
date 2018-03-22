@@ -10,7 +10,7 @@ void initialise(fftw_complex *in, Real q1, Real q2,Pencil &x,Pencil &y)
 		for (size_t j=0;j<Ny;j++)
 		{
                         Real val = cos(q1*x(i))*cos(q2*y(j));
-                        in[j+Nx*i][0] = val;
+                        in[j+(Nx+2)*i][0] = val;
 		}
 	}
 }
@@ -51,39 +51,6 @@ Int main()
 
 	fftw_execute(forward);
 
-        //Solving for psi = (-1/k^2)*rho
-        for (size_t i=0;i<Nx;i++)
-        {
-                for (size_t j=0;j<Ny;j++)
-                {
-                        Int II = 0;
-                        Int JJ = 0;
-                        if (2*i<Nx)
-                                II = i;
-                        else
-                                II = Nx-i;
-
-                        if (2*j<Ny)
-                                JJ = j;
-                        else
-                                JJ = Ny-j;
-                        
-                        Real fac = pow(2*pi*(II/(L1-L0)),2)+pow(2*pi*(JJ/(L1-L0)),2);
-                        if (fac == 0)
-                        {
-                                out[j+Nx*i][0] = 0;
-                                out[j+Nx*i][1] = 0;
-                        }
-                        else
-                        {
-                                out[j+Nx*i][0] = (-1.0/fac)*out[j+Nx*i][0];
-                                out[j+Nx*i][1] = (-1.0/fac)*out[j+Nx*i][1];
-                        }
-                        
-                                                                 
-                }
-        }
-        
 
         fftw_execute(backward);
 
@@ -95,7 +62,7 @@ Int main()
 		{
                         Real ana_psi = -cos(q1*x(i))*cos(q2*x(j))/(pow(q1,2)+pow(q2,2));
                         Real ana_A = cos(q1*x(i))*cos(q2*x(j));
-                        Real diff = fabs(in[j+Nx*i][0]/(Nx*Ny)-ana_psi);
+                        Real diff = fabs(in[j+(Nx+2)*i][0]/(Nx*Ny)-ana_psi);
                         if (diff < 1e-14)
                                 diff = 0.0;
                         

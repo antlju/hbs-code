@@ -1,0 +1,19 @@
+from numpy import *
+from matplotlib import pyplot as plt
+import matplotlib.animation as animation
+
+fname = "/home/anton/dev/hbs/src/test.out"
+X = loadtxt(fname, usecols=0,delimiter="\t",skiprows=0)
+Y = loadtxt(fname, usecols=1,delimiter="\t",skiprows=0)
+F = loadtxt(fname, usecols=2,delimiter="\t",skiprows=0)
+
+N = 16
+
+num = array([X,Y,F/(N*N)])
+ana = array([X,Y,-cos(X)*cos(Y)/2])
+
+#num = F/(N*N)
+#ana = -cos(X)*cos(Y)/2
+#print max(num-ana)
+plt.imshow(ana-F/(N*N))
+plt.show()

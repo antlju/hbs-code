@@ -2,7 +2,7 @@
 
 #include <fftw3.h>
 
-void initialise(Real *in, Real q1, Real q2,Pencil &x,Pencil &y)
+void initialise(fftw_complex *in, Real q1, Real q2,Pencil &x,Pencil &y)
 {
 	size_t Nx = x.nx_,Ny = y.nx_;
 	for (size_t i=0;i<Nx;i++)
@@ -10,7 +10,7 @@ void initialise(Real *in, Real q1, Real q2,Pencil &x,Pencil &y)
 		for (size_t j=0;j<Ny;j++)
 		{
                         Real val = cos(q1*x(i))*cos(q2*y(j));
-                        in[j+Nx*i] = val;
+                        in[j+(Nx+2)*i][0] = val;
 		}
 	}
 }
@@ -23,19 +23,20 @@ Int main()
 	Int Nx=Size+1,Ny=Size+1; 
 	fftw_complex *mem_;
 	mem_ = (fftw_complex*)
-			fftw_malloc(
-                                sizeof(fftw_complex) * (Nx*(2*(Ny/2+1)))
-				);
+                fftw_malloc(
+                        sizeof(fftw_complex) * (Nx*Ny)
+                        );
+               
 	
 	//fftw_complex *out = mem_;
-	Real *in = mem_[0];
+	fftw_complex *in = mem_;
 	fftw_complex *out = mem_;
-	fftw_plan forward = fftw_plan_dft_r2c_2d(Nx,Ny,
-                                                 in,out,
-                                                 FFTW_MEASURE);
-        fftw_plan backward = fftw_plan_dft_c2r_2d(Nx,Ny,
-                                                  out,in,
-                                                  FFTW_MEASURE);
+	fftw_plan forward = fftw_plan_dft_2d(Nx,Ny,
+                                             in,out,
+                                             FFTW_FORWARD,FFTW_MEASURE);
+        fftw_plan backward = fftw_plan_dft_2d(Nx,Ny,
+                                              out,in,
+                                              FFTW_BACKWARD,FFTW_MEASURE);
 
 	Real L0=-2*M_PI;
         Real L1=2*M_PI;
@@ -50,19 +51,23 @@ Int main()
 
 	fftw_execute(forward);
 
-        // Solving for psi = (-1/k^2)*rho
+        //Solving for psi = (-1/k^2)*rho
         for (size_t i=0;i<Nx;i++)
         {
-                for (size_t j=0;j<(Ny/2+1);j++)
+                for (size_t j=0;j<Ny;j++)
                 {
                         Int II = 0;
                         Int JJ = 0;
-                        if (i<Nx/2)
+                        if (2*i<Nx)
                                 II = i;
                         else
                                 II = Nx-i;
+
+                        if (2*j<Ny)
+                                JJ = j;
+                        else
+                                JJ = Ny-j;
                         
-                        JJ = j;
                         Real fac = pow(2*pi*(II/(L1-L0)),2)+pow(2*pi*(JJ/(L1-L0)),2);
                         if (fac == 0)
                         {
@@ -79,6 +84,7 @@ Int main()
                 }
         }
         
+
         fftw_execute(backward);
 
         std::cout.precision(4);
@@ -89,7 +95,7 @@ Int main()
 		{
                         Real ana_psi = -cos(q1*x(i))*cos(q2*x(j))/(pow(q1,2)+pow(q2,2));
                         Real ana_A = cos(q1*x(i))*cos(q2*x(j));
-                        Real diff = fabs(in[j+Nx*i]/(Nx*Ny)-ana_psi);
+                        Real diff = fabs(in[j+(Nx+2)*i][0]/(Nx*Ny)-ana_psi);
                         if (diff < 1e-14)
                                 diff = 0.0;
                         
