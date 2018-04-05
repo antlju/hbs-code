@@ -6,7 +6,7 @@
 
 #include <fftw3.h>
 
-#define SIZE 512
+#define SIZE 64
 #define NXX SIZE
 #define NYY SIZE
 
@@ -136,7 +136,7 @@ Int main()
 
 	// Check inverse transform
 	
-	std::cout<< "--------------------------------------------" << std::endl;
+	//std::cout<< "--------------------------------------------" << std::endl;
 	for (Int i=0;i<Nx;i++)
 	{
 		for (Int j=0;j<Ny;j++)
@@ -147,17 +147,17 @@ Int main()
 
 			if (fabs(ifft) < 1e-14)
 				ifft = 0.0;
-			//std::cout << ifft << "\t";
+			std::cout << ifft << "\t";
 			
 			Real diff = fabs(ifft-analytic);
 			if (diff < 1e-14)
 				diff = 0.0;
-			std::cout << diff << "\t";
+			//std::cout << diff << "\t";
 			
 		}
 		std::cout << std::endl;
 	}
-	std::cout<< "--------------------------------------------" << std::endl;
+	//std::cout<< "--------------------------------------------" << std::endl;
 	
 
 	

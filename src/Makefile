@@ -6,7 +6,7 @@ HEADERS=Makefile headers/*.h
 
 DIFFOPS=partials/partials.cpp findiff/findiff.cpp curl/curl.cpp div/div.cpp grad/grad.cpp lapl/lapl.cpp
 UTILS=utility/bundlememcpy.cpp utility/linspace.cpp utility/pbc.cpp utility/printfield.cpp
-MAINSRC=fftw_2d_r2c_poisson_inplace.cpp
+MAINSRC=fftw_3d_r2c_poisson_meshTest.cpp
 SOURCES=$(MAINSRC) $(DIFFOPS) $(UTILS)
 
 OBJECTS=$(SOURCES:.cpp=.o)

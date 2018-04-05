@@ -13,5 +13,6 @@
 #include "typedef.h"
 #include "fmesh.h"
 #include "pmesh.h"
+#include "fftwmesh.h"
 #include "utility.h"
 #include "diffops.h"
