@@ -3,6 +3,7 @@
 
 #include "pmesh.h"
 #include "fmesh.h"
+#include "fftwmesh.h"
 #include "inputparams.h"
 
 typedef std::pair<Int, Int> Intpair;
@@ -12,3 +13,5 @@ typedef fMesh<Real, NGHOSTS> Mesh;
 
 typedef pMesh<Real, 0> Pencil;
 typedef pMesh<Real, NGHOSTS> Bundle;
+
+typedef FFTWMesh<Real> fftwMesh;

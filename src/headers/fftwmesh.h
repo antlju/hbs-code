@@ -6,11 +6,10 @@
 
 /// A template class of type T for storing and accessing memory
 /// allocated by fftw_malloc, to be used by the FFTW3 Fourier Transform package.
-/// Specifically for use in in-place real-to-complex 3D transforms for solving
-/// Poisson's equation by Fourier transform.
+/// Specifically for in-place real-to-complex 3D transforms to solve Poisson's equation.
 
 template<class T>
-class fftwMesh {
+class FFTWMesh {
 public:
         /// Internal main storage
         fftw_complex *mem_;
@@ -34,7 +33,7 @@ public:
         size_t nzh_;
         
         /// Default constructor
-        fftwMesh(size_t Nx, size_t Ny, size_t Nz) :
+        FFTWMesh(size_t Nx, size_t Ny, size_t Nz) :
                 nx_(Nx), ny_(Ny), nz_(Nz), nzh_(Nz/2+1)
         {
                 mem_ = (fftw_complex*) fftw_malloc(
@@ -60,30 +59,93 @@ public:
                 return mem_;
         }
 
+        const fftw_complex *outPtr() const
+        {
+                return mem_;
+        }
+
         T *inPtr()
         {
                 return mem_[0];
         }
 
-        T& in(Int i, Int j, Int k)
+        const T *inPtr() const
+        {
+                return mem_[0];
+        }
+
+        T& spacedom(Int i, Int j, Int k)
         {
 
                 return inPtr()[iindx(i,j,k)];
         }
 
-        T& outRe(Int i, Int j, Int k)
+        const T& spacedom(Int i, Int j, Int k) const
+        {
+
+                return inPtr()[iindx(i,j,k)];
+        }
+
+        T& freqdomRe(Int i, Int j, Int k)
         {
                 return outPtr()[oindx(i,j,k)][0];
         }
 
-        T& outIm(Int i, Int j, Int k)
+        T& freqdomIm(Int i, Int j, Int k)
         {
                 return outPtr()[oindx(i,j,k)][1];
         }
 
+        const T& freqdomRe(Int i, Int j, Int k) const
+        {
+                return outPtr()[oindx(i,j,k)][0];
+        }
+
+        const T& freqdomIm(Int i, Int j, Int k) const
+        {
+                return outPtr()[oindx(i,j,k)][1];
+        }
+
+
+        void fill(T val)
+        {
+                for (size_t i=0;i<nx_;i++)
+                {
+                        for (size_t j=0;j<ny_;j++)
+                        {
+                                for (size_t k=0;k<nzh_;k++)
+                                {
+                                        freqdomRe(i,j,k) = val;
+                                        freqdomIm(i,j,k) = val;
+                                }
+                        }
+                }
+        }
+
+        void printspacedom()
+        {
+                std::cout << "========================" << std::endl;
+                std::cout << "FFTWMesh 'input' print. " << std::endl;
+                std::cout << "========================" << std::endl;
+                for (size_t i=0;i<nx_;i++)
+                {
+                        for (size_t j=0;j<ny_;j++)
+                        {
+                                for (size_t k=0;k<nz_;k++)
+                                {
+                                        std::cout << spacedom(i,j,k) << "\t";
+                                }
+                                std::cout << std::endl;
+                        }
+                        std::cout << "----------------------------" << std::endl;
+                }
+                std::cout << std::endl;
+
+        }
+
         
         /// Default destructor
-        ~fftwMesh()
+        ~FFTWMesh()
         {
                 fftw_free(mem_);
         }

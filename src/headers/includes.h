@@ -6,6 +6,7 @@
 #include <cassert>
 #include <fstream>
 #include <string>
+#include <fftw3.h>
 
 /// Headers
 #include "inputparams.h"

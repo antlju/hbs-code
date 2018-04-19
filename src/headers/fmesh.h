@@ -86,7 +86,7 @@ public:
                 for (size_t vi=0;vi<nvar_;vi++)
                 {
                         std::cout << "========================" << std::endl;
-                        std::cout << "Component: " << vi << std::endl;
+                        std::cout << "fMesh print. Component: " << vi << std::endl;
                         std::cout << "========================" << std::endl;
                         for (size_t i=0;i<nx_;i++)
                         {
