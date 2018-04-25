@@ -22,8 +22,6 @@ void div(const Bundle &u, Pencil &p, const Real xfac, const Real yfac, const Rea
 
 /// Gradient operator on scalar bundle, returns 3-vector pencil
 void sgrad(const Bundle &B, Pencil &P, const Real xfac, const Real yfac, const Real zfac);
-void udotgradu(const Bundle &B, Pencil &P, const Real xfac, const Real yfac, const Real zfac);
 
 /// Laplacian on scalar bundle to scalar pencil
 void lapl(const Bundle &B, Pencil &P, const Real xfac, const Real yfac, const Real zfac);
-void vlapl(const Bundle &B, Pencil &P, const Real xfac, const Real yfac, const Real zfac);

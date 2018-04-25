@@ -32,7 +32,7 @@ public:
         size_t ng_ = NG;
         
         /// Internal indexing function taking ghostpoints into account. I.e 4D->1D map
-        size_t indx(Int i, Int j, Int k, Int vi=0) const
+        size_t indx(Int i, Int j, Int k, Int vi) const
         {
                 Int indx = vi*(nz_+2*NG)*(ny_+2*NG)*(nx_+2*NG)
                         +(i+NG)+(ny_+2*NG)*((j+NG)+(nz_+2*NG)*(k+NG)); 
@@ -75,9 +75,7 @@ public:
         fMesh& operator=(const fMesh& rhs);
         fMesh& operator=(const T& rhs);
         fMesh& operator+=(const fMesh& rhs);
-        fMesh& operator-=(const fMesh& rhs);
-
-        /// Utility methods.
+        
         void fill(const T val)
         {
                 std::fill(mem_.begin(),mem_.end(), val);
@@ -153,17 +151,6 @@ fMesh<T,NG>& fMesh<T,NG>::operator+=(const fMesh<T,NG>& rhs)
         return *this;
 }
 
-template <class T, Int NG>
-fMesh<T,NG>& fMesh<T,NG>::operator-=(const fMesh<T,NG>& rhs)
-{
-        validateDims(rhs);
-        for (size_t i=0;i<this->mem_.size();i++)
-        {
-                this->mem_[i] -= rhs.mem_[i];
-        }
-
-        return *this;
-}
 ///-------------------------------------------------- 
 ///    Array arithmetics, ie meshA+meshB = meshC etc.
 ///--------------------------------
@@ -174,14 +161,6 @@ inline fMesh<T, NG> operator+(fMesh<T, NG> lhs, const fMesh<T, NG>& rhs)
         lhs += rhs;
         return lhs;
 }
-
-template <class T, Int NG>
-inline fMesh<T, NG> operator-(fMesh<T, NG> lhs, const fMesh<T, NG>& rhs)
-{
-        lhs -= rhs;
-        return lhs;
-}
-
 
 ///-------------------------------------------------- 
 ///    Single value operators
