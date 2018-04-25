@@ -1,6 +1,6 @@
 #pragma once
 
 #define NGHOSTS 2
-#define NX 4
-#define NY 4
-#define NZ 4
+#define NX 16
+#define NY 16
+#define NZ 16

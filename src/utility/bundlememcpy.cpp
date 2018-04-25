@@ -20,7 +20,7 @@ void pencil2ff(const Pencil &P, Mesh &ff, Int j, Int k,Int ffvi)
                         }
                 }
         }
-}
+} //End pencil2ff()
 
 void ff2bundle(const Mesh &ff, Bundle &B, Int j, Int k, Int ffvi)
 {
@@ -58,4 +58,19 @@ void ff2bundle(const Mesh &ff, Bundle &B, Int j, Int k, Int ffvi)
                 }
         }
         
-} // end ff2vbundle()
+} // end ff2bundle()
+
+
+/// Function for copying from a bundle to a pencil.
+void bundle2pencil(const Bundle &B, Pencil &P)
+{
+        assert((B.nx_ == P.nx_) && (B.nvars_ == P.nvars_) );
+        for (size_t i=0;i<B.nx_;i++)
+        {
+                for (size_t vi=0;vi<B.nvars_;vi++)
+                {
+                        P(i,0,vi) = B(i,0,vi);
+                }
+        }
+        
+} //End bundle2pencil
