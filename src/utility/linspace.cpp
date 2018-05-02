@@ -1,6 +1,7 @@
 #include "includes.h"
 
-void linspace(Pencil &u, Real start, Real end, Real dx)
+/// Simple linspace function
+void linspace(Pencil &u, const Real start, const Real end, const Real dx)
 {
         Real size = u.nx_;
         //Real dx = (end-start)/size;
