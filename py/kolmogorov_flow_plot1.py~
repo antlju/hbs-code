@@ -2,6 +2,7 @@ from numpy import *
 from matplotlib import pyplot as plt
 import matplotlib.animation as animation
 
+fname = "/home/anton/dev/hbs/src/kolmo_v1_component_0__tNum_39.csv"
 
 X = loadtxt(fname, usecols=3,delimiter=",",skiprows=1)
 Y = loadtxt(fname, usecols=4,delimiter=",",skiprows=1)
@@ -10,7 +11,7 @@ F = loadtxt(fname, usecols=6,delimiter=",",skiprows=1)
     
 N = 8
 
-fname6 = "/home/anton/dev/hbs/src/kolmo_v1_component_0__tNum_39.csv"
+
 FFT = loadtxt(fname6)
 #FFT = FFT.transpose()
 
