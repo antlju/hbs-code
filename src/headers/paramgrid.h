@@ -15,6 +15,9 @@ public:
 
         /// Max time steps.
         Int maxTimesteps;
+
+        ///current time step
+        Int currentTimestep;
         
         /// Reynolds number, viscosity
         /// Might require updates in time steps.
@@ -28,11 +31,10 @@ public:
 
 
 /// A class for finite difference grid properties
-template <size_t Nx_, size_t Ny_, size_t Nz_>
 class Grid {
 public:
         /// Grid sizes
-        size_t nx_=Nx_,ny_=Ny_,nz_=Nz_;
+        size_t nx_,ny_,nz_;
         
         /// Spatial step sizes
         Real dx,dy,dz;
@@ -63,14 +65,16 @@ public:
         }
 
         /// Constructor for uniform grid, i. e same size along all three dimensions.
-        Grid(Real L0, Real L1) :
+        Grid(Int Nx,Int Ny,Int Nz,Real L0, Real L1) :
+                /// Init dims
+                nx_(Nx),ny_(Ny),nz_(Nz),
                 /// Init start and endpts
                 L0_(L0),L1_(L1),L0x(L0),L1x(L1),L0y(L0),L1y(L1),L0z(L0),L1z(L1),
                 /// Init pencils
-                x(Nx_),y(Ny_),z(Nz_)
+                x(Nx),y(Ny),z(Nz)
         {
                 /// Calculate step size and lengths
-                dx = (L1-L0)/(Nx_-1); dy = dx; dz = dx;
+                dx = (L1-L0)/(Nx-1); dy = dx; dz = dx;
                 xlen = (L1-L0); ylen = xlen; zlen = xlen;
 
                 /// Create x-axis linspace.

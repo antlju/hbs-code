@@ -50,6 +50,7 @@ void compute_ustar(const Mesh &ff, Mesh &dff, Mesh &pp,
         Pencil force(ff.nx_,3); /// Vector pencil
         Pencil uPencil(ff.nx_,3);
         Pencil pPencil(ff.nx_,3); // Vector Pencil
+        
         for (size_t j=0;j<ff.ny_;j++)
         {
                 for (size_t k=0;k<ff.nz_;k++)
@@ -222,6 +223,14 @@ Int main()
         Pencil x(Nx);
         linspace(x,L0,L1,dx);
 
+        /// Create objects for calculation and allocate appropriate space as.
+        Mesh ff(Nx,Ny,Nz,3);   //main velocity vector field
+        Mesh dff(Nx,Ny,Nz,3); //space for computations
+        Mesh pp(Nx,Ny,Nz,1); //pressure scalar field
+        Mesh psi(Nx,Ny,Nz,1); //result from Poisson equation.
+        Mesh gradpsi(Nx,Ny,Nz,3); //Gradient of psi to enforce solenoidal condition.
+        fftwMesh psifftw(Nx,Ny,Nz); //Space for 3D FFTW solver for Poisson eq.
+        
         /// Runge Kutta 4 step objects
         Mesh k1(ff.nx_,ff.ny_,ff.nz_,ff.nvar_);
         Mesh k2(ff.nx_,ff.ny_,ff.nz_,ff.nvar_);

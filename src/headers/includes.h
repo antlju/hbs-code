@@ -13,6 +13,7 @@
 #include "vartypedef.h"
 #include "typedef.h"
 #include "fmesh.h"
+#include "stats.h"
 #include "meshcontainer.h"
 #include "pmesh.h"
 #include "paramgrid.h"
