@@ -9,25 +9,25 @@
 class MeshContainer {
 public:
 
-        /// Velocity field and applied RHS
+        /// Velocity field
         Mesh& u;
-        Mesh& du;
+        Mesh& ustar;
 
-        /// Runge-Kutta 4 step fields
-        Mesh& k1;
-        Mesh& k2;
-        Mesh& k3;
-        Mesh& k4;
-
+        ///Runge-Kutta 3 "right hand sides" (Kim & Moin 1985)
+        Mesh& RHSk; //For some k in {1,2,3}
+        Mesh& RHSk_1; //For k-1
+        
         /// Pressure scalar field
         Mesh &p;
-
-        /// Constructor for Kolmogorov flow Navier stokes
+        Mesh &psi;
+        Mesh &gradpsi;
+        fftwMesh &fftwPsi;
         
-        MeshContainer(Mesh& velocity, Mesh& dvelocity, Mesh& pp) :
-                u(velocity), du(dvelocity),
-                k1(velocity),k2(velocity),k3(velocity),k4(velocity),
-                p(pp)
+        /// Constructor for Kolmogorov flow Navier stokes
+        MeshContainer(Mesh& velocity, Mesh &velstar, Mesh& rhsk, Mesh& rhsk_1, Mesh& pp, Mesh& psi_, Mesh &gradPsi, fftwMesh& fftwpsi) :
+                u(velocity), ustar(velstar),
+                RHSk(rhsk), RHSk_1(rhsk_1),
+                p(pp), psi(psi_), gradpsi(gradPsi), fftwPsi(fftwpsi)
         {
                 
         }

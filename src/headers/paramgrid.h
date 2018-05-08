@@ -22,7 +22,10 @@ public:
         /// Reynolds number, viscosity
         /// Might require updates in time steps.
         Real Re;
-        Real viscosity; 
+        Real viscosity;
+
+        /// Density
+        Real rho;
 
         /// Kolmogorov frequency
         Real kf;
@@ -87,3 +90,65 @@ public:
 
                 
 }; // End class Grid
+
+/// Container class for Runge-Kutta 3 coefficients 
+class RK3Coeff {
+public:
+
+        /// Coefficient values taken from Rosti & Brandt 2017
+        Real alpha1 = 4.0/15;
+        Real alpha2 = 1.0/15;
+        Real alpha3 = 1.0/6;
+        
+        Real beta1 = 8.0/15;
+        Real beta2 = 5.0/12;
+        Real beta3 = 3.0/4;
+        
+        Real gamma1 = 0.0;
+        Real gamma2 = -17.0/60;
+        Real gamma3 = -5.0/12;
+
+        /// Functions for returning constants for each k
+        Real alpha(Int k)
+        {
+                assert( k >= 1 && k <= 3);
+                
+                switch(k)
+                {
+                case 1: return alpha1;
+                case 2: return alpha2;
+                case 3: return alpha3;
+                default: return 0.0;
+                }
+                
+        }
+        
+        Real beta(Int k)
+        {
+                assert( k >= 1 && k <= 3);
+                
+                switch(k)
+                {
+                case 1: return beta1;
+                case 2: return beta2;
+                case 3: return beta3;
+                default: return 0.0;
+                }
+                
+        }
+        
+        Real gamma(Int k)
+        {
+                assert( k >= 1 && k <= 3);
+                
+                switch(k)
+                {
+                case 1: return gamma1;
+                case 2: return gamma2;
+                case 3: return gamma3;
+                default: return 0.0;
+                }
+                
+        }
+        
+};

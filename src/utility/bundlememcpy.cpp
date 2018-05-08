@@ -60,6 +60,26 @@ void ff2bundle(const Mesh &ff, Bundle &B, Int j, Int k, Int ffvi)
         
 } // end ff2bundle()
 
+void ff2pencil(const Mesh &ff, Pencil &P, Int j, Int k, Int ffvi)
+{
+        if (P.isScalar_ == 1)
+        {
+                for (Int i=0;i<(Int)P.nx_;i++)
+                {
+                        P(i,0,0) = ff(i,j,k,ffvi);
+                }
+        }
+        else
+        {
+                for (size_t vi=0;vi<P.nvars_;vi++)
+                {
+                        for (Int i=0;i<(Int)P.nx_;i++)
+                        {
+                                P(i,0,vi) = ff(i,j,k,vi);
+                        }
+                }
+        }
+} // end ff2pencil()
 
 /// Function for copying from a bundle to a pencil.
 void bundle2pencil(const Bundle &B, Pencil &P)
@@ -72,5 +92,4 @@ void bundle2pencil(const Bundle &B, Pencil &P)
                         P(i,0,vi) = B(i,0,vi);
                 }
         }
-        
 } //End bundle2pencil

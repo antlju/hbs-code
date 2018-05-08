@@ -70,8 +70,6 @@ void compute_ustar(MeshContainer &meshcntr, SolverParams &params, Grid &grid, St
     
                         ustar = uPncl + force;
 
-                        stats.calc_pencil_umax(ustar);
-                       
                 }
         }
         

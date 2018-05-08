@@ -1,2 +1,0 @@
-fieldtest:
-	g++ fieldclasstest.cpp -o fieldtest.o -std=c++11

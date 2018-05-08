@@ -58,7 +58,7 @@ void PoissonSolve3D(Mesh &inMesh, fftwMesh &fftwMem, const Int vi, const Real xl
 
         /// Forward transform
         fftw_execute(fwrd);
-
+        
         /// Perform Pssn frequency division step
         PssnFreqDiv(fftwMem,xlen);
 
@@ -66,5 +66,7 @@ void PoissonSolve3D(Mesh &inMesh, fftwMesh &fftwMem, const Int vi, const Real xl
         fftw_execute(bwrd);
 
         /// Copy from FFTW mesh to finite difference Mesh
-        fftw2mesh(fftwMem, inMesh, vi);
+        fftw2mesh(fftwMem,inMesh,vi);
+
+        inMesh = inMesh*(1.0/(Nx*Ny*Nz));
 }
