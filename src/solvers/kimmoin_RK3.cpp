@@ -1,4 +1,6 @@
 #include "includes.h"
+
+/// Function to calculate the source term for Poisson eq: rho/(2*alpha^k*dt)*div(u*)
 void calc_divustar(MeshContainer &meshCntr, SolverParams &params, const Grid &grid, const Int k_rk)
 {
         size_t Nx = meshCntr.u.nx_;
@@ -23,13 +25,16 @@ void calc_divustar(MeshContainer &meshCntr, SolverParams &params, const Grid &gr
         {
                 for (size_t k=0;k<Nz;k++)
                 {
+                        //Copy from mesh to bundle
                         ff2bundle(meshCntr.ustar,ustarBndl,j,k);
-                        
+
+                        // Calculate div(u*) and multiply by proper factor
+                        // for use as source in Poisson eq.
                         div(ustarBndl,divustarPncl,xfac,yfac,zfac);
                         divustarPncl = divustarPncl*(rho/(2*alphak*dt));
-                        
+
+                        // Copy from pencil to mesh
                         pencil2ff(divustarPncl,meshCntr.psi,j,k);
-                        
                 }
         }
 }
@@ -76,7 +81,7 @@ void calc_ustar(MeshContainer &meshCntr, SolverParams &params, const Grid &grid,
 
                         // Set ustar
                         ustarPncl = uPncl + rhskPncl*(dt*betak) + rhsk_1Pncl*(dt*gammak)
-                                + gradpPncl*(2*alphak*dt/rho);
+                                - gradpPncl*(2*alphak*dt/rho);
 
                         //Copy from pencil to mesh
                         pencil2ff(ustarPncl,meshCntr.ustar,j,k);
@@ -97,8 +102,8 @@ void calc_RHSk(MeshContainer &meshCntr, SolverParams &params, const Grid &grid)
         
         /// Create pencils and bundles;
         Bundle uBndl(Nx,3);
-        Pencil uDelu(Nx,3);
-        Pencil Laplu(Nx,3);
+        Pencil uDeluPncl(Nx,3);
+        Pencil LapluPncl(Nx,3);
         Pencil rhskPncl(Nx,3);
 
         //Loop over mesh (y,z)-plane
@@ -110,14 +115,14 @@ void calc_RHSk(MeshContainer &meshCntr, SolverParams &params, const Grid &grid)
                         ff2bundle(meshCntr.u,uBndl,j,k);
                         
                         //Compute (u.grad)u on the bundle.
-                        udotgradu(uBndl,uDelu,xfac,yfac,zfac);
+                        udotgradu(uBndl,uDeluPncl,xfac,yfac,zfac);
 
                         //Compute vector laplacian on the bundle.
-                        vlapl(uBndl,Laplu,xfac*xfac,yfac*yfac,zfac*zfac);
-                        Laplu = Laplu*(1.0/rho);
+                        vlapl(uBndl,LapluPncl,xfac*xfac,yfac*yfac,zfac*zfac);
+                        LapluPncl = LapluPncl*(1.0/rho);
 
                         //Set RHSk pencil
-                        rhskPncl = uDelu-Laplu;
+                        rhskPncl = LapluPncl-uDeluPncl;
 
                         //Copy from pencil to mesh
                         pencil2ff(rhskPncl,meshCntr.RHSk,j,k);
@@ -127,6 +132,7 @@ void calc_RHSk(MeshContainer &meshCntr, SolverParams &params, const Grid &grid)
         
 }
 
+/// Calls the Poisson solver
 void PoissonEq(MeshContainer &meshCntr, SolverParams &params, const Grid &grid, const Int k_rk)
 {
         /// Since this is a inplace real-to-complex transform solver,
@@ -135,11 +141,13 @@ void PoissonEq(MeshContainer &meshCntr, SolverParams &params, const Grid &grid, 
         
 }
 
+/// Updates pressure p^k = p^(k-1) + psi^k
 void update_pressure(MeshContainer &meshCntr)
 {
         meshCntr.p = meshCntr.p + meshCntr.psi;
 }
 
+/// Calculate gradient of psi. Perhaps this should be done in Fourier space later.
 void calc_gradpsi(MeshContainer &meshCntr, const SolverParams &params, const Grid &grid)
 {
         size_t Nx = meshCntr.psi.nx_;
@@ -150,7 +158,8 @@ void calc_gradpsi(MeshContainer &meshCntr, const SolverParams &params, const Gri
         Pencil gradpsiPncl(Nx,3);
 
         Real xfac=grid.invdx,yfac=grid.invdy,zfac=grid.invdz;
-        
+
+        // Loop over mesh (y,z)-plane 
         for (size_t j=0;j<Ny;j++)
         {
                 for (size_t k=0;k<Nz;k++)
@@ -163,6 +172,7 @@ void calc_gradpsi(MeshContainer &meshCntr, const SolverParams &params, const Gri
         }
 }
 
+/// Enforces solenoidal condition on velocity field by subtracting grad(psi) from ustar.
 void enforce_solenoidal(MeshContainer &meshCntr, const SolverParams &params, const Grid &grid, const Int k_rk)
 {
         ///Set param constants
@@ -172,26 +182,31 @@ void enforce_solenoidal(MeshContainer &meshCntr, const SolverParams &params, con
         RK3Coeff coeffs;
         Real alphak = coeffs.alpha(k_rk);
 
+        apply_pbc(meshCntr.psi);
         calc_gradpsi(meshCntr,params,grid);
         meshCntr.u = meshCntr.ustar-(meshCntr.gradpsi*(2*alphak*dt/rho));
 }
 
-void RK3_timestepping(MeshContainer &meshCntr, SolverParams &params, const Grid &grid, Stats &stats)
+/// Function that performs RK3 substeps from k=1 to k=3
+void RK3_stepping(MeshContainer &meshCntr, SolverParams &params, const Grid &grid, Stats &stats)
 {
+        Int k_rk; //Runge-Kutta 3 substep index
         /// From the previous step we have k=0 (time step n) data.
         /// We want to arrive at data for k=3 (time step n+1).
 
         /// Let k=1.
-        Int k_rk = 1;
+        k_rk = 1;
         /// First calculate RHSk = D_j u_i u_j-(nu/rho)*Lapl(u) )
         /// Then calc. u* = u+(2*dt*(alpha(k)/rho))*grad(p)
         ///                        +(dt*beta(k))*RHSk+(dt*gamma(k))*RHSk_1
         /// This is all done within the bundle/pencil framework.
         meshCntr.RHSk_1 = meshCntr.RHSk;
+        apply_pbc(meshCntr.u);
         calc_RHSk(meshCntr,params,grid);
         calc_ustar(meshCntr,params,grid,k_rk);
 
         /// Solve the Poisson eq for Psi.
+        apply_pbc(meshCntr.ustar);
         calc_divustar(meshCntr,params,grid,k_rk);
         PoissonEq(meshCntr,params,grid,k_rk);
 
@@ -199,7 +214,7 @@ void RK3_timestepping(MeshContainer &meshCntr, SolverParams &params, const Grid 
         update_pressure(meshCntr);
         enforce_solenoidal(meshCntr,params,grid,k_rk);
         
-} //End RK3_timestepping()
+} //End RK3_stepping()
 
 
 Int main()
@@ -240,7 +255,8 @@ Int main()
         /// Create container object with references to meshes
         MeshContainer meshCntr(uu,ustar,RHSk,RHSk_1,pp,psi,gradpsi,fftwPsi);
 
-        RK3_timestepping(meshCntr,params,grid,stats);
+        /// Run runge-kutta 3 stepping
+        RK3_stepping(meshCntr,params,grid,stats);
         return 0;
         
-}//End main()
+} //End main()
