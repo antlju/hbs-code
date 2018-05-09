@@ -1,34 +1,9 @@
 #include "includes.h"
 
-//void init_velocity(Mesh &u, const Pencil &x, SolverParams &params)
-void init_velocity(Mesh &u)
+void set_force(Pencil &force, const SolverParams &params, const Grid &grid, const Int j)
 {
-        /// Kolmogorov frequency
-        //Real kf = params.kf;
-
-        /// Set initial state
-        for (size_t i=0;i<u.nx_;i++)
-        {
-                for (size_t j=0;j<u.ny_;j++)
-                {
-                        for (size_t k=0;k<u.nz_;k++)
-                        {
-                                //Real term = sin(x(i))+sin(x(j))+sin(x(k));
-                                //Real term = sin(kf*x(j));
-                                u(i,j,k,0) = 0.0;
-                                u(i,j,k,1) = 0.0;
-                                u(i,j,k,2) = 0.0;
-                        }
-                }
-        }
-        
-}//End init_velocity()
-
-
-void set_force(Pencil &force, const Grid &grid, const SolverParams &params, const Int j)
-{
-        Real Amp = 1.0, kf = params.kf;
-
+        Real Amp = 1.0;
+        Real kf = params.kf;
         for (size_t i=0;i<force.nx_;i++)
         {
                 force(i,0,0) = Amp*sin(kf*grid.x(j));
@@ -36,44 +11,241 @@ void set_force(Pencil &force, const Grid &grid, const SolverParams &params, cons
                 force(i,0,2) = 0.0;
         }
         
+} //End set_force
+
+/// Function to calculate the source term for Poisson eq: rho/(2*alpha^k*dt)*div(u*)
+void calc_divustar(MeshContainer &meshCntr, SolverParams &params, const Grid &grid, const Int k_rk)
+{
+        size_t Nx = meshCntr.u.nx_;
+        size_t Ny = meshCntr.u.ny_;
+        size_t Nz = meshCntr.u.nz_;
+
+        /// Parameters
+        Real xfac=grid.invdx,yfac=grid.invdy,zfac=grid.invdz;
+        Real rho = params.rho;
+        Real dt = params.dt;
+        
+        /// Create RK3 coefficients
+        RK3Coeff coeffs;
+        Real alphak = coeffs.alpha(k_rk);
+
+        /// Create pencils and bundles;
+        Bundle ustarBndl(Nx,3);
+        Pencil divustarPncl(Nx,1);
+
+        //Loop over mesh (y,z)-plane
+        for (size_t j=0;j<Ny;j++)
+        {
+                for (size_t k=0;k<Nz;k++)
+                {
+                        //Copy from mesh to bundle
+                        ff2bundle(meshCntr.ustar,ustarBndl,j,k);
+
+                        // Calculate div(u*) and multiply by proper factor
+                        // for use as source in Poisson eq.
+                        div(ustarBndl,divustarPncl,xfac,yfac,zfac);
+                        divustarPncl = divustarPncl*(rho/(2*alphak*dt));
+
+                        // Copy from pencil to mesh
+                        pencil2ff(divustarPncl,meshCntr.psi,j,k);
+                }
+        }
 }
 
-/// Computes u* = u_old+dt*(-grad(p)-(u dot grad)u+nu*Lapl(u)+force)
-void compute_ustar(MeshContainer &meshcntr, SolverParams &params, Grid &grid, Stats &stats)
+/// Calculate u* = u+(2*dt*(alpha(k)/rho))*grad(p)+(dt*beta(k))*RHSk+(dt*gamma(k))*RHSk_1
+void calc_ustar(MeshContainer &meshCntr, SolverParams &params, const Grid &grid, const Int k_rk)
 {
-        // Sizes
-        Int nx = meshcntr.u.nx_, ny = meshcntr.u.ny_, nz = meshcntr.u.nz_;
+        size_t Nx = meshCntr.u.nx_;
+        size_t Ny = meshCntr.u.ny_;
+        size_t Nz = meshCntr.u.nz_;
+
+        /// Parameters
+        Real xfac=grid.invdx,yfac=grid.invdy,zfac=grid.invdz;
+        Real rho = params.rho;
+        Real dt = params.dt;
         
-        /// Create bundle and pencil objects
-        Bundle uBndl(nx,3); /// Vector bundle
-        Bundle pBndl(nx,1); /// Scalar bundle
+        /// Create RK3 coefficients
+        RK3Coeff coeffs;
+        Real alphak = coeffs.alpha(k_rk);
+        Real betak = coeffs.beta(k_rk);
+        Real gammak = coeffs.beta(k_rk);
 
-        Pencil ustar(nx,3); /// Vector pencil
-        Pencil uDelu(nx,3); /// Vector pencil
-        Pencil uPncl(nx,3); /// Vector pencil, to save "old u"
+        /// Create pencils and bundles;
+        Bundle pBndl(Nx,1);
+        Pencil uPncl(Nx,3);
+        Pencil gradpPncl(Nx,3);
+        Pencil ustarPncl(Nx,3);
+        Pencil rhskPncl(Nx,3);
+        Pencil rhsk_1Pncl(Nx,3);
 
-        Pencil force(nx,3); /// Vector pencil
-
-        
-        for (size_t j=0;j<ny;j++)
+        //Loop over mesh (y,z)-plane
+        for (size_t j=0;j<Ny;j++)
         {
-                for (size_t k=0;k<nz;k++)
+                for (size_t k=0;k<Nz;k++)
                 {
-                        /// Copy from mesh operations
-                        ff2bundle(meshcntr.u,uBndl,j,k);
-                        ff2bundle(meshcntr.p,pBndl,j,k);
+                        //Copy from mesh to bundle/pencil
+                        ff2bundle(meshCntr.p,pBndl,j,k);
+                        ff2pencil(meshCntr.u,uPncl,j,k);
+                        ff2pencil(meshCntr.RHSk,rhskPncl,j,k);
+                        ff2pencil(meshCntr.RHSk_1,rhsk_1Pncl,j,k);
+                        
+                        //Compute gradient of the pressure (scalar bundle -> vector pencil)
+                        sgrad(pBndl,gradpPncl,xfac,yfac,zfac);
 
-                        // Copy "old" u to pencil
-                        bundle2pencil(uBndl,uPncl);
+                        // Set ustar
+                        ustarPncl = uPncl + rhskPncl*(dt*betak) + rhsk_1Pncl*(dt*gammak)
+                                - gradpPncl*(2*alphak*dt/rho);
 
-                        set_force(force,grid,params,j);
-    
-                        ustar = uPncl + force;
+                        //Copy from pencil to mesh
+                        pencil2ff(ustarPncl,meshCntr.ustar,j,k);
+                        
+                }
+        }
+}
 
+/// Function to calculate RHSk = (u_j Del_j u_i)-nu*Lapl(u) at some RK substep k.
+void calc_RHSk(MeshContainer &meshCntr, SolverParams &params, const Grid &grid)
+{
+        size_t Nx = meshCntr.u.nx_;
+        size_t Ny = meshCntr.u.ny_;
+        size_t Nz = meshCntr.u.nz_;
+
+        Real xfac=grid.invdx,yfac=grid.invdy,zfac=grid.invdz;
+        Real rho = params.rho;
+        
+        /// Create pencils and bundles;
+        Bundle uBndl(Nx,3);
+        Pencil uDeluPncl(Nx,3);
+        Pencil LapluPncl(Nx,3);
+        Pencil rhskPncl(Nx,3);
+        Pencil forcePncl(Nx,3);
+
+        //Loop over mesh (y,z)-plane
+        for (size_t j=0;j<Ny;j++)
+        {
+                for (size_t k=0;k<Nz;k++)
+                {
+                        //Copy from mesh to bundle
+                        ff2bundle(meshCntr.u,uBndl,j,k);
+                        
+                        //Compute (u.grad)u on the bundle.
+                        udotgradu(uBndl,uDeluPncl,xfac,yfac,zfac);
+
+                        //Compute vector laplacian on the bundle.
+                        vlapl(uBndl,LapluPncl,xfac*xfac,yfac*yfac,zfac*zfac);
+                        LapluPncl = LapluPncl*(1.0/rho);
+
+                        //Compute force pencil
+                        set_force(forcePncl,params,grid,j);
+                        
+                        //Set RHSk pencil
+                        rhskPncl = LapluPncl-uDeluPncl+forcePncl;
+
+                        //Copy from pencil to mesh
+                        pencil2ff(rhskPncl,meshCntr.RHSk,j,k);
+                                        
                 }
         }
         
+}
 
+/// Calls the Poisson solver
+void PoissonEq(MeshContainer &meshCntr, SolverParams &params, const Grid &grid, const Int k_rk)
+{
+        /// Since this is a inplace real-to-complex transform solver,
+        /// here the input mesh psi acts as the input source as well as the result.
+        PoissonSolve3D(meshCntr.psi,meshCntr.fftwPsi,0,grid.xlen);
+        
+}
+
+/// Updates pressure p^k = p^(k-1) + psi^k
+void update_pressure(MeshContainer &meshCntr)
+{
+        meshCntr.p = meshCntr.p + meshCntr.psi;
+}
+
+/// Calculate gradient of psi. Perhaps this should be done in Fourier space later.
+void calc_gradpsi(MeshContainer &meshCntr, const SolverParams &params, const Grid &grid)
+{
+        size_t Nx = meshCntr.psi.nx_;
+        size_t Ny = meshCntr.psi.ny_;
+        size_t Nz = meshCntr.psi.nz_;
+        
+        Bundle psiBndl(Nx,1);
+        Pencil gradpsiPncl(Nx,3);
+
+        Real xfac=grid.invdx,yfac=grid.invdy,zfac=grid.invdz;
+
+        // Loop over mesh (y,z)-plane 
+        for (size_t j=0;j<Ny;j++)
+        {
+                for (size_t k=0;k<Nz;k++)
+                {
+                        ff2bundle(meshCntr.psi,psiBndl,j,k); //Copy
+                        sgrad(psiBndl,gradpsiPncl,xfac,yfac,zfac); //Compute gradient on bundle
+                        pencil2ff(gradpsiPncl,meshCntr.gradpsi,j,k);
+                        
+                }
+        }
+}
+
+/// Enforces solenoidal condition on velocity field by subtracting grad(psi) from ustar.
+void enforce_solenoidal(MeshContainer &meshCntr, const SolverParams &params, const Grid &grid, const Int k_rk)
+{
+        ///Set param constants
+        Real dt = params.dt, rho = params.rho;
+        
+        /// Create RK3 coefficient
+        RK3Coeff coeffs;
+        Real alphak = coeffs.alpha(k_rk);
+
+        apply_pbc(meshCntr.psi);
+        calc_gradpsi(meshCntr,params,grid);
+        meshCntr.u = meshCntr.ustar-(meshCntr.gradpsi*(2*alphak*dt/rho));
+}
+
+/// Function that performs RK3 substeps from k=1 to k=3
+void RK3_stepping(MeshContainer &meshCntr, SolverParams &params, const Grid &grid)
+{
+        
+        /// From the previous step we have k=0 (time step n) data.
+        /// We want to arrive at data for k=3 (time step n+1).
+
+        for (Int k_rk = 1;k_rk<=3;k_rk++)
+        {
+                /// First calculate RHSk = -D_j u_i u_j+(nu/rho)*Lapl(u))+force
+                /// Then calc. u* = u+(2*dt*(alpha(k)/rho))*grad(p)
+                ///                        +(dt*beta(k))*RHSk+(dt*gamma(k))*RHSk_1
+                /// This is all done within the bundle/pencil framework.
+                meshCntr.RHSk_1 = meshCntr.RHSk;
+                apply_pbc(meshCntr.u);
+                calc_RHSk(meshCntr,params,grid);
+                calc_ustar(meshCntr,params,grid,k_rk);
+
+                /// Solve the Poisson eq for Psi.
+                apply_pbc(meshCntr.ustar);
+                calc_divustar(meshCntr,params,grid,k_rk);
+                PoissonEq(meshCntr,params,grid,k_rk);
+
+                /// Update pressure and enforce solenoidal condition
+                update_pressure(meshCntr);
+                enforce_solenoidal(meshCntr,params,grid,k_rk);
+        }
+        
+} //End RK3_stepping()
+
+
+/// Function for calling various diagnostics calculations
+void calc_diagnostic(const MeshContainer &meshCntr, Stats &stats)
+{
+        /// Calculate maximum velocity.
+        stats.umax_old = stats.umax;
+        stats.umax = stats.calc_mesh_max(meshCntr.u);
+
+        /// Calculate root mean square velocity
+        stats.urms = stats.calc_mesh_rms(meshCntr.u);
+        
+        
 }
 
 Int main()
@@ -88,27 +260,38 @@ Int main()
         params.dt = dt;
         params.maxTimesteps = maxtsteps;
         params.currentTimestep = 0;
-        params.kf = 0.1; //Kolmogorov frequency
+        params.kf = 1.0; //Kolmogorov frequency
+        params.rho = 1.0;
         
         /// Set grid sizes
-        const Real L0 = -M_PI, L1 = M_PI;
-        const Int Nsize = 4;
+        const Real L0 = -M_PI, L1 = M_PI; // x,y,z in [-pi,pi]
+        const Int Nsize = 8;
         
-        /// Initialise uniform 3D finite difference grid object.
+        /// Create and initialise uniform 3D finite difference grid object.
         Grid grid(Nsize,Nsize,Nsize,L0,L1);
 
         /// Create run statistics object
         Stats stats;
 
         /// Create mesh objects
-        Mesh u(Nsize,Nsize,Nsize,3); /// vector field
-        Mesh du(Nsize,Nsize,Nsize,3); ///  vector field
-        Mesh pp(Nsize,Nsize,Nsize,1); /// scalar field
+        Mesh uu(Nsize,Nsize,Nsize,3); /// velocity vector field
+        Mesh ustar(Nsize,Nsize,Nsize,3); /// ustar
+        Mesh RHSk(Nsize,Nsize,Nsize,3); /// RHS^k vector field
+        Mesh RHSk_1(Nsize,Nsize,Nsize,3); /// RHS^(k-1) vector field
+        Mesh pp(Nsize,Nsize,Nsize,1); /// pressure scalar field
+        Mesh psi(Nsize,Nsize,Nsize,1); /// Psi scalar field
+        Mesh gradpsi(Nsize,Nsize,Nsize,3); /// grad(psi) vector field
+        fftwMesh fftwPsi(Nsize,Nsize,Nsize); /// FFTW3 memory scalar field
         
         /// Create container object with references to meshes
-        MeshContainer meshCntr(u,du,pp);
+        MeshContainer meshCntr(uu,ustar,RHSk,RHSk_1,pp,psi,gradpsi,fftwPsi);
 
-        compute_ustar(meshCntr,params,grid,stats);
+        /// Run Runge-Kutta 3 substepping
+        RK3_stepping(meshCntr,params,grid);
+        uu.print();
+        calc_diagnostic(meshCntr,stats);
+
+        
         return 0;
         
-}//End main()
+} //End main()
