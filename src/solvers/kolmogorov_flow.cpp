@@ -1,4 +1,7 @@
 #include "includes.h"
+#include <chrono>
+
+using Clock=std::chrono::high_resolution_clock;
 
 void set_force(Pencil &force, const SolverParams &params, const Grid &grid, const Int j)
 {
@@ -285,16 +288,17 @@ void RK3_stepping(MeshContainer &meshCntr, SolverParams &params, Stats &stats, c
 
 void calc_Re(SolverParams &params, const Stats &stats, const Grid &grid)
 {
-        std::cout << stats.urms << "\t" << grid.dx << "\t" << params.viscosity << std::endl;
+        //std::cout << stats.urms << "\t" << grid.dx << "\t" << params.viscosity << std::endl;
         params.Re = stats.urms*grid.dx/params.viscosity;
-        std::cout << "Re: " << params.Re << "\t sqrt(2): " << sqrt(2.0) << std::endl;
+        //std::cout << "Re: " << params.Re << "\t sqrt(2): " << sqrt(2.0) << std::endl;
 }
 
 Int main()
 {
-
+        auto t1 = Clock::now();
+ 
         /// Time settings.
-        const Int maxtsteps = 100;
+        const Int maxtsteps = 30;
 
         /// Create parameter object and initialise parameters.
         SolverParams params;
@@ -347,6 +351,14 @@ Int main()
                 //std::cout << ts << " : " << params.dt << std::endl;
         }
         
+        // Write u_0(x,y,z) at last step to file
+        writeToFile_1DArr(set_fname("kolm_rk3_x",".dat",params.maxTimesteps),
+                          meshCntr.u,0,grid);
+        
+        auto t2 = Clock::now();
+        std::cout << "Delta t2-t1: " 
+                  << std::chrono::duration_cast<std::chrono::seconds>(t2 - t1).count()
+                  << " seconds" << std::endl;
         
         return 0;
         

@@ -3,28 +3,29 @@ from matplotlib import pyplot as plt
 
 ### This script plots the x-component of u(x,y,z) in the (x,y)-plane.
 
-### Load data. This is formatted as a set of (y,z)-arrays sequenced along x-direction.
-fname0 = "/home/anton/dev/hbs/simdata/kolmo_v1_component_0_tNum_99.dat"
+### Load data. This is a 1D array using C-style access with last index being the fastest.
+fname0 = "/home/anton/dev/hbs/simdata/kolm_rk3_x_tNum_30.dat"
+
 u0 = loadtxt(fname0,skiprows=1)
-N = len(u0[0])
+N = 32
+Nx = N
+Ny = N
+Nz = N
 
+U0 = zeros((N,N,N));
 
-#print N
+for i in range(0,N):
+    for j in range(0,N):
+        for k in range(0,N):
+            U0[i][j][k] = u0[(Ny*i+j)*Nz+k]
+            
+# Fix k=0
 
-# The (x,y)-plane array
-u0_xy = zeros((N,N))
+Umesh = U0[:][:][0]
 
-### Set the (x,y)-plane array from loaded data.
-for i in range(N):
-    for j in range(N):
-        u0_xy[i][j] = u0[N*i+j][0]
-
-#print u0_xy
-
-
-### Plot
-
-plt.imshow(u0_xy.transpose()) #transpose so that we have a 'standard' y(x)-plot
+plt.figure(1)
+plt.imshow(Umesh)
 plt.xlabel('x')
 plt.ylabel('y')
+
 plt.show()
