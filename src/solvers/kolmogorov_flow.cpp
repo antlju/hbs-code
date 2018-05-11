@@ -102,9 +102,16 @@ void calc_ustar(MeshContainer &meshCntr, SolverParams &params, const Grid &grid,
                 }
         }
 }
-
+void calc_pncl_diagnostics(const Pencil &u, Stats &stats)
+{
+        stats.calc_pncl_absmax(u);
+        //stats.calc_pncl_rms(u);
+        //std::cout << "umax: " << stats.umax << std::endl;
+        //std::cout << "urms: " << stats.urms << std::endl;
+}
 /// Function to calculate RHSk = (u_j Del_j u_i)-nu*Lapl(u) at some RK substep k.
-void calc_RHSk(MeshContainer &meshCntr, SolverParams &params, const Grid &grid)
+/// Here we also calculate necessary 
+void calc_RHSk(MeshContainer &meshCntr, SolverParams &params, Stats &stats, const Grid &grid, const Int k_rk)
 {
         size_t Nx = meshCntr.u.nx_;
         size_t Ny = meshCntr.u.ny_;
@@ -115,11 +122,18 @@ void calc_RHSk(MeshContainer &meshCntr, SolverParams &params, const Grid &grid)
         
         /// Create pencils and bundles;
         Bundle uBndl(Nx,3);
+        Pencil uPncl(Nx,3);
         Pencil uDeluPncl(Nx,3);
         Pencil LapluPncl(Nx,3);
         Pencil rhskPncl(Nx,3);
         Pencil forcePncl(Nx,3);
 
+        /// Statistics set
+        stats.umax_old = stats.umax;
+        stats.urms_old = stats.urms;
+        stats.umax = 0.0;
+        stats.urms = 0.0;
+        
         //Loop over mesh (y,z)-plane
         for (size_t j=0;j<Ny;j++)
         {
@@ -127,6 +141,13 @@ void calc_RHSk(MeshContainer &meshCntr, SolverParams &params, const Grid &grid)
                 {
                         //Copy from mesh to bundle
                         ff2bundle(meshCntr.u,uBndl,j,k);
+                        ff2pencil(meshCntr.u,uPncl,j,k);
+
+                        
+                        //If k_rk = 1: Calculate pencil diagnostics from u
+                        if (k_rk == 1)
+                                calc_pncl_diagnostics(uPncl,stats);
+                        
                         
                         //Compute (u.grad)u on the bundle.
                         udotgradu(uBndl,uDeluPncl,xfac,yfac,zfac);
@@ -146,6 +167,10 @@ void calc_RHSk(MeshContainer &meshCntr, SolverParams &params, const Grid &grid)
                                         
                 }
         }
+
+        // Calc urms
+        stats.urms = sqrt(stats.urms/(Nx*Ny*Nz));
+        //std::cout << "urms final: " << stats.urms << std::endl;
         
 }
 
@@ -204,12 +229,31 @@ void enforce_solenoidal(MeshContainer &meshCntr, const SolverParams &params, con
         meshCntr.u = meshCntr.ustar-(meshCntr.gradpsi*(2*alphak*dt/rho));
 }
 
+void update_timestep(SolverParams &params, Stats &stats, const Grid &grid)
+{
+        Real c1=0.5,c2=0.5; //Courant numbers for advection and diffusion respectively
+
+        Real nu = params.viscosity,dx = grid.dx,L=grid.dx;
+        
+        //Factor of 1/3 since dx=dy=dz
+        if (stats.umax < 1e-10)
+                stats.umax = stats.umax_old;
+        
+        Real adv = (1.0/3)*c1*dx/stats.umax;
+        Real diff = (1.0/3)*c2*pow(L,2)/nu;
+        std::cout << "adv : " << adv << "\t diff: " << diff << std::endl;
+        //Set new time step size according to CFL condition
+        params.dt = std::min(adv,diff);
+
+}
+
 /// Function that performs RK3 substeps from k=1 to k=3
-void RK3_stepping(MeshContainer &meshCntr, SolverParams &params, const Grid &grid)
+void RK3_stepping(MeshContainer &meshCntr, SolverParams &params, Stats &stats, const Grid &grid)
 {
         
         /// From the previous step we have k=0 (time step n) data.
         /// We want to arrive at data for k=3 (time step n+1).
+        /// (compare with Rosti & Brandt 2017)
 
         for (Int k_rk = 1;k_rk<=3;k_rk++)
         {
@@ -218,8 +262,13 @@ void RK3_stepping(MeshContainer &meshCntr, SolverParams &params, const Grid &gri
                 ///                        +(dt*beta(k))*RHSk+(dt*gamma(k))*RHSk_1
                 /// This is all done within the bundle/pencil framework.
                 meshCntr.RHSk_1 = meshCntr.RHSk;
+
                 apply_pbc(meshCntr.u);
-                calc_RHSk(meshCntr,params,grid);
+                calc_RHSk(meshCntr,params,stats,grid,k_rk); //diagnostics also calculated here
+                // If k_rk == 1 update the timestep dt
+                if (k_rk == 1)
+                        update_timestep(params,stats,grid);
+                
                 calc_ustar(meshCntr,params,grid,k_rk);
 
                 /// Solve the Poisson eq for Psi.
@@ -234,38 +283,30 @@ void RK3_stepping(MeshContainer &meshCntr, SolverParams &params, const Grid &gri
         
 } //End RK3_stepping()
 
-
-/// Function for calling various diagnostics calculations
-void calc_diagnostic(const MeshContainer &meshCntr, Stats &stats)
+void calc_Re(SolverParams &params, const Stats &stats, const Grid &grid)
 {
-        /// Calculate maximum velocity.
-        stats.umax_old = stats.umax;
-        stats.umax = stats.calc_mesh_max(meshCntr.u);
-
-        /// Calculate root mean square velocity
-        stats.urms = stats.calc_mesh_rms(meshCntr.u);
-        
-        
+        std::cout << stats.urms << "\t" << grid.dx << "\t" << params.viscosity << std::endl;
+        params.Re = stats.urms*grid.dx/params.viscosity;
+        std::cout << "Re: " << params.Re << "\t sqrt(2): " << sqrt(2.0) << std::endl;
 }
 
 Int main()
 {
 
         /// Time settings.
-        Real dt = 0.01;
-        const Int maxtsteps = 10;
+        const Int maxtsteps = 100;
 
         /// Create parameter object and initialise parameters.
         SolverParams params;
-        params.dt = dt;
         params.maxTimesteps = maxtsteps;
         params.currentTimestep = 0;
         params.kf = 1.0; //Kolmogorov frequency
         params.rho = 1.0;
+        params.viscosity = 2.0;
         
         /// Set grid sizes
         const Real L0 = -M_PI, L1 = M_PI; // x,y,z in [-pi,pi]
-        const Int Nsize = 8;
+        const Int Nsize = 32;
         
         /// Create and initialise uniform 3D finite difference grid object.
         Grid grid(Nsize,Nsize,Nsize,L0,L1);
@@ -286,11 +327,26 @@ Int main()
         /// Create container object with references to meshes
         MeshContainer meshCntr(uu,ustar,RHSk,RHSk_1,pp,psi,gradpsi,fftwPsi);
 
-        /// Run Runge-Kutta 3 substepping
-        RK3_stepping(meshCntr,params,grid);
-        uu.print();
-        calc_diagnostic(meshCntr,stats);
-
+        /// At first we get initial timestep size from forcing
+        Pencil initforcePncl(Nsize,1);
+        for (size_t i=0;i<uu.nx_;i++)
+                initforcePncl(i,0,0) = sin(params.kf*grid.x(i));
+        
+        stats.calc_pncl_absmax(initforcePncl);
+        stats.umax_old = stats.umax;
+        update_timestep(params,stats,grid);
+        
+        //std::cout << 0 << " : " << params.dt << std::endl;
+        
+/// Run Runge-Kutta 3 substepping
+        for (Int ts = 1;ts<params.maxTimesteps;ts++)
+        {
+                RK3_stepping(meshCntr,params,stats,grid);
+                stats.urms = stats.calc_mesh_rms(meshCntr.u);
+                calc_Re(params,stats,grid);
+                //std::cout << ts << " : " << params.dt << std::endl;
+        }
+        
         
         return 0;
         

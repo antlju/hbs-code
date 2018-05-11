@@ -12,7 +12,8 @@ public:
         /// Time step size (to be updated according to CFL before each Runge-Kutta ingegration step).
         Real dt; 
         Real dt_old; /// Previous step size
-
+        Real dt_init;
+        
         /// Max time steps.
         Int maxTimesteps;
 

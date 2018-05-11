@@ -13,11 +13,34 @@ public:
         Real umax_old;
 
         Real urms;
-
+        Real urms_old;
+        
         /// Function for calculating statistics on pencils
         /// ---------------------------------------------------
+        void calc_pncl_absmax(const Pencil &u)
+        {
+                Real fabsu;
+                for (size_t vi=0;vi<u.nvars_;vi++)
+                {
+                        for (size_t i=0;i<u.nx_;i++)
+                        {
+                                fabsu = fabs(u(i,0,vi));
+                                if (fabsu > umax)
+                                        umax = fabsu;
+                        }
+                }
+        }
 
-
+        void calc_pncl_rms(const Pencil &u)
+        {
+                for (size_t vi=0;vi<u.nvars_;vi++)
+                {
+                        for (size_t i=0;i<u.nx_;i++)
+                        {
+                                urms += pow(u(i,0,vi),2);
+                        }
+                }
+        }        
         
         /// ---------------------------------------------------
 
