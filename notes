@@ -1,0 +1,7 @@
+#flow diagnostics
+
+grad(u) matrix, 9x9-pencil
+
+int(div(u)) over whole volume
+
+Energy
