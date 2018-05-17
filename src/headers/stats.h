@@ -14,6 +14,11 @@ public:
 
         Real urms;
         Real urms_old;
+
+	Real omega2; //omega = curl(u), vorticity, omega2 = omega^2
+
+	Real P; //Denotes div(u); P = div(u).
+	Real P2; //P^2 = div(u)^2
         
         /// Function for calculating statistics on pencils
         /// ---------------------------------------------------
@@ -31,7 +36,7 @@ public:
                 }
         }
 
-        void calc_pncl_rms(const Pencil &u)
+	void calc_pncl_rms(const Pencil &u)
         {
                 for (size_t vi=0;vi<u.nvars_;vi++)
                 {
@@ -40,7 +45,30 @@ public:
                                 urms += pow(u(i,0,vi),2);
                         }
                 }
-        }        
+        }
+
+	void calc_pncl_omega2(const Pencil &curlu)
+	{
+                for (size_t vi=0;vi<curlu.nvars_;vi++)
+                {
+                        for (size_t i=0;i<curlu.nx_;i++)
+                        {
+                                omega2 += pow(curlu(i,0,vi),2);
+                        }
+                }
+        }
+
+	void calc_pncl_Pavgs(const Pencil &divu)
+	{
+                for (size_t vi=0;vi<divu.nvars_;vi++)
+                {
+                        for (size_t i=0;i<divu.nx_;i++)
+                        {
+				P = divu(i,0,vi);
+                                P2 += pow(divu(i,0,vi),2);
+                        }
+                }
+        }
         
         /// ---------------------------------------------------
 

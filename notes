@@ -1,7 +1,19 @@
-#flow diagnostics
+---- Notes for meetings with Dhruba ----
 
-grad(u) matrix, 9x9-pencil
 
-int(div(u)) over whole volume
+
+--- May 17 2018 ---
+
+Make this:
+grad(u) matrix, 9x9-pencil 
+use this to compute things! 
+
+Stats:
+omega = curl(u)
+volume average of omega^2: <omega^2>
+
+P = div(u)
+volume averages of P and P^2: <P>, <P^2>
+
 
 Energy

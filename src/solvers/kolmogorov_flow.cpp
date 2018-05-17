@@ -25,8 +25,8 @@ void calc_divustar(MeshContainer &meshCntr, SolverParams &params, const Grid &gr
 
         /// Parameters
         Real xfac=grid.invdx,yfac=grid.invdy,zfac=grid.invdz;
-        Real rho = params.rho;
-        Real dt = params.dt;
+        Real rho=params.rho;
+        Real dt=params.dt;
         
         /// Create RK3 coefficients
         RK3Coeff coeffs;
@@ -105,9 +105,11 @@ void calc_ustar(MeshContainer &meshCntr, SolverParams &params, const Grid &grid,
                 }
         }
 }
-void calc_pncl_diagnostics(const Pencil &u, Stats &stats)
+void calc_pncl_diagnostics(const Pencil &u, const Pencil &omega, const Pencil &divu, Stats &stats)
 {
         stats.calc_pncl_absmax(u);
+	stats.calc_pncl_omega2(omega);
+	stats.calc_pncl_Pavgs(divu);
         //stats.calc_pncl_rms(u);
         //std::cout << "umax: " << stats.umax << std::endl;
         //std::cout << "urms: " << stats.urms << std::endl;
@@ -130,12 +132,8 @@ void calc_RHSk(MeshContainer &meshCntr, SolverParams &params, Stats &stats, cons
         Pencil LapluPncl(Nx,3);
         Pencil rhskPncl(Nx,3);
         Pencil forcePncl(Nx,3);
-
-        /// Statistics set
-        stats.umax_old = stats.umax;
-        stats.urms_old = stats.urms;
-        stats.umax = 0.0;
-        stats.urms = 0.0;
+	Pencil omegaPncl(Nx,3); // omega = curl(u)
+	Pencil divuPncl(Nx,1);
         
         //Loop over mesh (y,z)-plane
         for (size_t j=0;j<Ny;j++)
@@ -149,7 +147,21 @@ void calc_RHSk(MeshContainer &meshCntr, SolverParams &params, Stats &stats, cons
                         
                         //If k_rk = 1: Calculate pencil diagnostics from u
                         if (k_rk == 1)
-                                calc_pncl_diagnostics(uPncl,stats);
+			{
+				/// Statistics set
+				stats.umax_old = stats.umax;
+				stats.urms_old = stats.urms;
+				stats.umax = 0.0;
+				stats.urms = 0.0;
+				stats.omega2 = 0.0;
+				stats.P = 0.0;
+				stats.P2 = 0.0;
+				
+				//calculate omega = curl(u)
+				div(uBndl,divuPncl,xfac,yfac,zfac);
+				curl(uBndl,omegaPncl,xfac,yfac,zfac);
+                                calc_pncl_diagnostics(uPncl,omegaPncl,divuPncl,stats);
+			}
                         
                         
                         //Compute (u.grad)u on the bundle.
@@ -167,12 +179,11 @@ void calc_RHSk(MeshContainer &meshCntr, SolverParams &params, Stats &stats, cons
 
                         //Copy from pencil to mesh
                         pencil2ff(rhskPncl,meshCntr.RHSk,j,k);
-                                        
+			
                 }
         }
-
-        // Calc urms
-        stats.urms = sqrt(stats.urms/(Nx*Ny*Nz));
+	
+        
         //std::cout << "urms final: " << stats.urms << std::endl;
         
 }
@@ -289,8 +300,21 @@ void RK3_stepping(MeshContainer &meshCntr, SolverParams &params, Stats &stats, c
 void calc_Re(SolverParams &params, const Stats &stats, const Grid &grid)
 {
         //std::cout << stats.urms << "\t" << grid.dx << "\t" << params.viscosity << std::endl;
-        params.Re = stats.urms*grid.dx/params.viscosity;
+        //params.Re = stats.urms*grid.dx/params.viscosity;
         //std::cout << "Re: " << params.Re << "\t sqrt(2): " << sqrt(2.0) << std::endl;
+}
+
+void calc_mesh_avg(const MeshContainer &meshCntr, Stats &stats, const Grid &grid)
+{
+	Real volsize = meshCntr.u.nx_*meshCntr.u.ny_*meshCntr.u.nz_;
+	
+	Real avgomega2 = stats.omega2/volsize;
+	Real avgP = stats.P/volsize;
+	Real avgP2 = stats.P2/volsize;
+	std::cout << "<Omega^2>: " << avgomega2 << std::endl;
+	std::cout << "<P>: " << avgP << std::endl;
+	std::cout << "<P^2>: " << avgP2 << std::endl;
+	
 }
 
 Int main()
@@ -306,11 +330,11 @@ Int main()
         params.currentTimestep = 0;
         params.kf = 1.0; //Kolmogorov frequency
         params.rho = 1.0;
-        params.viscosity = 2.0;
+        params.viscosity = 1.0;
         
         /// Set grid sizes
         const Real L0 = -M_PI, L1 = M_PI; // x,y,z in [-pi,pi]
-        const Int Nsize = 32;
+        const Int Nsize = 16;
         
         /// Create and initialise uniform 3D finite difference grid object.
         Grid grid(Nsize,Nsize,Nsize,L0,L1);
@@ -335,7 +359,8 @@ Int main()
         Pencil initforcePncl(Nsize,1);
         for (size_t i=0;i<uu.nx_;i++)
                 initforcePncl(i,0,0) = sin(params.kf*grid.x(i));
-        
+
+	/// Initial set of the timesteps
         stats.calc_pncl_absmax(initforcePncl);
         stats.umax_old = stats.umax;
         update_timestep(params,stats,grid);
@@ -346,11 +371,13 @@ Int main()
         for (Int ts = 1;ts<params.maxTimesteps;ts++)
         {
                 RK3_stepping(meshCntr,params,stats,grid);
-                stats.urms = stats.calc_mesh_rms(meshCntr.u);
-                calc_Re(params,stats,grid);
+		calc_mesh_avg(meshCntr,stats,grid);
+                //stats.urms = stats.calc_mesh_rms(meshCntr.u);
+                //calc_Re(params,stats,grid);
                 //std::cout << ts << " : " << params.dt << std::endl;
         }
-        
+
+	
         // Write u_0(x,y,z) at last step to file
         writeToFile_1DArr(set_fname("kolm_rk3_x",".dat",params.maxTimesteps),
                           meshCntr.u,0,grid);
