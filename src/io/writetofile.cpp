@@ -64,3 +64,19 @@ Int writeToFile_1DArr(const std::string fname, const Mesh &u, const Int vi, cons
         return 0;
                       
 }
+
+Int writeStatsToFile(const std::string fname, const MeshContainer &meshCntr, const Stats &stats, const Grid &grid)
+{
+	std::ofstream openfile("/home/anton/dev/hbs/simdata/"+fname, std::ios::trunc);
+
+	Real volsize = meshCntr.u.nx_*meshCntr.u.ny_*meshCntr.u.nz_;
+	
+	Real avgomega2 = stats.omega2/volsize;
+	Real avgP = stats.P/volsize;
+	Real avgP2 = stats.P2/volsize;
+	
+	openfile << "<Omega^2> \t" << "<P> \t" << "<P^2> \t" << "umax" << std::endl;
+	openfile << avgomega2 << "\t" << avgP << "\t" << avgP2 << "\t" << stats.umax << std::endl;
+
+	return 0;
+}

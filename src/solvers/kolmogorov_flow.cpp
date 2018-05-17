@@ -311,9 +311,9 @@ void calc_mesh_avg(const MeshContainer &meshCntr, Stats &stats, const Grid &grid
 	Real avgomega2 = stats.omega2/volsize;
 	Real avgP = stats.P/volsize;
 	Real avgP2 = stats.P2/volsize;
-	std::cout << "<Omega^2>: " << avgomega2 << std::endl;
-	std::cout << "<P>: " << avgP << std::endl;
-	std::cout << "<P^2>: " << avgP2 << std::endl;
+	//std::cout << "<Omega^2>: " << avgomega2 << std::endl;
+	//std::cout << "<P>: " << avgP << std::endl;
+	//std::cout << "<P^2>: " << avgP2 << std::endl;
 	
 }
 
@@ -322,7 +322,7 @@ Int main()
         auto t1 = Clock::now();
  
         /// Time settings.
-        const Int maxtsteps = 30;
+        const Int maxtsteps = 100;
 
         /// Create parameter object and initialise parameters.
         SolverParams params;
@@ -334,7 +334,7 @@ Int main()
         
         /// Set grid sizes
         const Real L0 = -M_PI, L1 = M_PI; // x,y,z in [-pi,pi]
-        const Int Nsize = 16;
+        const Int Nsize = 256;
         
         /// Create and initialise uniform 3D finite difference grid object.
         Grid grid(Nsize,Nsize,Nsize,L0,L1);
@@ -371,7 +371,7 @@ Int main()
         for (Int ts = 1;ts<params.maxTimesteps;ts++)
         {
                 RK3_stepping(meshCntr,params,stats,grid);
-		calc_mesh_avg(meshCntr,stats,grid);
+		//calc_mesh_avg(meshCntr,stats,grid);
                 //stats.urms = stats.calc_mesh_rms(meshCntr.u);
                 //calc_Re(params,stats,grid);
                 //std::cout << ts << " : " << params.dt << std::endl;
@@ -381,6 +381,8 @@ Int main()
         // Write u_0(x,y,z) at last step to file
         writeToFile_1DArr(set_fname("kolm_rk3_x",".dat",params.maxTimesteps),
                           meshCntr.u,0,grid);
+
+	writeStatsToFile(set_fname("kolm_rk3_x",".stats",params.maxTimesteps),meshCntr,stats,grid);
         
         auto t2 = Clock::now();
         std::cout << "Delta t2-t1: " 
