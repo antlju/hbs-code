@@ -134,8 +134,11 @@ void calc_RHSk(MeshContainer &meshCntr, SolverParams &params, Stats &stats, cons
         Pencil forcePncl(Nx,3);
 	Pencil omegaPncl(Nx,3); // omega = curl(u)
 	Pencil divuPncl(Nx,1);
-        
+
+	
+	//std::cout << "umax before calc: " << stats.umax << std::endl;
         //Loop over mesh (y,z)-plane
+
         for (size_t j=0;j<Ny;j++)
         {
                 for (size_t k=0;k<Nz;k++)
@@ -148,6 +151,7 @@ void calc_RHSk(MeshContainer &meshCntr, SolverParams &params, Stats &stats, cons
                         //If k_rk = 1: Calculate pencil diagnostics from u
                         if (k_rk == 1)
 			{
+				
 				/// Statistics set
 				stats.umax_old = stats.umax;
 				stats.urms_old = stats.urms;
@@ -161,6 +165,7 @@ void calc_RHSk(MeshContainer &meshCntr, SolverParams &params, Stats &stats, cons
 				div(uBndl,divuPncl,xfac,yfac,zfac);
 				curl(uBndl,omegaPncl,xfac,yfac,zfac);
                                 calc_pncl_diagnostics(uPncl,omegaPncl,divuPncl,stats);
+
 			}
                         
                         
@@ -182,6 +187,7 @@ void calc_RHSk(MeshContainer &meshCntr, SolverParams &params, Stats &stats, cons
 			
                 }
         }
+	//std::cout << "umax after calc: " << stats.umax << std::endl;
 	
         
         //std::cout << "urms final: " << stats.urms << std::endl;
@@ -245,22 +251,20 @@ void enforce_solenoidal(MeshContainer &meshCntr, const SolverParams &params, con
 
 void update_timestep(SolverParams &params, Stats &stats, const Grid &grid)
 {
-        Real c1=0.8;
-	Real c2=c1; //Courant numbers for advection and diffusion respectively
+	if (params.currentTimestep !=1) {
+		Real c1=0.8;
+		Real c2=c1; //Courant numbers for advection and diffusion respectively
 
-        Real nu = params.viscosity,dx = grid.dx,L=grid.dx;
+		Real nu = params.viscosity,dx = grid.dx,L=grid.dx;
         
-        //Factor of 1/3 since dx=dy=dz
-        if (stats.umax < 1e-5)
-                stats.umax = stats.umax_old;
+		//Factor of 1/3 since dx=dy=dz
 	
-	std::cout << "umax: " << stats.umax << std::endl;
-        Real adv = (1.0/3)*c1*dx/stats.umax;
-        Real diff = (1.0/3)*c2*pow(L,2)/nu;
-        //std::cout << "adv : " << adv << "\t diff: " << diff << std::endl;
-        //Set new time step size according to CFL condition
-        params.dt = std::min(adv,diff);
-	std::cout << "dt: " << params.dt << std::endl;
+		Real adv = (1.0/3)*c1*dx/stats.umax;
+		Real diff = (1.0/3)*c2*pow(L,2)/nu;
+		//std::cout << "adv : " << adv << "\t diff: " << diff << std::endl;
+		//Set new time step size according to CFL condition
+		params.dt = std::min(adv,diff);
+	}
 
 }
 
@@ -300,26 +304,23 @@ void RK3_stepping(MeshContainer &meshCntr, SolverParams &params, Stats &stats, c
         
 } //End RK3_stepping()
 
-void calc_Re(SolverParams &params, const Stats &stats, const Grid &grid)
+void save_data_at_step(const MeshContainer &meshCntr, const SolverParams &params, const Stats &stats, const Grid &grid, const Int t)
 {
-        //std::cout << stats.urms << "\t" << grid.dx << "\t" << params.viscosity << std::endl;
-        //params.Re = stats.urms*grid.dx/params.viscosity;
-        //std::cout << "Re: " << params.Re << "\t sqrt(2): " << sqrt(2.0) << std::endl;
+	std::string kfname = kolmofname("kolmo",params.kf);
+	std::string meshfname = step_fname(kfname, ".dat",meshCntr.u.nx_,t);
+	std::string statsfname = step_fname(kfname, ".stats",meshCntr.u.nx_,t);
+	
+	writeToFile_1DArr(meshfname,meshCntr.u,0,grid); //Write x-component of u field to file
+	writeStatsToFile(statsfname,meshCntr,stats,grid); //Calculate and write statistics to file
+	std::cout << "wrote array and stats to file at timestep " << t << std::endl;
 }
 
-void calc_mesh_avg(const MeshContainer &meshCntr, Stats &stats, const Grid &grid)
+void execprint(const MeshContainer &meshCntr, const SolverParams &params, const Stats &stats, const Grid &grid)
 {
-	Real volsize = meshCntr.u.nx_*meshCntr.u.ny_*meshCntr.u.nz_;
-	
-	Real avgomega2 = stats.omega2/volsize;
-	Real avgP = stats.P/volsize;
-	Real avgP2 = stats.P2/volsize;
-	//std::cout << "<Omega^2>: " << avgomega2 << std::endl;
-	//std::cout << "<P>: " << avgP << std::endl;
-	//std::cout << "<P^2>: " << avgP2 << std::endl;
-	
+	std::cout << "Started run with N: " << meshCntr.u.nx_ << " maxsteps: " << params.maxTimesteps <<
+		", saving every " << params.saveintrvl << " timesteps." << std::endl;
+	std::cout << std::endl;
 }
-
 Int main()
 {
         auto t1 = Clock::now();
@@ -334,10 +335,12 @@ Int main()
         params.kf = 1.0; //Kolmogorov frequency
         params.rho = 1.0;
         params.viscosity = 1.0;
+	params.saveintrvl = 4;
+	
         
         /// Set grid sizes
         const Real L0 = -M_PI, L1 = M_PI; // x,y,z in [-pi,pi]
-        const Int Nsize = 64;
+        const Int Nsize = 16;
         
         /// Create and initialise uniform 3D finite difference grid object.
         Grid grid(Nsize,Nsize,Nsize,L0,L1);
@@ -365,29 +368,32 @@ Int main()
 
 	/// Initial set of the timesteps
         stats.calc_pncl_absmax(initforcePncl);
-	std::cout << stats.umax << std::endl;
+	//std::cout << stats.umax << std::endl;
         stats.umax_old = stats.umax;
         update_timestep(params,stats,grid);
-        
+        stats.umax = 0;
         //std::cout << 0 << " : " << params.dt << std::endl;
-        
+        //Set umax to zero again to get actual calculation from run
+	
 /// Run Runge-Kutta 3 substepping
+	execprint(meshCntr,params,stats,grid);
+	
         for (Int ts = 1;ts<params.maxTimesteps;ts++)
         {
+		params.currentTimestep = ts;
                 RK3_stepping(meshCntr,params,stats,grid);
+		//Save data every 4th timestep
+		if (ts % params.saveintrvl == 0)
+			save_data_at_step(meshCntr,params,stats,grid,ts);
+		
 		//calc_mesh_avg(meshCntr,stats,grid);
                 //stats.urms = stats.calc_mesh_rms(meshCntr.u);
                 //calc_Re(params,stats,grid);
                 //std::cout << ts << " : " << params.dt << std::endl;
         }
 
-	std::string fname = "kolm_rk3_x_N64";
-	
-        // Write u_0(x,y,z) at last step to file
-        writeToFile_1DArr(set_fname(fname,".dat",params.maxTimesteps),
-                          meshCntr.u,0,grid);
-
-	writeStatsToFile(set_fname(fname,".stats",params.maxTimesteps),meshCntr,stats,grid);
+	//save last step again to be sure
+	save_data_at_step(meshCntr,params,stats,grid,params.maxTimesteps+1);
         
         auto t2 = Clock::now();
         std::cout << "Delta t2-t1: " 

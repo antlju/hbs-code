@@ -17,6 +17,9 @@ public:
         /// Max time steps.
         Int maxTimesteps;
 
+	///
+	Int saveintrvl;
+	
         ///current time step
         Int currentTimestep;
         
