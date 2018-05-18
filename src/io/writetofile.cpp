@@ -11,7 +11,7 @@ std::string set_fname(const std::string base, const std::string end, const Int s
 /// Function to write a 3D scalar field and corresponding (x,y,z)-coordinates to file.
 Int writeToFile(std::string fname, const Mesh &u, const Int vi, const Pencil &x, const Pencil &y, const Pencil &z)
 {
-        std::ofstream openfile("/home/anton/dev/hbs/simdata/"+fname, std::ios::trunc);
+        std::ofstream openfile("../simdata/"+fname, std::ios::trunc);
         //openfile << "i,j,k,x,y,z,f" << std::endl;
         //for (size_t i=0;i<u.nx_;i++)
         //{
@@ -43,7 +43,7 @@ Int writeToFile(std::string fname, const Mesh &u, const Int vi, const Pencil &x,
 
 Int writeToFile_1DArr(const std::string fname, const Mesh &u, const Int vi, const Grid &grid)
 {
-        std::ofstream openfile("/home/anton/dev/hbs/simdata/"+fname, std::ios::trunc);
+        std::ofstream openfile("../simdata/"+fname, std::ios::trunc);
         Int Nx = u.nx_, Ny = u.ny_, Nz = u.nz_;
 
         // Write Nsize metadata assuming Nx=Ny=Nz
@@ -67,7 +67,7 @@ Int writeToFile_1DArr(const std::string fname, const Mesh &u, const Int vi, cons
 
 Int writeStatsToFile(const std::string fname, const MeshContainer &meshCntr, const Stats &stats, const Grid &grid)
 {
-	std::ofstream openfile("/home/anton/dev/hbs/simdata/"+fname, std::ios::trunc);
+	std::ofstream openfile("../simdata/"+fname, std::ios::trunc);
 
 	Real volsize = meshCntr.u.nx_*meshCntr.u.ny_*meshCntr.u.nz_;
 	

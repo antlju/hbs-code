@@ -151,8 +151,8 @@ void calc_RHSk(MeshContainer &meshCntr, SolverParams &params, Stats &stats, cons
 				/// Statistics set
 				stats.umax_old = stats.umax;
 				stats.urms_old = stats.urms;
-				stats.umax = 0.0;
-				stats.urms = 0.0;
+				//stats.umax = 0.0;
+				//stats.urms = 0.0;
 				stats.omega2 = 0.0;
 				stats.P = 0.0;
 				stats.P2 = 0.0;
@@ -245,19 +245,22 @@ void enforce_solenoidal(MeshContainer &meshCntr, const SolverParams &params, con
 
 void update_timestep(SolverParams &params, Stats &stats, const Grid &grid)
 {
-        Real c1=0.5,c2=0.5; //Courant numbers for advection and diffusion respectively
+        Real c1=0.8;
+	Real c2=c1; //Courant numbers for advection and diffusion respectively
 
         Real nu = params.viscosity,dx = grid.dx,L=grid.dx;
         
         //Factor of 1/3 since dx=dy=dz
-        if (stats.umax < 1e-10)
+        if (stats.umax < 1e-5)
                 stats.umax = stats.umax_old;
-        
+	
+	std::cout << "umax: " << stats.umax << std::endl;
         Real adv = (1.0/3)*c1*dx/stats.umax;
         Real diff = (1.0/3)*c2*pow(L,2)/nu;
-        std::cout << "adv : " << adv << "\t diff: " << diff << std::endl;
+        //std::cout << "adv : " << adv << "\t diff: " << diff << std::endl;
         //Set new time step size according to CFL condition
         params.dt = std::min(adv,diff);
+	std::cout << "dt: " << params.dt << std::endl;
 
 }
 
@@ -322,7 +325,7 @@ Int main()
         auto t1 = Clock::now();
  
         /// Time settings.
-        const Int maxtsteps = 100;
+        const Int maxtsteps = 60;
 
         /// Create parameter object and initialise parameters.
         SolverParams params;
@@ -334,7 +337,7 @@ Int main()
         
         /// Set grid sizes
         const Real L0 = -M_PI, L1 = M_PI; // x,y,z in [-pi,pi]
-        const Int Nsize = 256;
+        const Int Nsize = 64;
         
         /// Create and initialise uniform 3D finite difference grid object.
         Grid grid(Nsize,Nsize,Nsize,L0,L1);
@@ -362,6 +365,7 @@ Int main()
 
 	/// Initial set of the timesteps
         stats.calc_pncl_absmax(initforcePncl);
+	std::cout << stats.umax << std::endl;
         stats.umax_old = stats.umax;
         update_timestep(params,stats,grid);
         
@@ -377,12 +381,13 @@ Int main()
                 //std::cout << ts << " : " << params.dt << std::endl;
         }
 
+	std::string fname = "kolm_rk3_x_N64";
 	
         // Write u_0(x,y,z) at last step to file
-        writeToFile_1DArr(set_fname("kolm_rk3_x",".dat",params.maxTimesteps),
+        writeToFile_1DArr(set_fname(fname,".dat",params.maxTimesteps),
                           meshCntr.u,0,grid);
 
-	writeStatsToFile(set_fname("kolm_rk3_x",".stats",params.maxTimesteps),meshCntr,stats,grid);
+	writeStatsToFile(set_fname(fname,".stats",params.maxTimesteps),meshCntr,stats,grid);
         
         auto t2 = Clock::now();
         std::cout << "Delta t2-t1: " 
