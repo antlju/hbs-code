@@ -24,16 +24,18 @@ void pencil2ff(const Pencil &P, Mesh &ff, Int j, Int k,Int ffvi)
 
 void ff2bundle(const Mesh &ff, Bundle &B, Int j, Int k, Int ffvi)
 {
+	Int jk[2]; //Container for (j,k) pair
+	
         if (B.isScalar_ == 1)
         {
                 for (Int q=0;q<(Int)B.stencilSize_;q++)
                 {
-                        Intpair jk = qtojk(q);
+                        qtojk(jk,q);
 
                         for (Int i=0;i<(Int)B.nx_+2*(Int)ff.ng_;i++)
                         {
                                 B(i-(Int)ff.ng_,q,0) =
-                                        ff(i-(Int)ff.ng_,j+jk.first,k+jk.second,ffvi);
+                                        ff(i-(Int)ff.ng_,j+jk[0],k+jk[1],ffvi);
                         
                         }
                        
@@ -44,13 +46,13 @@ void ff2bundle(const Mesh &ff, Bundle &B, Int j, Int k, Int ffvi)
         {
                 for (Int q=0;q<(Int)B.stencilSize_;q++)
                 {
-                        Intpair jk = qtojk(q);
+                        qtojk(jk,q);
                         for (size_t vi=0;vi<B.nvars_;vi++)
                         {
                                 for (Int i=0;i<(Int)B.nx_+2*(Int)ff.ng_;i++)
                                 {
                                         B(i-(Int)ff.ng_,q,vi) =
-                                                ff(i-(Int)ff.ng_,j+jk.first,k+jk.second,vi);
+                                                ff(i-(Int)ff.ng_,j+jk[0],k+jk[1],vi);
                         
                                 }
                         }

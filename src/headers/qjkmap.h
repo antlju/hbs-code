@@ -3,12 +3,12 @@
 #include "typedef.h"
 #include "vartypedef.h"
 #include <cassert>
-#include <map>
-#include <utility>
+//#include <map>
+//#include <utility>
 
 /// An index map for the ff->bundle memcopy functions.
-/*
-Int *qtjok(const Int q)
+
+void qtojk(Int *jk, const Int q)
 {
 	assert( q < 9 );
 	
@@ -33,15 +33,12 @@ Int *qtjok(const Int q)
         qtok[7] = 0;
         qtok[8] = 2;
 
-	Int jk[2];
 	jk[0] = qtoj[q];
 	jk[1] = qtok[q];
-
-	return jk;
 	
 }
-*/
 
+/*
 //Old map (slow)
 Intpair qtojk(Int q)  
 {
@@ -79,4 +76,4 @@ Intpair qtojk(Int q)
         //return ret;
         //std::cout << j << "\t" << k << std::endl;  
 }
-
+*/

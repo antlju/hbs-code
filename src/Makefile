@@ -5,7 +5,7 @@ LIBS = -lfftw3 -lm
 HEADERS=Makefile headers/*.h
 
 DIFFOPS=partials/partials.cpp findiff/findiff.cpp curl/curl.cpp div/div.cpp grad/grad.cpp lapl/lapl.cpp
-UTILS=utility/bundlememcpy.cpp utility/fftwmemcpy.cpp utility/linspace.cpp utility/pbc.cpp utility/printfield.cpp
+UTILS=utility/fftwmemcpy.cpp utility/linspace.cpp utility/pbc.cpp utility/printfield.cpp utility/bundlememcpy.cpp
 IO=io/writetofile.cpp io/savestepfname.cpp
 SOLVERS=solvers/poisson_solver.cpp
 MAINSRC=solvers/kolmogorov_flow.cpp
