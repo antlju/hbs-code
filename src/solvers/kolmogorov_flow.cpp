@@ -340,7 +340,7 @@ Int main()
         
         /// Set grid sizes
         const Real L0 = -M_PI, L1 = M_PI; // x,y,z in [-pi,pi]
-        const Int Nsize = 16;
+        const Int Nsize = 128;
         
         /// Create and initialise uniform 3D finite difference grid object.
         Grid grid(Nsize,Nsize,Nsize,L0,L1);
