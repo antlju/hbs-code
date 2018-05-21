@@ -34,3 +34,31 @@ public:
         
         
 }; // End class MeshContainer.
+
+class PBContainer {
+public:
+	Bundle &uBndl; // velocity, velocity* and pressure and psi bundles
+	Bundle &ustarBndl; 
+	Bundle &pBndl;
+	Bundle &psiBndl;
+
+	Pencil &uPncl; // old u as pencil
+	Pencil &ustarPncl;
+	Pencil &dvPncl;// vector result of diffop
+	Pencil &dsPncl; //scalar result of diffop
+	Pencil &fPncl; //Force
+	Pencil &rhskPncl; // RHSk RK substep pencils
+	Pencil &rhsk_1Pncl;
+	
+PBContainer(Bundle &u, Bundle &ustar, Bundle &p, Bundle &psi,
+	    Pencil &up, Pencil &ustarp, Pencil &dv, Pencil &ds,
+	    Pencil &f, Pencil &rhsk, Pencil &rhsk_1) :
+	uBndl(u), ustarBndl(ustar), pBndl(p), psiBndl(psi),
+		uPncl(up), ustarPncl(ustarp), dvPncl(dv), dsPncl(ds),
+		fPncl(f), rhskPncl(rhsk), rhsk_1Pncl(rhsk_1)
+		
+	{
+		
+	}
+		
+}; // End class PBContainer
