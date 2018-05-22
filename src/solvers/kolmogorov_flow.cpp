@@ -139,8 +139,8 @@ void calc_RHSk(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &param
 				//calculate omega = curl(u)
 				
 				//div(uBndl,divuPncl,xfac,yfac,zfac);
-				//curl(pbCntr.uBndl,pbCntr.dvPncl,xfac,yfac,zfac);
-                                //calc_pncl_diagnostics(pbCntr.uPncl,pbCntr.dvPncl,stats);
+				curl(pbCntr.uBndl,pbCntr.dvPncl,xfac,yfac,zfac);
+                                calc_pncl_diagnostics(pbCntr.uPncl,pbCntr.dvPncl,stats);
 				
 
 			}
@@ -280,23 +280,24 @@ void RK3_stepping(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &pa
 
 void save_data_at_step(const MeshContainer &meshCntr, const SolverParams &params, const Stats &stats, const Grid &grid, const Int t)
 {
-	std::string kfname = kolmofname("kolmo",params.kf);
-
-	std::string statsfname = step_fname(kfname, ".stats",meshCntr.u.nx_,t);
+	std::string kfname = kolmofname("pnclOptim",params.kf);
+	std::string statsfname = stats_fname(kfname,".stats",meshCntr.u.nx_);
+	//std::string statsfname = step_fname(kfname, ".stats",meshCntr.u.nx_,t);
 
 	for (Int i=0;i<3;i++)
 	{
 		std::string meshfname = step_fname(kfname+"_component_"+std::to_string(i), ".dat",meshCntr.u.nx_,t);
 		writeToFile_1DArr(meshfname,meshCntr.u,i,grid); //Write i-component of u field to file
+		std::cout << "wrote " << meshfname << " to file at timestep " << t << std::endl;
 	}
 	
 	writeStatsToFile(statsfname,meshCntr,stats,grid,t); //Calculate and write statistics to file
-	//std::cout << "wrote " << meshfname << " and " << statsfname << " to file at timestep " << t << std::endl;
+	std::cout << "wrote " << statsfname << " to file at timestep " << t << std::endl;
 }
 
 void execprint(const MeshContainer &meshCntr, const SolverParams &params, const Stats &stats, const Grid &grid)
 {
-	std::cout << "Started run with N: " << meshCntr.u.nx_ << " maxsteps: " << params.maxTimesteps <<
+	std::cout << "Started run with N: " << meshCntr.u.nx_ << " kf: " << params.kf << " maxsteps: " << params.maxTimesteps <<
 		", saving every " << params.saveintrvl << " timesteps." << std::endl;
 	std::cout << std::endl;
 }
@@ -323,7 +324,7 @@ Int main()
         
         /// Set grid sizes
         const Real L0 = 0, L1 = 2*M_PI; // x,y,z in [0,2pi]
-        const Int Nsize = 16;
+        const Int Nsize = 128;
         
         /// Create and initialise uniform 3D finite difference grid object.
         Grid grid(Nsize,Nsize,Nsize,L0,L1);
@@ -399,7 +400,6 @@ Int main()
 	save_data_at_step(meshCntr,params,stats,grid,params.maxTimesteps+1);
 	
 	apply_pbc(meshCntr.u);
-	calc_curlu(meshCntr,curlu,pbCntr,params,stats,grid);
         writeCurl(curlu,params,stats,grid,params.maxTimesteps+1);
         auto t2 = Clock::now();
         std::cout << "Delta t2-t1: " 
