@@ -14,3 +14,10 @@ std::string step_fname(const std::string prefix, const std::string suffix,
 	
 	return prefix+"_N_"+std::to_string(N)+"_stepNo_"+std::to_string(stepNo)+suffix;
 }
+
+std::string stats_fname(const std::string prefix, const std::string suffix,const Int N)
+{
+
+	
+	return prefix+"_N_"+std::to_string(N)+suffix;
+}

@@ -1,5 +1,20 @@
 #include "includes.h"
 
+Int writeStatsToFile(const std::string fname, const MeshContainer &meshCntr, const Stats &stats, const Grid &grid, const Int stepNo)
+{
+	std::ofstream openfile("../simdata/"+fname, std::ios::app); //Append option!
+
+	Real volsize = meshCntr.u.nx_*meshCntr.u.ny_*meshCntr.u.nz_;
+	
+	Real avgomega2 = stats.omega2/volsize;
+	Real avgP = stats.P/volsize;
+	Real avgP2 = stats.P2/volsize;
+	
+	openfile << stepNo << ":\t" << avgomega2 << "\t" << avgP << "\t" << avgP2 << "\t" << stats.umax << std::endl;
+
+	return 0;
+}
+
 /// Sets filename for use in writeToFile()
 std::string set_fname(const std::string base, const std::string end, const Int step)
 {
@@ -34,7 +49,7 @@ Int writeToFile(std::string fname, const Mesh &u, const Int vi, const Pencil &x,
                 }
                 openfile << "#---------------------------------" << std::endl;
         }
-                // }
+	// }
         openfile.close();
         std::cout << "Wrote " << fname << std::endl;
         return 0;
@@ -61,10 +76,14 @@ Int writeToFile_1DArr(const std::string fname, const Mesh &u, const Int vi, cons
                 }
         }
 
+	std::cout << "wrote " << fname << std::endl;
         return 0;
                       
 }
 
+
+
+/* // This old one writes to a new file each time 
 Int writeStatsToFile(const std::string fname, const MeshContainer &meshCntr, const Stats &stats, const Grid &grid)
 {
 	std::ofstream openfile("../simdata/"+fname, std::ios::trunc);
@@ -80,3 +99,4 @@ Int writeStatsToFile(const std::string fname, const MeshContainer &meshCntr, con
 
 	return 0;
 }
+*/

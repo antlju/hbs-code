@@ -25,4 +25,7 @@ $(EXECUTABLE): $(OBJECTS) $(HEADERS)
 clean:
 	rm -f *.o *.exe
 
+cleanse:
+	rm -f partials/*.o findiff/*.o curl/*.o div/*.o grad/*.o lapl/*.o utility/*.o io/*.o solvers/*.o
+
 

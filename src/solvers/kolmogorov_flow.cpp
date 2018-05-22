@@ -73,9 +73,9 @@ void calc_ustar(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &para
                 for (size_t k=0;k<Nz;k++)
                 {
                         //Copy from mesh to bundle/pencil
-                        ff2bundle(meshCntr.p,pbCntr.pBndl,j,k);
-                        ff2pencil(meshCntr.u,pbCntr.uPncl,j,k);
-                        ff2pencil(meshCntr.RHSk,pbCntr.rhskPncl,j,k);
+                        ff2bundle(meshCntr.p,pbCntr.pBndl,j,k); //pressure field
+                        ff2pencil(meshCntr.u,pbCntr.uPncl,j,k); //velocity field
+                        ff2pencil(meshCntr.RHSk,pbCntr.rhskPncl,j,k); // Right hand sides
                         ff2pencil(meshCntr.RHSk_1,pbCntr.rhsk_1Pncl,j,k);
                         
                         //Compute gradient of the pressure (scalar bundle -> vector pencil)
@@ -280,12 +280,17 @@ void RK3_stepping(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &pa
 void save_data_at_step(const MeshContainer &meshCntr, const SolverParams &params, const Stats &stats, const Grid &grid, const Int t)
 {
 	std::string kfname = kolmofname("kolmo",params.kf);
-	std::string meshfname = step_fname(kfname, ".dat",meshCntr.u.nx_,t);
+
 	std::string statsfname = step_fname(kfname, ".stats",meshCntr.u.nx_,t);
+
+	for (Int i=0;i<3;i++)
+	{
+		std::string meshfname = step_fname(kfname+"_component_"+std::to_string(i), ".dat",meshCntr.u.nx_,t);
+		writeToFile_1DArr(meshfname,meshCntr.u,i,grid); //Write i-component of u field to file
+	}
 	
-	writeToFile_1DArr(meshfname,meshCntr.u,0,grid); //Write x-component of u field to file
-	writeStatsToFile(statsfname,meshCntr,stats,grid); //Calculate and write statistics to file
-	std::cout << "wrote array and stats to file at timestep " << t << std::endl;
+	writeStatsToFile(statsfname,meshCntr,stats,grid,t); //Calculate and write statistics to file
+	//std::cout << "wrote " << meshfname << " and " << statsfname << " to file at timestep " << t << std::endl;
 }
 
 void execprint(const MeshContainer &meshCntr, const SolverParams &params, const Stats &stats, const Grid &grid)
@@ -294,6 +299,10 @@ void execprint(const MeshContainer &meshCntr, const SolverParams &params, const 
 		", saving every " << params.saveintrvl << " timesteps." << std::endl;
 	std::cout << std::endl;
 }
+
+void calc_curlu(const MeshContainer &meshCntr, Mesh &curlu, PBContainer &pbCntr, const SolverParams &params, const Stats &stats, const Grid &grid);
+void writeCurl(const Mesh &curlu, const SolverParams &params, const Stats &stats, const Grid &grid, const Int t);
+
 Int main()
 {
         auto t1 = Clock::now();
@@ -329,6 +338,7 @@ Int main()
         Mesh pp(Nsize,Nsize,Nsize,1); /// pressure scalar field
         Mesh psi(Nsize,Nsize,Nsize,1); /// Psi scalar field
         Mesh gradpsi(Nsize,Nsize,Nsize,3); /// grad(psi) vector field
+	Mesh curlu(Nsize,Nsize,Nsize,3); /// Curl of u for verification
         fftwMesh fftwPsi(Nsize,Nsize,Nsize); /// FFTW3 memory scalar field
 
 	/// Create Bundle & Pencil objects
@@ -369,7 +379,14 @@ Int main()
         for (Int ts = 1;ts<params.maxTimesteps;ts++)
         {
 		params.currentTimestep = ts;
+		
+		if (ts % params.saveintrvl == 0)
+			stats.isSaveStep = 1;
+		else
+			stats.isSaveStep = 0;
+		
                 RK3_stepping(meshCntr,pbCntr,params,stats,grid);
+		
 		//Save data every 4th timestep
 		if (ts % params.saveintrvl == 0)
 			save_data_at_step(meshCntr,params,stats,grid,ts);
@@ -382,7 +399,8 @@ Int main()
 
 	//save last step again to be sure
 	save_data_at_step(meshCntr,params,stats,grid,params.maxTimesteps+1);
-        
+	calc_curlu(meshCntr,curlu,pbCntr,params,stats,grid);
+        writeCurl(curlu,params,stats,grid,params.maxTimesteps+1);
         auto t2 = Clock::now();
         std::cout << "Delta t2-t1: " 
                   << std::chrono::duration_cast<std::chrono::seconds>(t2 - t1).count()
@@ -391,3 +409,42 @@ Int main()
         return 0;
         
 } //End main()
+
+void calc_curlu(const MeshContainer &meshCntr, Mesh &curlu, PBContainer &pbCntr, const SolverParams &params, const Stats &stats, const Grid &grid)
+{
+	size_t Ny = meshCntr.u.ny_;
+        size_t Nz = meshCntr.u.nz_;
+
+        Real xfac=grid.invdx,yfac=grid.invdy,zfac=grid.invdz;
+
+	//std::cout << "umax before calc: " << stats.umax << std::endl;
+        //Loop over mesh (y,z)-plane
+
+        for (size_t j=0;j<Ny;j++)
+        {
+                for (size_t k=0;k<Nz;k++)
+                {
+                        //Copy from mesh to bundle
+                        ff2bundle(meshCntr.u,pbCntr.uBndl,j,k);
+
+			curl(pbCntr.uBndl,pbCntr.dvPncl,xfac,yfac,zfac);
+
+                        pencil2ff(pbCntr.dvPncl,curlu,j,k);
+			
+                }
+        }
+}
+
+
+void writeCurl(const Mesh &curlu, const SolverParams &params, const Stats &stats, const Grid &grid, const Int t)
+{
+	std::string curlname = kolmofname("kolmocurl",params.kf);
+	
+
+	for (Int i=0;i<3;i++)
+	{
+		std::string curlstepname = step_fname(curlname+"_component_"+std::to_string(i),".dat",curlu.nx_,t);
+		writeToFile_1DArr(curlstepname,curlu,i,grid); //Write i-component of curl(u) field to file
+	}
+	
+}

@@ -19,7 +19,9 @@ public:
 
 	Real P; //Denotes div(u); P = div(u).
 	Real P2; //P^2 = div(u)^2
-        
+
+	Int isSaveStep = 0;
+	
         /// Function for calculating statistics on pencils
         /// ---------------------------------------------------
         void calc_pncl_absmax(const Pencil &u)
