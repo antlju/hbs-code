@@ -17,8 +17,9 @@ void set_force(Pencil &force, const SolverParams &params, const Grid &grid, cons
 } //End set_force
 
 /// Function to calculate the source term for Poisson eq: rho/(2*alpha^k*dt)*div(u*)
-void calc_divustar(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &params, const Grid &grid, const Int k_rk)
+void calc_divustar(MeshContainer &meshCntr, SolverParams &params, const Grid &grid, const Int k_rk)
 {
+        size_t Nx = meshCntr.u.nx_;
         size_t Ny = meshCntr.u.ny_;
         size_t Nz = meshCntr.u.nz_;
 
@@ -31,28 +32,33 @@ void calc_divustar(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &p
         RK3Coeff coeffs;
         Real alphak = coeffs.alpha(k_rk);
 
+        /// Create pencils and bundles;
+        Bundle ustarBndl(Nx,3);
+        Pencil divustarPncl(Nx,1);
+
         //Loop over mesh (y,z)-plane
         for (size_t j=0;j<Ny;j++)
         {
                 for (size_t k=0;k<Nz;k++)
                 {
                         //Copy from mesh to bundle
-                        ff2bundle(meshCntr.ustar,pbCntr.ustarBndl,j,k);
+                        ff2bundle(meshCntr.ustar,ustarBndl,j,k);
 
                         // Calculate div(u*) and multiply by proper factor
                         // for use as source in Poisson eq.
-                        div(pbCntr.ustarBndl,pbCntr.dsPncl,xfac,yfac,zfac);
-                        pbCntr.dsPncl = pbCntr.dsPncl*(rho/(2*alphak*dt));
+                        div(ustarBndl,divustarPncl,xfac,yfac,zfac);
+                        divustarPncl = divustarPncl*(rho/(2*alphak*dt));
 
                         // Copy from pencil to mesh
-                        pencil2ff(pbCntr.dsPncl,meshCntr.psi,j,k);
+                        pencil2ff(divustarPncl,meshCntr.psi,j,k);
                 }
         }
 }
 
 /// Calculate u* = u+(2*dt*(alpha(k)/rho))*grad(p)+(dt*beta(k))*RHSk+(dt*gamma(k))*RHSk_1
-void calc_ustar(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &params, const Grid &grid, const Int k_rk)
+void calc_ustar(MeshContainer &meshCntr, SolverParams &params, const Grid &grid, const Int k_rk)
 {
+        size_t Nx = meshCntr.u.nx_;
         size_t Ny = meshCntr.u.ny_;
         size_t Nz = meshCntr.u.nz_;
 
@@ -67,50 +73,69 @@ void calc_ustar(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &para
         Real betak = coeffs.beta(k_rk);
         Real gammak = coeffs.beta(k_rk);
 
-	//Loop over mesh (y,z)-plane
+        /// Create pencils and bundles;
+        Bundle pBndl(Nx,1);
+        Pencil uPncl(Nx,3);
+        Pencil gradpPncl(Nx,3);
+        Pencil ustarPncl(Nx,3);
+        Pencil rhskPncl(Nx,3);
+        Pencil rhsk_1Pncl(Nx,3);
+
+        //Loop over mesh (y,z)-plane
         for (size_t j=0;j<Ny;j++)
         {
                 for (size_t k=0;k<Nz;k++)
                 {
                         //Copy from mesh to bundle/pencil
-                        ff2bundle(meshCntr.p,pbCntr.pBndl,j,k); //pressure field
-                        ff2pencil(meshCntr.u,pbCntr.uPncl,j,k); //velocity field
-                        ff2pencil(meshCntr.RHSk,pbCntr.rhskPncl,j,k); // Right hand sides
-                        ff2pencil(meshCntr.RHSk_1,pbCntr.rhsk_1Pncl,j,k);
+                        ff2bundle(meshCntr.p,pBndl,j,k);
+                        ff2pencil(meshCntr.u,uPncl,j,k);
+                        ff2pencil(meshCntr.RHSk,rhskPncl,j,k);
+                        ff2pencil(meshCntr.RHSk_1,rhsk_1Pncl,j,k);
                         
                         //Compute gradient of the pressure (scalar bundle -> vector pencil)
-                        sgrad(pbCntr.pBndl,pbCntr.dvPncl,xfac,yfac,zfac);
+                        sgrad(pBndl,gradpPncl,xfac,yfac,zfac);
 
                         // Set ustar
-                        pbCntr.ustarPncl = pbCntr.uPncl + pbCntr.rhskPncl*(dt*betak)
-				+ pbCntr.rhsk_1Pncl*(dt*gammak) - pbCntr.dvPncl*(2*alphak*dt/rho);
+                        ustarPncl = uPncl + rhskPncl*(dt*betak) + rhsk_1Pncl*(dt*gammak)
+                                - gradpPncl*(2*alphak*dt/rho);
 
                         //Copy from pencil to mesh
-                        pencil2ff(pbCntr.ustarPncl,meshCntr.ustar,j,k);
+                        pencil2ff(ustarPncl,meshCntr.ustar,j,k);
                         
                 }
         }
 }
-void calc_pncl_diagnostics(const Pencil &u, const Pencil &omega, Stats &stats)
+void calc_pncl_diagnostics(const Pencil &u, const Pencil &omega, const Pencil &divu, Stats &stats)
 {
         stats.calc_pncl_absmax(u);
 	stats.calc_pncl_omega2(omega);
-	//stats.calc_pncl_Pavgs(divu);
+	stats.calc_pncl_Pavgs(divu);
         //stats.calc_pncl_rms(u);
         //std::cout << "umax: " << stats.umax << std::endl;
         //std::cout << "urms: " << stats.urms << std::endl;
 }
-
 /// Function to calculate RHSk = (u_j Del_j u_i)-nu*Lapl(u) at some RK substep k.
 /// Here we also calculate necessary 
-void calc_RHSk(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &params, Stats &stats, const Grid &grid, const Int k_rk)
+void calc_RHSk(MeshContainer &meshCntr, SolverParams &params, Stats &stats, const Grid &grid, const Int k_rk)
 {
+        size_t Nx = meshCntr.u.nx_;
         size_t Ny = meshCntr.u.ny_;
         size_t Nz = meshCntr.u.nz_;
 
         Real xfac=grid.invdx,yfac=grid.invdy,zfac=grid.invdz;
         Real rho = params.rho;
+        
+        /// Create pencils and bundles;
+        Bundle uBndl(Nx,3);
+        Pencil uPncl(Nx,3);
+        Pencil uDeluPncl(Nx,3);
+        Pencil LapluPncl(Nx,3);
+        Pencil rhskPncl(Nx,3);
+        Pencil forcePncl(Nx,3);
+	Pencil omegaPncl(Nx,3); // omega = curl(u)
+	Pencil divuPncl(Nx,1);
 
+	
 	//std::cout << "umax before calc: " << stats.umax << std::endl;
         //Loop over mesh (y,z)-plane
 
@@ -119,8 +144,8 @@ void calc_RHSk(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &param
                 for (size_t k=0;k<Nz;k++)
                 {
                         //Copy from mesh to bundle
-                        ff2bundle(meshCntr.u,pbCntr.uBndl,j,k);
-                        ff2pencil(meshCntr.u,pbCntr.uPncl,j,k);
+                        ff2bundle(meshCntr.u,uBndl,j,k);
+                        ff2pencil(meshCntr.u,uPncl,j,k);
 
                         
                         //If k_rk = 1: Calculate pencil diagnostics from u
@@ -137,30 +162,28 @@ void calc_RHSk(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &param
 				stats.P2 = 0.0;
 				
 				//calculate omega = curl(u)
-				
-				//div(uBndl,divuPncl,xfac,yfac,zfac);
-				//curl(pbCntr.uBndl,pbCntr.dvPncl,xfac,yfac,zfac);
-                                //calc_pncl_diagnostics(pbCntr.uPncl,pbCntr.dvPncl,stats);
-				
+				div(uBndl,divuPncl,xfac,yfac,zfac);
+				curl(uBndl,omegaPncl,xfac,yfac,zfac);
+                                calc_pncl_diagnostics(uPncl,omegaPncl,divuPncl,stats);
 
 			}
                         
                         
                         //Compute (u.grad)u on the bundle.
-                        udotgradu(pbCntr.uBndl,pbCntr.dvPncl,xfac,yfac,zfac);
-			pbCntr.rhskPncl = pbCntr.rhskPncl + pbCntr.dvPncl;
-			
+                        udotgradu(uBndl,uDeluPncl,xfac,yfac,zfac);
+
                         //Compute vector laplacian on the bundle.
-                        vlapl(pbCntr.uBndl,pbCntr.dvPncl,xfac*xfac,yfac*yfac,zfac*zfac);
-                        pbCntr.dvPncl = pbCntr.dvPncl*(1.0/rho);
-			pbCntr.rhskPncl = pbCntr.rhskPncl + pbCntr.dvPncl;
-			
+                        vlapl(uBndl,LapluPncl,xfac*xfac,yfac*yfac,zfac*zfac);
+                        LapluPncl = LapluPncl*(1.0/rho);
+
                         //Compute force pencil
-                        set_force(pbCntr.fPncl,params,grid,j);
-			pbCntr.rhskPncl = pbCntr.rhskPncl + pbCntr.fPncl;
+                        set_force(forcePncl,params,grid,j);
+                        
+                        //Set RHSk pencil
+                        rhskPncl = LapluPncl-uDeluPncl+forcePncl;
 
                         //Copy from pencil to mesh
-                        pencil2ff(pbCntr.rhskPncl,meshCntr.RHSk,j,k);
+                        pencil2ff(rhskPncl,meshCntr.RHSk,j,k);
 			
                 }
         }
@@ -187,10 +210,14 @@ void update_pressure(MeshContainer &meshCntr)
 }
 
 /// Calculate gradient of psi. Perhaps this should be done in Fourier space later.
-void calc_gradpsi(MeshContainer &meshCntr, PBContainer &pbCntr, const SolverParams &params, const Grid &grid)
+void calc_gradpsi(MeshContainer &meshCntr, const SolverParams &params, const Grid &grid)
 {
+        size_t Nx = meshCntr.psi.nx_;
         size_t Ny = meshCntr.psi.ny_;
         size_t Nz = meshCntr.psi.nz_;
+        
+        Bundle psiBndl(Nx,1);
+        Pencil gradpsiPncl(Nx,3);
 
         Real xfac=grid.invdx,yfac=grid.invdy,zfac=grid.invdz;
 
@@ -199,16 +226,16 @@ void calc_gradpsi(MeshContainer &meshCntr, PBContainer &pbCntr, const SolverPara
         {
                 for (size_t k=0;k<Nz;k++)
                 {
-                        ff2bundle(meshCntr.psi,pbCntr.psiBndl,j,k); //Copy
-                        sgrad(pbCntr.psiBndl,pbCntr.dvPncl,xfac,yfac,zfac); //Compute gradient on bundle
-                        pencil2ff(pbCntr.dvPncl,meshCntr.gradpsi,j,k);
+                        ff2bundle(meshCntr.psi,psiBndl,j,k); //Copy
+                        sgrad(psiBndl,gradpsiPncl,xfac,yfac,zfac); //Compute gradient on bundle
+                        pencil2ff(gradpsiPncl,meshCntr.gradpsi,j,k);
                         
                 }
         }
 }
 
 /// Enforces solenoidal condition on velocity field by subtracting grad(psi) from ustar.
-void enforce_solenoidal(MeshContainer &meshCntr, PBContainer &pbCntr, const SolverParams &params, const Grid &grid, const Int k_rk)
+void enforce_solenoidal(MeshContainer &meshCntr, const SolverParams &params, const Grid &grid, const Int k_rk)
 {
         ///Set param constants
         Real dt = params.dt, rho = params.rho;
@@ -218,14 +245,14 @@ void enforce_solenoidal(MeshContainer &meshCntr, PBContainer &pbCntr, const Solv
         Real alphak = coeffs.alpha(k_rk);
 
         apply_pbc(meshCntr.psi);
-        calc_gradpsi(meshCntr,pbCntr,params,grid);
+        calc_gradpsi(meshCntr,params,grid);
         meshCntr.u = meshCntr.ustar-(meshCntr.gradpsi*(2*alphak*dt/rho));
 }
 
 void update_timestep(SolverParams &params, Stats &stats, const Grid &grid)
 {
 	if (params.currentTimestep !=1) {
-		Real c1=0.1;
+		Real c1=0.8;
 		Real c2=c1; //Courant numbers for advection and diffusion respectively
 
 		Real nu = params.viscosity,dx = grid.dx,L=grid.dx;
@@ -242,7 +269,7 @@ void update_timestep(SolverParams &params, Stats &stats, const Grid &grid)
 }
 
 /// Function that performs RK3 substeps from k=1 to k=3
-void RK3_stepping(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &params, Stats &stats, const Grid &grid)
+void RK3_stepping(MeshContainer &meshCntr, SolverParams &params, Stats &stats, const Grid &grid)
 {
         
         /// From the previous step we have k=0 (time step n) data.
@@ -258,21 +285,21 @@ void RK3_stepping(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &pa
                 meshCntr.RHSk_1 = meshCntr.RHSk;
 
                 apply_pbc(meshCntr.u);
-                calc_RHSk(meshCntr,pbCntr,params,stats,grid,k_rk); //diagnostics also calculated here
+                calc_RHSk(meshCntr,params,stats,grid,k_rk); //diagnostics also calculated here
                 // If k_rk == 1 update the timestep dt
                 if (k_rk == 1)
                         update_timestep(params,stats,grid);
                 
-                calc_ustar(meshCntr,pbCntr,params,grid,k_rk);
+                calc_ustar(meshCntr,params,grid,k_rk);
 
                 /// Solve the Poisson eq for Psi.
                 apply_pbc(meshCntr.ustar);
-                calc_divustar(meshCntr,pbCntr,params,grid,k_rk);
+                calc_divustar(meshCntr,params,grid,k_rk);
                 PoissonEq(meshCntr,params,grid,k_rk);
 
                 /// Update pressure and enforce solenoidal condition
                 update_pressure(meshCntr);
-                enforce_solenoidal(meshCntr,pbCntr,params,grid,k_rk);
+                enforce_solenoidal(meshCntr,params,grid,k_rk);
         }
         
 } //End RK3_stepping()
@@ -280,17 +307,12 @@ void RK3_stepping(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &pa
 void save_data_at_step(const MeshContainer &meshCntr, const SolverParams &params, const Stats &stats, const Grid &grid, const Int t)
 {
 	std::string kfname = kolmofname("kolmo",params.kf);
-
+	std::string meshfname = step_fname(kfname, ".dat",meshCntr.u.nx_,t);
 	std::string statsfname = step_fname(kfname, ".stats",meshCntr.u.nx_,t);
-
-	for (Int i=0;i<3;i++)
-	{
-		std::string meshfname = step_fname(kfname+"_component_"+std::to_string(i), ".dat",meshCntr.u.nx_,t);
-		writeToFile_1DArr(meshfname,meshCntr.u,i,grid); //Write i-component of u field to file
-	}
 	
-	writeStatsToFile(statsfname,meshCntr,stats,grid,t); //Calculate and write statistics to file
-	//std::cout << "wrote " << meshfname << " and " << statsfname << " to file at timestep " << t << std::endl;
+	//writeToFile_1DArr(meshfname,meshCntr.u,0,grid); //Write x-component of u field to file
+	//writeStatsToFile(statsfname,meshCntr,stats,grid); //Calculate and write statistics to file
+	std::cout << "wrote array and stats to file at timestep " << t << std::endl;
 }
 
 void execprint(const MeshContainer &meshCntr, const SolverParams &params, const Stats &stats, const Grid &grid)
@@ -299,10 +321,6 @@ void execprint(const MeshContainer &meshCntr, const SolverParams &params, const 
 		", saving every " << params.saveintrvl << " timesteps." << std::endl;
 	std::cout << std::endl;
 }
-
-void calc_curlu(const MeshContainer &meshCntr, Mesh &curlu, PBContainer &pbCntr, const SolverParams &params, const Stats &stats, const Grid &grid);
-void writeCurl(const Mesh &curlu, const SolverParams &params, const Stats &stats, const Grid &grid, const Int t);
-
 Int main()
 {
         auto t1 = Clock::now();
@@ -321,7 +339,7 @@ Int main()
 	
         
         /// Set grid sizes
-        const Real L0 = 0, L1 = 2*M_PI; // x,y,z in [0,2pi]
+        const Real L0 = -M_PI, L1 = M_PI; // x,y,z in [-pi,pi]
         const Int Nsize = 8;
         
         /// Create and initialise uniform 3D finite difference grid object.
@@ -338,27 +356,11 @@ Int main()
         Mesh pp(Nsize,Nsize,Nsize,1); /// pressure scalar field
         Mesh psi(Nsize,Nsize,Nsize,1); /// Psi scalar field
         Mesh gradpsi(Nsize,Nsize,Nsize,3); /// grad(psi) vector field
-	Mesh curlu(Nsize,Nsize,Nsize,3); /// Curl of u for verification
         fftwMesh fftwPsi(Nsize,Nsize,Nsize); /// FFTW3 memory scalar field
-
-	/// Create Bundle & Pencil objects
-	Bundle uBndl(Nsize,3);
-	Bundle ustarBndl(Nsize,3);
-	Bundle pBndl(Nsize,1);
-	Bundle psiBndl(Nsize,1);
-	Pencil uPncl(Nsize,3);
-	Pencil ustarPncl(Nsize,3);
-	Pencil dvPncl(Nsize,3);
-	Pencil dsPncl(Nsize,1);
-	Pencil forcePncl(Nsize,3);
-	Pencil rhskPncl(Nsize,3);
-	Pencil rhsk_1Pncl(Nsize,3);
-	
+        
         /// Create container object with references to meshes
         MeshContainer meshCntr(uu,ustar,RHSk,RHSk_1,pp,psi,gradpsi,fftwPsi);
-	PBContainer pbCntr(uBndl,ustarBndl,pBndl,psiBndl,uPncl,ustarPncl,dvPncl,dsPncl,
-			   forcePncl,rhskPncl,rhsk_1Pncl);
-	
+
         /// At first we get initial timestep size from forcing
         Pencil initforcePncl(Nsize,1);
         for (size_t i=0;i<uu.nx_;i++)
@@ -380,14 +382,7 @@ Int main()
         {
 		meshCntr.u.print();
 		params.currentTimestep = ts;
-		
-		if (ts % params.saveintrvl == 0)
-			stats.isSaveStep = 1;
-		else
-			stats.isSaveStep = 0;
-		
-                RK3_stepping(meshCntr,pbCntr,params,stats,grid);
-		
+                RK3_stepping(meshCntr,params,stats,grid);
 		//Save data every 4th timestep
 		//if (ts % params.saveintrvl == 0)
 			//save_data_at_step(meshCntr,params,stats,grid,ts);
@@ -400,10 +395,7 @@ Int main()
 	meshCntr.u.print();
 	//save last step again to be sure
 	//save_data_at_step(meshCntr,params,stats,grid,params.maxTimesteps+1);
-	
-	//apply_pbc(meshCntr.u);
-	//calc_curlu(meshCntr,curlu,pbCntr,params,stats,grid);
-        //writeCurl(curlu,params,stats,grid,params.maxTimesteps+1);
+        
         auto t2 = Clock::now();
         std::cout << "Delta t2-t1: " 
                   << std::chrono::duration_cast<std::chrono::seconds>(t2 - t1).count()
@@ -412,42 +404,3 @@ Int main()
         return 0;
         
 } //End main()
-
-void calc_curlu(const MeshContainer &meshCntr, Mesh &curlu, PBContainer &pbCntr, const SolverParams &params, const Stats &stats, const Grid &grid)
-{
-	size_t Ny = meshCntr.u.ny_;
-        size_t Nz = meshCntr.u.nz_;
-
-        Real xfac=grid.invdx,yfac=grid.invdy,zfac=grid.invdz;
-
-	//std::cout << "umax before calc: " << stats.umax << std::endl;
-        //Loop over mesh (y,z)-plane
-
-        for (size_t j=0;j<Ny;j++)
-        {
-                for (size_t k=0;k<Nz;k++)
-                {
-                        //Copy from mesh to bundle
-                        ff2bundle(meshCntr.u,pbCntr.uBndl,j,k);
-
-			curl(pbCntr.uBndl,pbCntr.dvPncl,xfac,yfac,zfac);
-
-                        pencil2ff(pbCntr.dvPncl,curlu,j,k);
-			
-                }
-        }
-}
-
-
-void writeCurl(const Mesh &curlu, const SolverParams &params, const Stats &stats, const Grid &grid, const Int t)
-{
-	std::string curlname = kolmofname("kolmocurl",params.kf);
-	
-
-	for (Int i=0;i<3;i++)
-	{
-		std::string curlstepname = step_fname(curlname+"_component_"+std::to_string(i),".dat",curlu.nx_,t);
-		writeToFile_1DArr(curlstepname,curlu,i,grid); //Write i-component of curl(u) field to file
-	}
-	
-}
