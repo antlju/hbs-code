@@ -1,0 +1,11 @@
+operator overload pencil arithmetic gives
+same result as += method for calc_ustar().
+
+HYPOTHESIS:
+Since I'm not creating and destroying pencils/bundles locally
+I need to set them to zero before operating!
+But this shouldnt be right.. differential operators should overwrite pencils.
+
+Rather maybe rhskPncl is not implemented properly.
+
+YEs this was the problem I think!
