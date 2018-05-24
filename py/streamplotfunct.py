@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 
 ### Load data. This is a 1D array using C-style access with last index being the fastest.
 #fname0 = "../simdata/kolm_rk3_x_N64_tNum_60.dat"
-def kolmstreamplot(fn,nn):
+def kolmstreamplot(fn,nn,kf):
     fname0 = fn   
 
     u0 = loadtxt(fname0,skiprows=1)
@@ -27,7 +27,7 @@ def kolmstreamplot(fn,nn):
     #print U0[:-2]
     Umesh = U0[:][:][0]
 
-    print(Umesh)
+    #print(Umesh)
 
     x = linspace(-pi,pi,N)
     y = x
@@ -35,9 +35,13 @@ def kolmstreamplot(fn,nn):
     X,Y = meshgrid(x,y)
 
     Vzer = zeros((N,N))
+    #skip=(slice(None,None,4),slice(None,None,4))
     plt.figure(1)
+    #plt.quiver(x[skip],y[skip],Umesh[skip],Vzer[skip],Umesh[skip])
     plt.quiver(x,y,Umesh,Vzer,Umesh)
     #plt.imshow(Umesh)
+    tit = "kf = %i, N = %i" % (kf,nn)
+    plt.title(tit)
     plt.xlabel('x')
     plt.ylabel('y')
     

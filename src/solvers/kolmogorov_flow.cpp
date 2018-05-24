@@ -316,7 +316,7 @@ Int main()
         SolverParams params;
         params.maxTimesteps = maxtsteps;
         params.currentTimestep = 0;
-        params.kf = 1.0; //Kolmogorov frequency
+        params.kf = 2.0; //Kolmogorov frequency
         params.rho = 1.0;
         params.viscosity = 1.0;
 	params.saveintrvl = 4;
@@ -324,7 +324,7 @@ Int main()
         
         /// Set grid sizes
         const Real L0 = 0, L1 = 2*M_PI; // x,y,z in [0,2pi]
-        const Int Nsize = 128;
+        const Int Nsize = 256;
         
         /// Create and initialise uniform 3D finite difference grid object.
         Grid grid(Nsize,Nsize,Nsize,L0,L1);
