@@ -35,6 +35,8 @@
 *.dat
 *.cvs
 *.csv
+simdata/
+*.stats
 
 # Plots
 *.jpg
