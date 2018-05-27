@@ -91,10 +91,12 @@ void calc_ustar(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &para
                 }
         }
 }
-void calc_pncl_diagnostics(const Pencil &u, const Pencil &omega, Stats &stats)
+void calc_pncl_diagnostics(const Pencil &u, const Pencil &omega, const Pencil &force, Stats &stats)
 {
         stats.calc_pncl_absmax(u);
 	stats.calc_pncl_omega2(omega);
+	stats.calc_pncl_energy(u,force);
+	/// Calculate avg energy mean(dot(u,f))
 	//stats.calc_pncl_Pavgs(divu);
         //stats.calc_pncl_rms(u);
         //std::cout << "umax: " << stats.umax << std::endl;
@@ -122,6 +124,8 @@ void calc_RHSk(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &param
                         ff2bundle(meshCntr.u,pbCntr.uBndl,j,k);
                         ff2pencil(meshCntr.u,pbCntr.uPncl,j,k);
 
+			//Compute force pencil
+                        set_force(pbCntr.fPncl,params,grid,j);
                         
                         //If k_rk = 1: Calculate pencil diagnostics from u
                         if (k_rk == 1)
@@ -135,12 +139,13 @@ void calc_RHSk(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &param
 				stats.omega2 = 0.0;
 				stats.P = 0.0;
 				stats.P2 = 0.0;
+				stats.energy = 0.0;
 				
 				//calculate omega = curl(u)
 				
 				//div(uBndl,divuPncl,xfac,yfac,zfac);
 				curl(pbCntr.uBndl,pbCntr.dvPncl,xfac,yfac,zfac);
-                                calc_pncl_diagnostics(pbCntr.uPncl,pbCntr.dvPncl,stats);
+                                calc_pncl_diagnostics(pbCntr.uPncl,pbCntr.dvPncl,pbCntr.fPncl,stats);
 				
 
 			}
@@ -156,8 +161,7 @@ void calc_RHSk(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &param
                         pbCntr.dvPncl = pbCntr.dvPncl*(1.0/rho);
 			pbCntr.rhskPncl = pbCntr.rhskPncl + pbCntr.dvPncl;
 			
-                        //Compute force pencil
-                        set_force(pbCntr.fPncl,params,grid,j);
+			//Set force
 			pbCntr.rhskPncl = pbCntr.rhskPncl + pbCntr.fPncl;
 
                         //Copy from pencil to mesh
@@ -280,7 +284,7 @@ void RK3_stepping(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &pa
 
 void save_data_at_step(const MeshContainer &meshCntr, const SolverParams &params, const Stats &stats, const Grid &grid, const Int t)
 {
-	std::string kfname = kolmofname("pnclOptim",params.kf);
+	std::string kfname = kolmofname("steadyState_test",params.kf);
 	std::string statsfname = stats_fname(kfname,".stats",meshCntr.u.nx_);
 	//std::string statsfname = step_fname(kfname, ".stats",meshCntr.u.nx_,t);
 
@@ -310,7 +314,7 @@ Int main()
         auto t1 = Clock::now();
  
         /// Time settings.
-        const Int maxtsteps = 60;
+        const Int maxtsteps = 1200;
 
         /// Create parameter object and initialise parameters.
         SolverParams params;
@@ -319,12 +323,12 @@ Int main()
         params.kf = 2.0; //Kolmogorov frequency
         params.rho = 1.0;
         params.viscosity = 1.0;
-	params.saveintrvl = 4;
+	params.saveintrvl = 100;
 	
         
         /// Set grid sizes
         const Real L0 = 0, L1 = 2*M_PI; // x,y,z in [0,2pi]
-        const Int Nsize = 256;
+        const Int Nsize = 64;
         
         /// Create and initialise uniform 3D finite difference grid object.
         Grid grid(Nsize,Nsize,Nsize,L0,L1);
@@ -439,7 +443,7 @@ void calc_curlu(const MeshContainer &meshCntr, Mesh &curlu, PBContainer &pbCntr,
 
 void writeCurl(const Mesh &curlu, const SolverParams &params, const Stats &stats, const Grid &grid, const Int t)
 {
-	std::string curlname = kolmofname("kolmocurl",params.kf);
+	std::string curlname = kolmofname("steadyState_test",params.kf);
 	
 
 	for (Int i=0;i<3;i++)

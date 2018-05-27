@@ -16,7 +16,7 @@ void udotgradu(const Bundle &B, Pencil &P, const Real xfac, const Real yfac, con
         assert((B.nx_ == P.nx_) && (B.nvars_ == P.nvars_) );
         for (size_t i=0;i<B.nx_;i++)
         {
-                for (Int vi=0;vi<P.nvars_;vi++)
+                for (size_t vi=0;vi<P.nvars_;vi++)
                 {
                         P(i,0,vi) = B(i,0,0)*delx(B,xfac,i,vi)
                                 +B(i,0,1)*dely(B,yfac,i,vi)

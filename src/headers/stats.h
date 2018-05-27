@@ -12,6 +12,8 @@ public:
         Real umax;
         Real umax_old;
 
+	Real energy;
+	
         Real urms;
         Real urms_old;
 
@@ -24,6 +26,20 @@ public:
 	
         /// Function for calculating statistics on pencils
         /// ---------------------------------------------------
+
+	void calc_pncl_energy(const Pencil &u, const Pencil &f)
+	{
+		Real uf;
+		for (size_t vi=0;vi<u.nvars_;vi++)
+		{
+			for (size_t i=0;i<u.nx_;i++)
+			{
+				uf = u(i,0,vi)*f(i,0,vi);
+				energy += uf;
+			}
+		}
+	}
+		       
         void calc_pncl_absmax(const Pencil &u)
         {
                 Real fabsu;

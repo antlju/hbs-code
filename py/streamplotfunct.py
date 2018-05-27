@@ -47,4 +47,9 @@ def kolmstreamplot(fn,nn,kf):
     
     plt.show()
 
+def meanEplot(fname):
+    meanE = loadtxt(fname,usecols=3)
+    timesteps = loadtxt(fname,usecols=0,delimiter=":")
 
+    plt.plot(timesteps,meanE)
+    plt.show()

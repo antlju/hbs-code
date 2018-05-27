@@ -1,6 +1,6 @@
 CC=g++
-CFLAGS=-c -Wall -std=c++14 -Iheaders -pg
-LDFLAGS=-pg
+CFLAGS=-c -Wall -std=c++14 -Iheaders -O3 #-pg
+LDFLAGS= -O3 #-pg
 LIBS = -lfftw3 -lm
 HEADERS=Makefile headers/*.h
 

@@ -4,14 +4,16 @@ Int writeStatsToFile(const std::string fname, const MeshContainer &meshCntr, con
 {
 	std::ofstream openfile("../simdata/"+fname, std::ios::app); //Append option!
 
-	Real volsize = meshCntr.u.nx_*meshCntr.u.ny_*meshCntr.u.nz_;
+	Real volsize = 3*meshCntr.u.nx_*meshCntr.u.ny_*meshCntr.u.nz_;
 	
 	Real avgomega2 = stats.omega2/volsize;
-	Real avgP = stats.P/volsize;
-	Real avgP2 = stats.P2/volsize;
+	//Real avgP = stats.P/volsize;
+	//Real avgP2 = stats.P2/volsize;
+	Real avgE = stats.energy/volsize;
 	
-	openfile << stepNo << ":\t" << avgomega2 << "\t" << avgP << "\t" << avgP2 << "\t" << stats.umax << std::endl;
-
+	//openfile << stepNo << ":\t" << avgomega2 << "\t" << avgP << "\t" << avgP2 << "\t" << stats.umax << "\t" << avgE << std::endl;
+	openfile << stepNo << ":\t" << avgomega2 << "\t" << stats.umax << "\t" << avgE << std::endl;
+	
 	return 0;
 }
 
