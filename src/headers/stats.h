@@ -9,14 +9,18 @@
 class Stats {
 public:
         /// max(abs(u)), The maximum absolute velocity
+	Real Re;
+	
         Real umax;
         Real umax_old;
-
+	
 	Real energy;
 	
-        Real urms;
+        Real urms2sum;
+	Real urms_step;
         Real urms_old;
-
+	Real urms_mesh;
+	
 	Real omega2; //omega = curl(u), vorticity, omega2 = omega^2
 
 	Real P; //Denotes div(u); P = div(u).
@@ -39,7 +43,26 @@ public:
 			}
 		}
 	}
-		       
+
+	void calc_mesh_urms(const Mesh &u)
+	{
+		urms_mesh = 0.0;
+		for (size_t vi=0;vi<u.nvar_;vi++)
+		{
+			for (size_t i=0;i<u.nx_;i++)
+			{
+				for (size_t j=0;j<u.ny_;j++)
+				{
+					for (size_t k=0;k<u.nz_;k++)
+					{
+						urms_mesh += u(i,j,k,vi)*u(i,j,k,vi);
+					}
+				}
+			}
+		}
+		urms_mesh = sqrt(urms_mesh/(u.nvar_*u.nx_*u.ny_*u.nz_));
+	}
+	
         void calc_pncl_absmax(const Pencil &u)
         {
                 Real fabsu;
@@ -60,7 +83,7 @@ public:
                 {
                         for (size_t i=0;i<u.nx_;i++)
                         {
-                                urms += pow(u(i,0,vi),2);
+                                urms2sum += pow(u(i,0,vi),2);
                         }
                 }
         }

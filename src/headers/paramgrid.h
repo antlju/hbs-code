@@ -30,9 +30,13 @@ public:
 
         /// Density
         Real rho;
-
+	//Kinematic viscosity
+	Real mu;
         /// Kolmogorov frequency
         Real kf;
+
+	/// Characteristic velocity
+	Real Uchar;
 
 }; // End class SolverParams
 

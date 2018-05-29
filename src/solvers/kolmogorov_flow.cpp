@@ -96,6 +96,8 @@ void calc_pncl_diagnostics(const Pencil &u, const Pencil &omega, const Pencil &f
         stats.calc_pncl_absmax(u);
 	stats.calc_pncl_omega2(omega);
 	stats.calc_pncl_energy(u,force);
+	//stats.calc_pncl_rms(u);
+	//std::cout << "urms2sum: " << stats.urms2sum << std::endl;
 	/// Calculate avg energy mean(dot(u,f))
 	//stats.calc_pncl_Pavgs(divu);
         //stats.calc_pncl_rms(u);
@@ -111,11 +113,14 @@ void calc_RHSk(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &param
         size_t Nz = meshCntr.u.nz_;
 
         Real xfac=grid.invdx,yfac=grid.invdy,zfac=grid.invdz;
-        Real rho = params.rho;
+
+	Real nu = params.viscosity;
+	
 
 	//std::cout << "umax before calc: " << stats.umax << std::endl;
         //Loop over mesh (y,z)-plane
 
+	
         for (size_t j=0;j<Ny;j++)
         {
                 for (size_t k=0;k<Nz;k++)
@@ -133,13 +138,10 @@ void calc_RHSk(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &param
 				
 				/// Statistics set
 				stats.umax_old = stats.umax;
-				stats.urms_old = stats.urms;
-				//stats.umax = 0.0;
-				//stats.urms = 0.0;
-				stats.omega2 = 0.0;
-				stats.P = 0.0;
-				stats.P2 = 0.0;
-				stats.energy = 0.0;
+				//stats.omega2 = 0.0;
+				//stats.P = 0.0;
+				//stats.P2 = 0.0;
+				//stats.energy = 0.0;
 				
 				//calculate omega = curl(u)
 				
@@ -158,7 +160,7 @@ void calc_RHSk(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &param
 			
                         //Compute vector laplacian on the bundle.
                         vlapl(pbCntr.uBndl,pbCntr.dvPncl,xfac*xfac,yfac*yfac,zfac*zfac);
-                        pbCntr.dvPncl = pbCntr.dvPncl*(1.0/rho);
+                        pbCntr.dvPncl = pbCntr.dvPncl*nu;
 			pbCntr.rhskPncl = pbCntr.rhskPncl + pbCntr.dvPncl;
 			
 			//Set force
@@ -169,10 +171,6 @@ void calc_RHSk(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &param
 			
                 }
         }
-	//std::cout << "umax after calc: " << stats.umax << std::endl;
-	
-        
-        //std::cout << "urms final: " << stats.urms << std::endl;
         
 }
 
@@ -234,12 +232,11 @@ void update_timestep(SolverParams &params, Stats &stats, const Grid &grid)
 		Real c2=c1; //Courant numbers for advection and diffusion respectively
 
 		Real nu = params.viscosity,dx = grid.dx,L=grid.dx;
-        
-		//Factor of 1/3 since dx=dy=dz
-	
-		Real adv = (1.0/3)*c1*dx/stats.umax;
-		Real diff = (1.0/3)*c2*pow(L,2)/nu;
-		//std::cout << "adv : " << adv << "\t diff: " << diff << std::endl;
+
+		
+		Real adv = c1*dx/stats.urms_mesh;//params.Uchar;
+		Real diff = c2*pow(L,2)/nu;
+		std::cout << "adv : " << adv << "\t diff: " << diff << std::endl;
 		//Set new time step size according to CFL condition
 		params.dt = std::min(adv,diff);
 	}
@@ -266,7 +263,10 @@ void RK3_stepping(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &pa
                 calc_RHSk(meshCntr,pbCntr,params,stats,grid,k_rk); //diagnostics also calculated here
                 // If k_rk == 1 update the timestep dt
                 if (k_rk == 1)
+		{
+			stats.calc_mesh_urms(meshCntr.u);
                         update_timestep(params,stats,grid);
+		}
                 
                 calc_ustar(meshCntr,pbCntr,params,grid,k_rk);
 
@@ -309,26 +309,34 @@ void execprint(const MeshContainer &meshCntr, const SolverParams &params, const 
 void calc_curlu(const MeshContainer &meshCntr, Mesh &curlu, PBContainer &pbCntr, const SolverParams &params, const Stats &stats, const Grid &grid);
 void writeCurl(const Mesh &curlu, const SolverParams &params, const Stats &stats, const Grid &grid, const Int t);
 
+void reset_step_stats(Stats &stats)
+{
+	stats.energy = 0.0;
+	stats.omega2 = 0.0;
+	stats.urms_mesh = 0.0;
+}
+
 Int main()
 {
         auto t1 = Clock::now();
  
         /// Time settings.
-        const Int maxtsteps = 5000;
+        const Int maxtsteps = 100;
 
-        /// Create parameter object and initialise parameters.
+        /// Set grid sizes
+        const Real L0 = 0, L1 = 2*M_PI; // x,y,z in [0,2pi]
+        const Int Nsize = 32;
+
+	/// Create parameter object and initialise parameters.
         SolverParams params;
         params.maxTimesteps = maxtsteps;
         params.currentTimestep = 0;
         params.kf = 1.0; //Kolmogorov frequency
         params.rho = 1.0;
-        params.viscosity = 1.0/(params.kf*sqrt(sqrt(2))); //Re_crit = sqrt(2)
-	params.saveintrvl = 100;
-	
-        
-        /// Set grid sizes
-        const Real L0 = 0, L1 = 2*M_PI; // x,y,z in [0,2pi]
-        const Int Nsize = 32;
+	params.Uchar = 1.0/2;
+	//params.Re = sqrt(2);
+        params.viscosity = 1.0/10;
+	params.saveintrvl = 10;
         
         /// Create and initialise uniform 3D finite difference grid object.
         Grid grid(Nsize,Nsize,Nsize,L0,L1);
@@ -372,16 +380,27 @@ Int main()
 
 	/// Initial set of the timesteps
         stats.calc_pncl_absmax(initforcePncl);
+	
 	//std::cout << stats.umax << std::endl;
         stats.umax_old = stats.umax;
         update_timestep(params,stats,grid);
-        stats.umax = 0;
+        stats.umax = 0.0;
         //std::cout << 0 << " : " << params.dt << std::endl;
         //Set umax to zero again to get actual calculation from run
 	
 /// Run Runge-Kutta 3 substepping
-	execprint(meshCntr,params,stats,grid);
+
+	//Delete previous stats file
+	std::string kfname = kolmofname("steadyState_test",params.kf);
+	std::string statsfname = stats_fname(kfname,".stats",meshCntr.u.nx_);
+	std::string removefname = "../simdata/"+statsfname;
 	
+	std::remove(removefname.c_str());
+
+	//Print execution message
+	execprint(meshCntr,params,stats,grid);
+
+	// Solve
         for (Int ts = 1;ts<params.maxTimesteps;ts++)
         {
 		
@@ -397,14 +416,10 @@ Int main()
 		//Save data every 4th timestep
 		if (ts % params.saveintrvl == 0)
 			save_data_at_step(meshCntr,params,stats,grid,ts);
-		
+
+		reset_step_stats(stats);
 	}
 	
-	//save last step again to be sure
-	save_data_at_step(meshCntr,params,stats,grid,params.maxTimesteps+1);
-	
-	apply_pbc(meshCntr.u);
-        writeCurl(curlu,params,stats,grid,params.maxTimesteps+1);
         auto t2 = Clock::now();
         std::cout << "Delta t2-t1: " 
                   << std::chrono::duration_cast<std::chrono::seconds>(t2 - t1).count()
@@ -413,43 +428,3 @@ Int main()
         return 0;
         
 } //End main()
-
-void calc_curlu(const MeshContainer &meshCntr, Mesh &curlu, PBContainer &pbCntr, const SolverParams &params, const Stats &stats, const Grid &grid)
-{
-	size_t Ny = meshCntr.u.ny_;
-        size_t Nz = meshCntr.u.nz_;
-
-        Real xfac=grid.invdx,yfac=grid.invdy,zfac=grid.invdz;
-
-	//std::cout << "umax before calc: " << stats.umax << std::endl;
-        //Loop over mesh (y,z)-plane
-
-        for (size_t j=0;j<Ny;j++)
-        {
-                for (size_t k=0;k<Nz;k++)
-                {
-                        //Copy from mesh to bundle
-                        ff2bundle(meshCntr.u,pbCntr.uBndl,j,k);
-
-			pbCntr.dvPncl.fillPencil(0.0);
-			curl(pbCntr.uBndl,pbCntr.dvPncl,xfac,yfac,zfac);
-
-                        pencil2ff(pbCntr.dvPncl,curlu,j,k);
-			
-                }
-        }
-}
-
-
-void writeCurl(const Mesh &curlu, const SolverParams &params, const Stats &stats, const Grid &grid, const Int t)
-{
-	std::string curlname = kolmofname("steadyState_test",params.kf);
-	
-
-	for (Int i=0;i<3;i++)
-	{
-		std::string curlstepname = step_fname(curlname+"_component_"+std::to_string(i),".dat",curlu.nx_,t);
-		writeToFile_1DArr(curlstepname,curlu,i,grid); //Write i-component of curl(u) field to file
-	}
-	
-}

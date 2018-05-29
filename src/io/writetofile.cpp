@@ -10,9 +10,14 @@ Int writeStatsToFile(const std::string fname, const MeshContainer &meshCntr, con
 	//Real avgP = stats.P/volsize;
 	//Real avgP2 = stats.P2/volsize;
 	Real avgE = stats.energy/volsize;
-	
+	//std::cout << "stats.urms_step" << stats.urms_step << std::endl;
+	//Real urms = sqrt(stats.urms_step/volsize);
+	Real urms_mesh = sqrt(stats.urms_mesh/volsize);
+
+	//Real Re = urms_mesh*2*M_PI/(10.0);
 	//openfile << stepNo << ":\t" << avgomega2 << "\t" << avgP << "\t" << avgP2 << "\t" << stats.umax << "\t" << avgE << std::endl;
-	openfile << stepNo << ":\t" << avgomega2 << "\t" << stats.umax << "\t" << avgE << std::endl;
+	//openfile << stepNo << std::setw(8) << std::left << avgomega2 << std::setw(8) << std::left << urms << std::setw(8) << std::left << urms_mesh << std::setw(8) << std::left << stats.umax << std::setw(8) << std::left << avgE << std::endl;
+		openfile << stepNo << "    " << avgomega2 << "    " << urms_mesh  << "    " << stats.umax << "    " << avgE << std::endl;
 	
 	return 0;
 }
