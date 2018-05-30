@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include "vartypedef.h"
@@ -12,42 +13,23 @@ public:
 	Real Re;
 	
         Real umax;
-        Real umax_old;
 	
 	Real energy;
 	
-        Real urms2sum;
-	Real urms_step;
-        Real urms_old;
-	Real urms_mesh;
-	
-	Real omega2; //omega = curl(u), vorticity, omega2 = omega^2
-
-	Real P; //Denotes div(u); P = div(u).
-	Real P2; //P^2 = div(u)^2
+	Real urms;
 
 	Int isSaveStep = 0;
-	
-        /// Function for calculating statistics on pencils
+
+	        
         /// ---------------------------------------------------
-
-	void calc_pncl_energy(const Pencil &u, const Pencil &f)
-	{
-		Real uf;
-		for (size_t vi=0;vi<u.nvars_;vi++)
-		{
-			for (size_t i=0;i<u.nx_;i++)
-			{
-				uf = u(i,0,vi)*f(i,0,vi);
-				energy += uf;
-			}
-		}
-	}
-
+        /// Functions for calculating statistics on mesh
+	/// -----------------------------------------------------
+	
 	void calc_mesh_urms(const Mesh &u)
 	{
-		urms_mesh = 0.0;
-		for (size_t vi=0;vi<u.nvar_;vi++)
+		urms = 0.0;
+		//for (size_t vi=0;vi<u.nvar_;vi++)
+		for (size_t vi=0;vi<1;vi++) // only x-component
 		{
 			for (size_t i=0;i<u.nx_;i++)
 			{
@@ -55,102 +37,55 @@ public:
 				{
 					for (size_t k=0;k<u.nz_;k++)
 					{
-						urms_mesh += u(i,j,k,vi)*u(i,j,k,vi);
+						urms += u(i,j,k,vi)*u(i,j,k,vi);
 					}
 				}
 			}
 		}
-		urms_mesh = sqrt(urms_mesh/(u.nvar_*u.nx_*u.ny_*u.nz_));
+		//urms = sqrt(urms/(u.nvar_*u.nx_*u.ny_*u.nz_));
+		urms = sqrt(urms/(u.nx_*u.ny_*u.nz_));
+	}
+
+	void calc_mesh_energy(const Mesh &inmesh)
+	{
+		//for (size_t vi=0;vi<inmesh.nvar_;vi++)
+		for (size_t vi=0;vi<1;vi++) // Only calc x-component
+		{
+			for (size_t i=0;i<inmesh.nx_;i++)
+			{
+				for (size_t j=0;j<inmesh.ny_;j++)
+				{
+					for (size_t k=0;k<inmesh.nz_;k++)
+					{
+						energy += inmesh(i,j,k,vi)*inmesh(i,j,k,vi);
+					}
+				}
+			}
+		}
+		//Real size = inmesh.nx_*inmesh.ny_*inmesh.nz_*inmesh.nvar_;
+		Real size = inmesh.nx_*inmesh.ny_*inmesh.nz_;
+		energy = energy/size;
 	}
 	
-        void calc_pncl_absmax(const Pencil &u)
+        void calc_mesh_umax(const Mesh &inmesh)
         {
-                Real fabsu;
-                for (size_t vi=0;vi<u.nvars_;vi++)
-                {
-                        for (size_t i=0;i<u.nx_;i++)
-                        {
-                                fabsu = fabs(u(i,0,vi));
-                                if (fabsu > umax)
-                                        umax = fabsu;
-                        }
-                }
-        }
-
-	void calc_pncl_rms(const Pencil &u)
-        {
-                for (size_t vi=0;vi<u.nvars_;vi++)
-                {
-                        for (size_t i=0;i<u.nx_;i++)
-                        {
-                                urms2sum += pow(u(i,0,vi),2);
-                        }
-                }
-        }
-
-	void calc_pncl_omega2(const Pencil &curlu)
-	{
-                for (size_t vi=0;vi<curlu.nvars_;vi++)
-                {
-                        for (size_t i=0;i<curlu.nx_;i++)
-                        {
-                                omega2 += pow(curlu(i,0,vi),2);
-                        }
-                }
-        }
-
-	void calc_pncl_Pavgs(const Pencil &divu)
-	{
-                for (size_t vi=0;vi<divu.nvars_;vi++)
-                {
-                        for (size_t i=0;i<divu.nx_;i++)
-                        {
-				P = divu(i,0,vi);
-                                P2 += pow(divu(i,0,vi),2);
-                        }
-                }
-        }
-        
-        /// ---------------------------------------------------
-
-        
-        /// Functions for calculating statistics on mesh
-        /// -----------------------------------------------------
-        Real calc_mesh_max(const Mesh &inmesh)
-        {
-                Real maxval = inmesh(0,0,0);
-                for (size_t i=0;i<inmesh.nx_;i++)
-                {
-                        for (size_t j=0;j<inmesh.ny_;j++)
-                        {
-                                for (size_t k=0;k<inmesh.nz_;k++)
-                                {
-                                        if (inmesh(i,j,k) >= maxval)
-                                                maxval = (Real)inmesh(i,j,k);
-                                }
-                        }
-                }
-
-                return maxval;
-        }
-
-        Real calc_mesh_rms(const Mesh &inmesh)
-        {
-                Real sum;
-                for (size_t i=0;i<inmesh.nx_;i++)
-                {
-                        for (size_t j=0;j<inmesh.ny_;j++)
-                        {
-                                for (size_t k=0;k<inmesh.nz_;k++)
-                                {
-                                        sum += pow(inmesh(i,j,k),2);
-                                }
-                        }
-                }
-                Int Nx = inmesh.nx_,Ny=inmesh.ny_,Nz=inmesh.nz_;
-                Real ret = sqrt(sum/(Nx*Ny*Nz));
-                
-                return ret;
+                umax = 0.0;
+		//for (size_t vi=0;vi<inmesh.nvar_;vi++)
+		for (size_t vi=0;vi<1;vi++) // Only x-component
+		{
+			for (size_t i=0;i<inmesh.nx_;i++)
+			{
+				for (size_t j=0;j<inmesh.ny_;j++)
+				{
+					for (size_t k=0;k<inmesh.nz_;k++)
+					{
+						if (fabs(inmesh(i,j,k,vi)) >= umax)
+							umax = fabs(inmesh(i,j,k,vi));
+					}
+				}
+			}
+		}
+				
         }
 
         /// ---------------------------------------------------------

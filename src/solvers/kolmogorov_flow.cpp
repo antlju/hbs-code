@@ -91,19 +91,6 @@ void calc_ustar(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &para
                 }
         }
 }
-void calc_pncl_diagnostics(const Pencil &u, const Pencil &omega, const Pencil &force, Stats &stats)
-{
-        stats.calc_pncl_absmax(u);
-	stats.calc_pncl_omega2(omega);
-	stats.calc_pncl_energy(u,force);
-	//stats.calc_pncl_rms(u);
-	//std::cout << "urms2sum: " << stats.urms2sum << std::endl;
-	/// Calculate avg energy mean(dot(u,f))
-	//stats.calc_pncl_Pavgs(divu);
-        //stats.calc_pncl_rms(u);
-        //std::cout << "umax: " << stats.umax << std::endl;
-        //std::cout << "urms: " << stats.urms << std::endl;
-}
 
 /// Function to calculate RHSk = (u_j Del_j u_i)-nu*Lapl(u) at some RK substep k.
 /// Here we also calculate necessary 
@@ -131,28 +118,7 @@ void calc_RHSk(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &param
 
 			//Compute force pencil
                         set_force(pbCntr.fPncl,params,grid,j);
-                        
-                        //If k_rk = 1: Calculate pencil diagnostics from u
-                        if (k_rk == 1)
-			{
-				
-				/// Statistics set
-				stats.umax_old = stats.umax;
-				//stats.omega2 = 0.0;
-				//stats.P = 0.0;
-				//stats.P2 = 0.0;
-				//stats.energy = 0.0;
-				
-				//calculate omega = curl(u)
-				
-				//div(uBndl,divuPncl,xfac,yfac,zfac);
-				curl(pbCntr.uBndl,pbCntr.dvPncl,xfac,yfac,zfac);
-                                calc_pncl_diagnostics(pbCntr.uPncl,pbCntr.dvPncl,pbCntr.fPncl,stats);
-				
-
-			}
-                        
-                        
+                                                
                         //Compute (u.grad)u on the bundle.
 			pbCntr.rhskPncl.fillPencil(0.0);
                         udotgradu(pbCntr.uBndl,pbCntr.dvPncl,xfac,yfac,zfac);
@@ -163,7 +129,7 @@ void calc_RHSk(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &param
                         pbCntr.dvPncl = pbCntr.dvPncl*nu;
 			pbCntr.rhskPncl = pbCntr.rhskPncl + pbCntr.dvPncl;
 			
-			//Set force
+			//Apply force
 			pbCntr.rhskPncl = pbCntr.rhskPncl + pbCntr.fPncl;
 
                         //Copy from pencil to mesh
@@ -228,15 +194,25 @@ void enforce_solenoidal(MeshContainer &meshCntr, PBContainer &pbCntr, const Solv
 void update_timestep(SolverParams &params, Stats &stats, const Grid &grid)
 {
 	if (params.currentTimestep !=1) {
-		Real c1=0.1;
+		Real c1=1.0/3;
 		Real c2=c1; //Courant numbers for advection and diffusion respectively
 
-		Real nu = params.viscosity,dx = grid.dx,L=grid.dx;
-
-		
-		Real adv = c1*dx/stats.urms_mesh;//params.Uchar;
+		Real nu = params.viscosity,dx=grid.dx,L=grid.dx;
+		Real UU;
+		/*
+		if (stats.urms < 1e-15)
+		{
+			UU = params.Uchar;
+		}
+		else
+		{
+		UU = stats.urms;
+		}
+		*/
+		UU = params.Uchar;
+		Real adv = c1*dx/UU;//params.Uchar;
 		Real diff = c2*pow(L,2)/nu;
-		std::cout << "adv : " << adv << "\t diff: " << diff << std::endl;
+		//std::cout << "adv : " << adv << "\t diff: " << diff << std::endl;
 		//Set new time step size according to CFL condition
 		params.dt = std::min(adv,diff);
 	}
@@ -264,7 +240,8 @@ void RK3_stepping(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &pa
                 // If k_rk == 1 update the timestep dt
                 if (k_rk == 1)
 		{
-			stats.calc_mesh_urms(meshCntr.u);
+
+			stats.calc_mesh_umax(meshCntr.u);
                         update_timestep(params,stats,grid);
 		}
                 
@@ -284,18 +261,18 @@ void RK3_stepping(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &pa
 
 void save_data_at_step(const MeshContainer &meshCntr, const SolverParams &params, const Stats &stats, const Grid &grid, const Int t)
 {
-	std::string kfname = kolmofname("steadyState_test",params.kf);
+	std::string kfname = kolmofname("kflow",params.kf);
 	std::string statsfname = stats_fname(kfname,".stats",meshCntr.u.nx_);
 	//std::string statsfname = step_fname(kfname, ".stats",meshCntr.u.nx_,t);
 
-	for (Int i=0;i<3;i++)
+	for (Int i=0;i<1;i++) //Write only component 0 (x-component) for now
 	{
-		std::string meshfname = step_fname(kfname+"_component_"+std::to_string(i), ".dat",meshCntr.u.nx_,t);
+		std::string meshfname = step_fname(kfname+"_cmpnt_"+std::to_string(i), ".dat",meshCntr.u.nx_,t);
 		writeToFile_1DArr(meshfname,meshCntr.u,i,grid); //Write i-component of u field to file
 		std::cout << "wrote " << meshfname << " to file at timestep " << t << std::endl;
 	}
 	
-	writeStatsToFile(statsfname,meshCntr,stats,grid,t); //Calculate and write statistics to file
+	writeStatsToFile(statsfname,meshCntr,stats,grid,t); //write statistics to file
 	std::cout << "wrote " << statsfname << " to file at timestep " << t << std::endl;
 }
 
@@ -306,15 +283,6 @@ void execprint(const MeshContainer &meshCntr, const SolverParams &params, const 
 	std::cout << std::endl;
 }
 
-void calc_curlu(const MeshContainer &meshCntr, Mesh &curlu, PBContainer &pbCntr, const SolverParams &params, const Stats &stats, const Grid &grid);
-void writeCurl(const Mesh &curlu, const SolverParams &params, const Stats &stats, const Grid &grid, const Int t);
-
-void reset_step_stats(Stats &stats)
-{
-	stats.energy = 0.0;
-	stats.omega2 = 0.0;
-	stats.urms_mesh = 0.0;
-}
 
 Int main()
 {
@@ -325,7 +293,7 @@ Int main()
 
         /// Set grid sizes
         const Real L0 = 0, L1 = 2*M_PI; // x,y,z in [0,2pi]
-        const Int Nsize = 32;
+        const Int Nsize = 128;
 
 	/// Create parameter object and initialise parameters.
         SolverParams params;
@@ -373,32 +341,21 @@ Int main()
 	PBContainer pbCntr(uBndl,ustarBndl,pBndl,psiBndl,uPncl,ustarPncl,dvPncl,dsPncl,
 			   forcePncl,rhskPncl,rhsk_1Pncl);
 	
-        /// At first we get initial timestep size from forcing
-        Pencil initforcePncl(Nsize,1);
-        for (size_t i=0;i<uu.nx_;i++)
-                initforcePncl(i,0,0) = sin(params.kf*grid.x(i));
 
-	/// Initial set of the timesteps
-        stats.calc_pncl_absmax(initforcePncl);
-	
-	//std::cout << stats.umax << std::endl;
-        stats.umax_old = stats.umax;
-        update_timestep(params,stats,grid);
-        stats.umax = 0.0;
-        //std::cout << 0 << " : " << params.dt << std::endl;
-        //Set umax to zero again to get actual calculation from run
+	//Set initial vel
+	stats.umax = params.Uchar;
+	update_timestep(params,stats,grid);
+	stats.umax = 0.0;
 	
 /// Run Runge-Kutta 3 substepping
 
-	//Delete previous stats file
-	std::string kfname = kolmofname("steadyState_test",params.kf);
-	std::string statsfname = stats_fname(kfname,".stats",meshCntr.u.nx_);
-	std::string removefname = "../simdata/"+statsfname;
-	
-	std::remove(removefname.c_str());
-
 	//Print execution message
 	execprint(meshCntr,params,stats,grid);
+
+	
+	std::string kfname = kolmofname("kflow",params.kf);
+	std::string statsfname = stats_fname(kfname,".stats",meshCntr.u.nx_);
+	openStats(statsfname);
 
 	// Solve
         for (Int ts = 1;ts<params.maxTimesteps;ts++)
@@ -415,9 +372,12 @@ Int main()
 		
 		//Save data every 4th timestep
 		if (ts % params.saveintrvl == 0)
+		{
+			stats.calc_mesh_urms(meshCntr.u);
+			stats.calc_mesh_energy(meshCntr.u);
 			save_data_at_step(meshCntr,params,stats,grid,ts);
+		}
 
-		reset_step_stats(stats);
 	}
 	
         auto t2 = Clock::now();

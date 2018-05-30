@@ -1,24 +1,20 @@
 #include "includes.h"
+#include <iomanip>
+
+Int openStats(const std::string fname)
+{
+	std::ofstream openfile("../simdata/"+fname, std::ios::trunc);
+	openfile << "stepNo" << std::setw(21) << "stats.urms" << std::setw(21) << "stats.umax" << std::setw(21) << "stats.energy" << std::endl;
+
+	return 0;
+}
 
 Int writeStatsToFile(const std::string fname, const MeshContainer &meshCntr, const Stats &stats, const Grid &grid, const Int stepNo)
 {
 	std::ofstream openfile("../simdata/"+fname, std::ios::app); //Append option!
 
-	Real volsize = 3*meshCntr.u.nx_*meshCntr.u.ny_*meshCntr.u.nz_;
-	
-	Real avgomega2 = stats.omega2/volsize;
-	//Real avgP = stats.P/volsize;
-	//Real avgP2 = stats.P2/volsize;
-	Real avgE = stats.energy/volsize;
-	//std::cout << "stats.urms_step" << stats.urms_step << std::endl;
-	//Real urms = sqrt(stats.urms_step/volsize);
-	Real urms_mesh = sqrt(stats.urms_mesh/volsize);
+	openfile << stepNo << std::setw(21) << stats.urms << std::setw(21) << stats.umax << std::setw(21) << stats.energy << std::endl;
 
-	//Real Re = urms_mesh*2*M_PI/(10.0);
-	//openfile << stepNo << ":\t" << avgomega2 << "\t" << avgP << "\t" << avgP2 << "\t" << stats.umax << "\t" << avgE << std::endl;
-	//openfile << stepNo << std::setw(8) << std::left << avgomega2 << std::setw(8) << std::left << urms << std::setw(8) << std::left << urms_mesh << std::setw(8) << std::left << stats.umax << std::setw(8) << std::left << avgE << std::endl;
-		openfile << stepNo << "    " << avgomega2 << "    " << urms_mesh  << "    " << stats.umax << "    " << avgE << std::endl;
-	
 	return 0;
 }
 
@@ -58,7 +54,7 @@ Int writeToFile(std::string fname, const Mesh &u, const Int vi, const Pencil &x,
         }
 	// }
         openfile.close();
-        std::cout << "Wrote " << fname << std::endl;
+        //std::cout << "Wrote " << fname << std::endl;
         return 0;
 
 }
@@ -83,7 +79,7 @@ Int writeToFile_1DArr(const std::string fname, const Mesh &u, const Int vi, cons
                 }
         }
 
-	std::cout << "wrote " << fname << std::endl;
+	//std::cout << "wrote " << fname << std::endl;
         return 0;
                       
 }
