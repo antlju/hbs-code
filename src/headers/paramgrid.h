@@ -85,7 +85,7 @@ public:
                 x(Nx),y(Ny),z(Nz)
         {
                 /// Calculate step size and lengths
-                dx = (L1-L0)/(Nx-1); dy = dx; dz = dx;
+                dx = (L1-L0)/(Nx); dy = dx; dz = dx;
                 xlen = (L1-L0); ylen = xlen; zlen = xlen;
 
                 /// Create x-axis linspace.
