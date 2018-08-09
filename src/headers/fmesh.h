@@ -105,6 +105,33 @@ public:
                         std::cout << std::endl;
                 }
         }
+
+	Real max()
+        {
+		Real max = 0.0;
+		Real val;
+                for (size_t vi=0;vi<nvar_;vi++)
+                {
+                        
+                        for (size_t i=0;i<nx_;i++)
+                        {
+                                for (size_t j=0;j<ny_;j++)
+                                {
+                                        for (size_t k=0;k<nz_;k++)
+                                        {
+						
+                                                val = fabs(mem_[ indx(i,j,k,vi) ]);
+						if(val > max)
+							max = val;
+                                        }
+                                        
+                                }
+                                
+                        }
+                        
+                }
+		return max;
+        }
 }; //End class
 
 template <class T, Int NG>

@@ -65,8 +65,9 @@ void calc_ustar(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &para
         RK3Coeff coeffs;
         Real alphak = coeffs.alpha(k_rk);
         Real betak = coeffs.beta(k_rk);
-        Real gammak = coeffs.beta(k_rk);
+        Real gammak = coeffs.gamma(k_rk);
 
+	//std::cout << alphak << " " << betak << " " << gammak << std::endl;
 	//Loop over mesh (y,z)-plane
         for (size_t j=0;j<Ny;j++)
         {
@@ -85,6 +86,7 @@ void calc_ustar(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &para
                         pbCntr.ustarPncl = pbCntr.uPncl + pbCntr.rhskPncl*(dt*betak)
 				+ pbCntr.rhsk_1Pncl*(dt*gammak) - pbCntr.dvPncl*(2*alphak*dt/rho);
 
+			
                         //Copy from pencil to mesh
                         pencil2ff(pbCntr.ustarPncl,meshCntr.ustar,j,k);
                         
@@ -121,6 +123,7 @@ void calc_RHSk(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &param
                                                 
                         //Compute (u.grad)u on the bundle.
 			pbCntr.rhskPncl.fillPencil(0.0);
+			/*
                         udotgradu(pbCntr.uBndl,pbCntr.dvPncl,xfac,yfac,zfac);
 			pbCntr.rhskPncl = pbCntr.dvPncl;
 			
@@ -128,6 +131,7 @@ void calc_RHSk(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &param
                         vlapl(pbCntr.uBndl,pbCntr.dvPncl,xfac*xfac,yfac*yfac,zfac*zfac);
                         pbCntr.dvPncl = pbCntr.dvPncl*nu;
 			pbCntr.rhskPncl = pbCntr.rhskPncl + pbCntr.dvPncl;
+			*/
 			
 			//Apply force
 			pbCntr.rhskPncl = pbCntr.rhskPncl + pbCntr.fPncl;
@@ -146,7 +150,7 @@ void PoissonEq(MeshContainer &meshCntr, SolverParams &params, const Grid &grid, 
         /// Since this is a inplace real-to-complex transform solver,
         /// here the input mesh psi acts as the input source as well as the result.
         PoissonSolve3D(meshCntr.psi,meshCntr.fftwPsi,0,grid.xlen);
-        
+        meshCntr.psi.print();
 }
 
 /// Updates pressure p^k = p^(k-1) + psi^k
@@ -237,24 +241,31 @@ void RK3_stepping(MeshContainer &meshCntr, PBContainer &pbCntr, SolverParams &pa
 
                 apply_pbc(meshCntr.u);
                 calc_RHSk(meshCntr,pbCntr,params,stats,grid,k_rk); //diagnostics also calculated here
+		//std::cout << "Tstep: " << params.currentTimestep << " k_rk: " << k_rk << " rhsk max: " << meshCntr.RHSk.max() << std::endl;
+		
                 // If k_rk == 1 update the timestep dt
                 if (k_rk == 1)
 		{
 
-			stats.calc_mesh_umax(meshCntr.u);
-                        update_timestep(params,stats,grid);
+			//stats.calc_mesh_umax(meshCntr.u);
+			update_timestep(params,stats,grid);
 		}
                 
-                calc_ustar(meshCntr,pbCntr,params,grid,k_rk);
+                //calc_ustar(meshCntr,pbCntr,params,grid,k_rk);
 
+		/*
                 /// Solve the Poisson eq for Psi.
                 apply_pbc(meshCntr.ustar);
+		
                 calc_divustar(meshCntr,pbCntr,params,grid,k_rk);
+		
                 PoissonEq(meshCntr,params,grid,k_rk);
 
                 /// Update pressure and enforce solenoidal condition
                 update_pressure(meshCntr);
                 enforce_solenoidal(meshCntr,pbCntr,params,grid,k_rk);
+		*/
+		meshCntr.u = meshCntr.RHSk;
         }
         
 } //End RK3_stepping()
@@ -289,7 +300,7 @@ Int main()
         auto t1 = Clock::now();
  
         /// Time settings.
-        const Int maxtsteps = 3000;
+        const Int maxtsteps = 1000;
 
         /// Set grid sizes
         const Real L0 = 0, L1 = 2*M_PI; // x,y,z in [0,2pi]
@@ -304,7 +315,7 @@ Int main()
 	params.Uchar = 1.0/2;
 	//params.Re = sqrt(2);
         params.viscosity = 1.0/20;
-	params.saveintrvl = 1;
+	params.saveintrvl = 10;
         
         /// Create and initialise uniform 3D finite difference grid object.
         Grid grid(Nsize,Nsize,Nsize,L0,L1);
@@ -355,7 +366,7 @@ Int main()
 	
 	std::string kfname = kolmofname("kflow",params.kf);
 	std::string statsfname = stats_fname(kfname,".stats",meshCntr.u.nx_);
-	openStats(statsfname);
+	//openStats(statsfname);
 
 	// Solve
         for (Int ts = 1;ts<params.maxTimesteps;ts++)
@@ -370,12 +381,14 @@ Int main()
 		
                 RK3_stepping(meshCntr,pbCntr,params,stats,grid);
 		
-		//Save data every 4th timestep
+		//Save data
 		if (ts % params.saveintrvl == 0)
 		{
-			stats.calc_mesh_urms(meshCntr.u);
-			stats.calc_mesh_energy(meshCntr.u);
-			save_data_at_step(meshCntr,params,stats,grid,ts);
+			//stats.calc_mesh_urms(meshCntr.u);
+			//stats.calc_mesh_energy(meshCntr.u);
+			//save_data_at_step(meshCntr,params,stats,grid,ts);
+			//std::cout << " Pressure max: " << pp.max() << "\n Umax: " << uu.max() << "\n Psimax: " << psi.max() << "\n gradpsimax: " << gradpsi.max() << std::endl;
+			std::cout << " Umax: " << uu.max()  << std::endl;
 		}
 
 	}
